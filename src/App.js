@@ -1,25 +1,32 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { ThemeProvider } from 'styled-components'
+import GlobalContainer from './components/GlobalContainer'
+import Column from './components/Column'
+import Content from './components/Content'
+import Footer from './components/Footer'
+import LoginForm from './components/LoginForm'
+
+const theme = {
+  font: 'Calibri',
+  colors: {
+    primary: 'blue',
+    secondary: 'white'
+  }
+}
 
 function App () {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalContainer id='globalContainer'>
+        <Content id='content' role='main'>
+          <Column size={2} background='welcome' />
+          <Column size={1}>
+            <LoginForm />
+          </Column>
+        </Content>
+        <Footer id='footer' />
+      </GlobalContainer>
+    </ThemeProvider>
   )
 }
 
