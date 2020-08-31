@@ -7,9 +7,13 @@ const Form = styled.form`
   flex-direction: column;
   flex-basis: 70%;
   justify-content: center;
+  align-items: center;
 `
 
 const Input = styled.input`
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
 
 `
 
@@ -18,9 +22,18 @@ background-color: #1877f2;
 border: none;
 border-radius: 6px;
 font-size: 20px;
+color: #fff;
 line-height: 48px;
 padding: 0 16px;
-width: 100px;
+width: 80%;
+margin-top: 10px;
+
+`
+const ErrorMsg = styled.span`
+  color: red;
+  font-size: 12px;
+  margin-top: -5px;
+  align-self: flex-start;
 
 `
 
@@ -34,9 +47,9 @@ const LoginForm = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input name='username' type='text' placeholder='Usuario' ref={register({ required: true, minLength: 3 })} />
-      {errors.username && <p>Username is invalid</p>}
+      {errors.username && <ErrorMsg>Username is invalid</ErrorMsg>}
       <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true, minLength: 8 })} />
-      {errors.password && <p>Password is invalid</p>}
+      {errors.password && <ErrorMsg>Password is invalid</ErrorMsg>}
       <SubmitButton type='submit' value='Ingresar' />
     </Form>
   )

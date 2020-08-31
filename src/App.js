@@ -5,6 +5,7 @@ import Column from './components/Column'
 import Content from './components/Content'
 import Footer from './components/Footer'
 import LoginForm from './components/LoginForm'
+import Recovery from './components/Recovery'
 
 const theme = {
   font: 'Calibri',
@@ -19,9 +20,10 @@ function App () {
     <ThemeProvider theme={theme}>
       <GlobalContainer id='globalContainer'>
         <Content id='content' role='main'>
-          <Column size={2} background='welcome' />
-          <Column size={1}>
+          <Column size={8} />
+          <Column size={5}>
             <LoginForm />
+            <Recovery />
           </Column>
         </Content>
         <Footer id='footer' />
