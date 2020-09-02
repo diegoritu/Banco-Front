@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  flex-basis: 70%;
+  flex-basis: 40%;
   justify-content: center;
   align-items: center;
 `
@@ -47,9 +47,9 @@ const LoginForm = () => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input name='username' type='text' placeholder='Usuario' ref={register({ required: true, minLength: 3 })} />
-      {errors.username && <ErrorMsg>Username is invalid</ErrorMsg>}
+      {errors.username && <ErrorMsg>Usuario invalido</ErrorMsg>}
       <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true, minLength: 8 })} />
-      {errors.password && <ErrorMsg>Password is invalid</ErrorMsg>}
+      {errors.password && <ErrorMsg>Contraseña invalida</ErrorMsg>}
       <SubmitButton type='submit' value='Ingresar' />
     </Form>
   )

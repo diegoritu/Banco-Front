@@ -11,6 +11,7 @@ const RecoveryMsg = styled.span`
 
 `
 const RecoveryLink = styled.a`
+  padding: 10px;
 
 `
 
