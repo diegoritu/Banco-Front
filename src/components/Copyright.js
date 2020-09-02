@@ -7,7 +7,7 @@ const CopyrightMsg = styled.span`
 const Copyright = () => {
   return (
     <CopyrightMsg>
-      C
+      KRRL
     </CopyrightMsg>
 
   )

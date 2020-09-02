@@ -1,11 +1,11 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import GlobalContainer from './components/GlobalContainer'
-import Column from './components/Column'
-import Content from './components/Content'
-import LoginForm from './components/LoginForm'
-import Recovery from './components/Recovery'
-import Welcome from './components/Welcome'
+import { Route, Switch } from 'react-router-dom'
+
+import Home from './pages/Home'
+import Login from './pages/Login'
+import ProtectedRoute from './components/ProtectedRoute'
+import NotFound from './pages/NotFound'
 
 const theme = {
   font: 'Calibri',
@@ -18,16 +18,11 @@ const theme = {
 function App () {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalContainer id='globalContainer'>
-        <Content id='content' role='main' url='https://www.cdbeco.com.vn/wp-content/uploads/2019/02/326780-P9JGF8-718.jpg' collapse='xs'>
-          <Column size={8} collapse='xs' />
-          <Column size={5}>
-            <Welcome />
-            <LoginForm />
-            <Recovery />
-          </Column>
-        </Content>
-      </GlobalContainer>
+      <Switch>
+        <Route exact path='/' component={Login} />
+        <ProtectedRoute exact path='/home' component={Home} />
+        <Route path='*' component={NotFound} />
+      </Switch>
     </ThemeProvider>
   )
 }

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
+import auth from './Auth'
+import { withRouter } from 'react-router-dom'
 
 const Form = styled.form`
   display: flex;
@@ -37,7 +39,7 @@ const ErrorMsg = styled.span`
 
 `
 
-const LoginForm = () => {
+const LoginForm = props => {
   const { register, handleSubmit, errors } = useForm()
 
   const onSubmit = (data) => {
@@ -50,8 +52,14 @@ const LoginForm = () => {
       {errors.username && <ErrorMsg>Usuario invalido</ErrorMsg>}
       <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true, minLength: 8 })} />
       {errors.password && <ErrorMsg>Contraseña invalida</ErrorMsg>}
-      <SubmitButton type='submit' value='Ingresar' />
+      <SubmitButton
+        type='submit'
+        value='Ingresar'
+        onClick={() => {
+          auth.login(() => { props.history.push('/home') })
+        }}
+      />
     </Form>
   )
 }
-export default LoginForm
+export default withRouter(LoginForm)
