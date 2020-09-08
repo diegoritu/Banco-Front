@@ -4,19 +4,18 @@ import styled from 'styled-components'
 const HeaderWrapper = styled.header`
   display: flex;
   width: 100%;
+  height: 5vh;
   background: #000;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `
 
 const HeaderTitle = styled.span`
-  flex: 1;
   color: #FFF;
   padding: 10px;
 `
 
 const HeaderMenu = styled.span`
-  display: flex;
-  justify-content: flex-end;
-  flex: 1;
   color: #FFF;
   padding: 10px;
   margin-left: 5px;

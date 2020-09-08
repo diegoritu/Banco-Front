@@ -11,8 +11,11 @@ const media = {
 export default styled.div`
 
   display: flex;
-  background: ${(props) => 'url("' + (props.url) + '")'};
+  flex-wrap: wrap;
+  flex-direction: ${(props) => props.direction};
+  background: ${(props) => props.url ? 'url("' + (props.url) + '")' : '#f5f5f7'};
   background-size: cover;
   ${(props) => props.collapse && media[props.collapse]('background: #f5f5f7;')};
+  height: ${(props) => props.height}
 
 `
