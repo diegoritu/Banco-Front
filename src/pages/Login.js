@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Column from '../components/Column'
 import Content from '../components/Content'
 import GlobalContainer from '../components/GlobalContainer'

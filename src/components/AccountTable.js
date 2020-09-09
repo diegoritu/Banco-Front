@@ -5,8 +5,8 @@ const Table = styled.table`
   width:60%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
   background: #fff;
   border: 1px solid black;
   border-collapse: collapse;
