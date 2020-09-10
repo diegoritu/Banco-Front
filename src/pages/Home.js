@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' height='95vh' direction='column'>
+      <Content id='content' direction='column'>
         <Text> Acciones </Text>
         <Button> Pagar Servicios </Button>
         <Text> Mis Cuentas </Text>

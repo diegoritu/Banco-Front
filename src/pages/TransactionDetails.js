@@ -10,7 +10,7 @@ const TransactionDetails = (data) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' height='95vh' direction='column'>
+      <Content id='content' direction='column'>
         <Text> Detalle de movimiento </Text>
         <Details>
           <h4> Cuenta: {data.account} </h4>

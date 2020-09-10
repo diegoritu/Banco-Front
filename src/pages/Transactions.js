@@ -8,7 +8,7 @@ const Transactions = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' height='95vh' direction='column'>
+      <Content id='content' direction='column'>
         <p>Transactions</p>
       </Content>
       <Footer id='footer' />

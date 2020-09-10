@@ -8,6 +8,7 @@ const HeaderWrapper = styled.header`
   background: #000;
   justify-content: space-between;
   flex-wrap: wrap;
+  min-height: 40px;
 `
 
 const HeaderTitle = styled.span`

@@ -10,7 +10,7 @@ const CBU = (data) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' height='95vh' direction='column'>
+      <Content id='content' direction='column'>
         <Text> Cuentas {'>>'} CBU </Text>
         <Details>
           <h4> CBU: {data.cbu} </h4>

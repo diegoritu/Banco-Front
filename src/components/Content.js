@@ -16,6 +16,6 @@ export default styled.div`
   background: ${(props) => props.url ? 'url("' + (props.url) + '")' : '#f5f5f7'};
   background-size: cover;
   ${(props) => props.collapse && media[props.collapse]('background: #f5f5f7;')};
-  height: ${(props) => props.height}
+  min-height: 95vh;
 
 `

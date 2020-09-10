@@ -20,7 +20,7 @@ const Transfer = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' height='95vh' direction='column'>
+      <Content id='content' direction='column'>
         <p>Transfer</p>
         <Dropdown title='Select' items={items} />
       </Content>
