@@ -7,7 +7,7 @@ const DdWrapper = styled.div`
   width: 100%;
   flex-wrap: wrap;
   position: relative;
-  min-width: 300px;
+  min-width: 50px;
 `
 
 const DdHeader = styled.div`
