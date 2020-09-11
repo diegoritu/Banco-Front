@@ -7,6 +7,8 @@ import Dropdown from '../components/Dropdown'
 import { useForm } from 'react-hook-form'
 import Text from '../components/Text'
 import styled from 'styled-components'
+import ErrorMsg from '../components/ErrorMsg'
+import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
 
 const items = [
   {
@@ -19,57 +21,12 @@ const items = [
   }
 ]
 
-const Table = styled.table`
-  width:60%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  background: #fff;
-  border-collapse: collapse;
-`
-
 const Input = styled.input`
   padding: 10px;
   margin: 10px;
   width: 20vw;
 `
 
-const TButton = styled.button`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  margin: 0px;
-`
-
-const TableDataR = styled.td`
-  border-collapse: collapse;
-  color: #000;
-  width: 20%;
-  text-align: center;
-  padding: 8px;
-  height: 5vh;
-`
-
-const TableDataL = styled.td`
-  border-collapse: collapse;
-  color: #000;
-  width: 10%;
-  text-align: center;
-  padding: 8px;
-  height: 5vh;
-`
-
-const ErrorMsg = styled.span`
-  color: red;
-  font-size: 12px;
-  margin-top: -5px;
-  align-self: flex-start;
-`
-
-const Caption = styled.caption`
-padding: 15px;
-`
 const ToggleWrapper = styled.div`
   width: 60%;
   margin-left: auto;

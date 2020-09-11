@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import auth from './Auth'
 import { withRouter } from 'react-router-dom'
+import ErrorMsg from './ErrorMsg'
 
 const Form = styled.form`
   display: flex;
@@ -29,13 +30,6 @@ line-height: 48px;
 padding: 0 16px;
 width: 80%;
 margin-top: 10px;
-
-`
-const ErrorMsg = styled.span`
-  color: red;
-  font-size: 12px;
-  margin-top: -5px;
-  align-self: flex-start;
 
 `
 
