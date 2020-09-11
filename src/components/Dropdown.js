@@ -4,8 +4,10 @@ import styled from 'styled-components'
 const DdWrapper = styled.div`
   display: flex;
   min-height: 38px;
-  width: 50%;
+  width: 100%;
   flex-wrap: wrap;
+  position: relative;
+  min-width: 300px;
 `
 
 const DdHeader = styled.div`
@@ -23,11 +25,9 @@ const DdHeader = styled.div`
 `
 
 const DdHeaderTitle = styled.div`
-
 `
 
 const DdHeaderTitleBold = styled.p`
-  font-weight: bold;
 `
 
 const DdHeaderAction = styled.div`
@@ -38,11 +38,17 @@ const DdList = styled.ul`
   padding: 0;
   margin: 0;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 60px;
+  position: absolute;
+  z-index: 1;
+  
 `
 
 const DdListItem = styled.li`
   list-style-type: none;
+  width:100%;
+  
+  
   
   &:first-of-type {
     button {
@@ -75,9 +81,12 @@ const DdListItem = styled.li`
     }
   }
 `
-const DdSymbol = styled.span`font-size: 12px; padding-right: 2px;`
+const DdSymbol = styled.span`
+  font-size: 12px; 
+  padding-right: 2px;
+`
 
-const Dropdown = ({ title = 'Select', items = [] }) => {
+const Dropdown = ({ title = 'Select', items = [], updateParent }) => {
   const [open, setOpen] = useState(false)
   const [selection, setSelection] = useState([])
   const toggle = () => setOpen(!open)
@@ -87,6 +96,7 @@ const Dropdown = ({ title = 'Select', items = [] }) => {
     if (!selection.some(current => current.id === item.id)) {
       setSelection([item])
       setDropTitle(item.value)
+      updateParent(item.value)
     } else {
       let selectionAfterRemoval = selection
       selectionAfterRemoval = selectionAfterRemoval.filter(
@@ -94,6 +104,7 @@ const Dropdown = ({ title = 'Select', items = [] }) => {
       )
       setSelection([...selectionAfterRemoval])
       setDropTitle(title)
+      updateParent('')
     }
   }
 
@@ -122,7 +133,7 @@ const Dropdown = ({ title = 'Select', items = [] }) => {
             <DdListItem key={item.id}>
               <button type='button' onClick={() => handleOnClick(item)}>
                 <span>{item.value}</span>
-                <DdSymbol>{isItemInSelection(item) && String.fromCharCode(10003)}</DdSymbol>
+                <DdSymbol>{isItemInSelection(item) && String.fromCharCode(10004)}</DdSymbol>
               </button>
             </DdListItem>
           ))}

@@ -44,20 +44,18 @@ const LoginForm = props => {
 
   const onSubmit = (data) => {
     console.log(data)
+    auth.login(() => { props.history.push('/home') })
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input name='username' type='text' placeholder='Usuario' ref={register({ required: true, minLength: 3 })} />
-      {errors.username && <ErrorMsg>Usuario invalido</ErrorMsg>}
+      {errors.username && <ErrorMsg> Usuario invalido </ErrorMsg>}
       <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true, minLength: 8 })} />
-      {errors.password && <ErrorMsg>Contraseña invalida</ErrorMsg>}
+      {errors.password && <ErrorMsg> Contraseña invalida </ErrorMsg>}
       <SubmitButton
         type='submit'
         value='Ingresar'
-        onClick={() => {
-          auth.login(() => { props.history.push('/home') })
-        }}
       />
     </Form>
   )
