@@ -37,9 +37,24 @@ const TableDataL = styled.td`
 const Caption = styled.caption`
 padding: 15px;
 `
+
+const TableHeader = styled.th`
+  border-collapse: collapse;
+  color: #000;
+  width: 20%;
+  text-align: center;
+  padding: 8px;
+  height: 5vh;
+`
+const TableHeaderRow = styled.tr`
+  background: grey;
+`
+
 export {
   Table,
   Caption,
+  TableHeaderRow,
+  TableHeader,
   TableDataL,
   TableDataR,
   TButton
