@@ -12,6 +12,7 @@ import TransactionDetails from './pages/TransactionDetails'
 import Deposit from './pages/Deposit'
 import Extraction from './pages/Extraction'
 import Password from './pages/Password'
+import AdminHome from './pages/AdminHome'
 
 const theme = {
   font: 'Calibri',
@@ -34,6 +35,7 @@ function App () {
         <ProtectedRoute exact path='/deposit' component={Deposit} />
         <ProtectedRoute exact path='/extraction' component={Extraction} />
         <ProtectedRoute exact path='/password' component={Password} />
+        <ProtectedRoute exact path='/adminHome' component={AdminHome} />
         <Route path='*' component={NotFound} />
       </Switch>
     </ThemeProvider>
