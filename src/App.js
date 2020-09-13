@@ -13,6 +13,7 @@ import Deposit from './pages/Deposit'
 import Extraction from './pages/Extraction'
 import Password from './pages/Password'
 import AdminHome from './pages/AdminHome'
+import SearchClient from './pages/SearchClient'
 
 const theme = {
   font: 'Calibri',
@@ -36,6 +37,7 @@ function App () {
         <ProtectedRoute exact path='/extraction' component={Extraction} />
         <ProtectedRoute exact path='/password' component={Password} />
         <ProtectedRoute exact path='/adminHome' component={AdminHome} />
+        <ProtectedRoute exact path='/searchClient' component={SearchClient} />
         <Route path='*' component={NotFound} />
       </Switch>
     </ThemeProvider>

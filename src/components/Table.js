@@ -2,6 +2,9 @@ import styled from 'styled-components'
 
 const Table = styled.table`
   width:60%;
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
   margin-left: auto;
   margin-right: auto;
   margin-top: 2%;

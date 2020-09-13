@@ -17,5 +17,6 @@ export default styled.div`
   background-size: cover;
   ${(props) => props.collapse && media[props.collapse]('background: #f5f5f7;')};
   min-height: 95vh;
+  overflow: auto;
 
 `

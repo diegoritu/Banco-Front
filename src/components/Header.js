@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Logout from './Logout'
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -14,13 +15,7 @@ const HeaderWrapper = styled.header`
 const HeaderTitle = styled.span`
   color: #FFF;
   padding: 10px;
-`
-
-const HeaderMenu = styled.span`
-  color: #FFF;
-  padding: 10px;
-  margin-left: 5px;
-  
+  align-self:center;
 `
 
 const Header = () => {
@@ -29,9 +24,7 @@ const Header = () => {
       <HeaderTitle>
         KRRL Bank
       </HeaderTitle>
-      <HeaderMenu>
-        Bienvenido/a Perez, Juan &#x25BC;
-      </HeaderMenu>
+      <Logout title='juan' />
     </HeaderWrapper>
   )
 }
