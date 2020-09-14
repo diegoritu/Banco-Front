@@ -60,47 +60,71 @@ const RegisterClient = props => {
                   <TableDataL> Nombre y Apellido </TableDataL>
                   <TableDataR>
                     <Input name='fullname' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
-                    {errors.fullname && <ErrorMsg> Invalido </ErrorMsg>}
+                    {errors.fullname && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
-                  <TableDataR><Input name='cuitCuilNL' type='number' min='0' step='any' ref={register({ required: true })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='cuitCuilNL' type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    {errors.cuitCuilNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> DNI </TableDataL>
                   <TableDataR>
-                    <Input name='dni' type='number' step='any' ref={register({ required: true, min: 0 })} />
-                    {errors.dni && <ErrorMsg> Invalido </ErrorMsg>}
+                    <Input name='dni' type='number' ref={register({ required: true, min: 0, max: 100000000 })} />
+                    {errors.dni && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Nombre de Usuario </TableDataL>
-                  <TableDataR><Input name='usernameNL' type='text' ref={register({ required: true })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='usernameNL' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.usernameNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Domicilio </TableDataL>
-                  <TableDataR><Input name='addressNL' type='text' ref={register({ required: true })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='addressNL' type='text' ref={register({ required: true, max: 255 })} />
+                    {errors.addressNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Fecha de nacimiento </TableDataL>
-                  <TableDataR><Input name='birthday' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} /> {errors.birthday && <ErrorMsg> Invalido </ErrorMsg>}</TableDataR>
+                  <TableDataR>
+                    <Input name='birthday' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                    {errors.birthday && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Telefono </TableDataL>
-                  <TableDataR><Input name='phoneNL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='phoneNL' type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.phoneNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Celular </TableDataL>
-                  <TableDataR><Input name='mobileNL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='mobileNL' type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.mobileNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cuenta Corriente </TableDataL>
-                  <TableDataR><Input name='checkingNL' type='checkbox' ref={register()} /></TableDataR>
+                  <TableDataR>
+                    <Input name='checkingNL' type='checkbox' ref={register()} />
+                    {errors.chekingNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
-                  <TableDataR><Input name='overdraftNL' /></TableDataR>
+                  <TableDataR>
+                    <Input name='overdraftNL' type='number' step='any' ref={register()} />
+                    {errors.overdraftNL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
@@ -115,38 +139,52 @@ const RegisterClient = props => {
               <tbody>
                 <tr>
                   <TableDataL> Razon Social </TableDataL>
-                  <TableDataR><Input name='companyName' type='text' ref={register({ required: true })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='companyName' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.companyName && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cuitCuilL' type='number' step='any' ref={register({ required: true, min: 0 })} />
+                    <Input name='cuitCuilL' type='number' step='any' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    {errors.cuitCuilL && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Nombre de usuario </TableDataL>
                   <TableDataR>
-                    <Input name='usernameL' type='text' ref={register({ required: true })} />
+                    <Input name='usernameL' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.usernameL && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Domicilio </TableDataL>
                   <TableDataR>
-                    <Input name='addressL' type='text' ref={register({ required: true })} />
-                    {errors.amountToNotOwned && <span> Debe ingresar un monto </span>}
+                    <Input name='addressL' type='text' ref={register({ required: true, max: 255 })} />
+                    {errors.addressL && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Telefono </TableDataL>
-                  <TableDataR><Input name='phoneL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                  <TableDataR>
+                    <Input name='phoneL' type='number' step='any' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.phoneL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cuenta corriente </TableDataL>
-                  <TableDataR><Input name='checkingL' type='checkbox' /></TableDataR>
+                  <TableDataR>
+                    <Input name='checkingL' type='checkbox' ref={register()} />
+                    {errors.checkingL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
-                  <TableDataR><Input name='overdraftL' /></TableDataR>
+                  <TableDataR>
+                    <Input name='overdraftL' type='number' step='any' ref={register()} />
+                    {errors.overdraftL && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
