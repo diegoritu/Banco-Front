@@ -23,6 +23,7 @@ const DdHeader = styled.div`
   outline: none;
   height: 5vh;
   align-items: center;
+  min-height: 40px;
 
 `
 

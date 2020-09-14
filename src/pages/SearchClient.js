@@ -3,10 +3,11 @@ import Content from '../components/Content'
 import Footer from '../components/Footer'
 import GlobalContainer from '../components/GlobalContainer'
 import Header from '../components/Header'
-import { Table, TButton, TableDataL, TableDataR, Caption, TableHeader, TableHeaderRow } from '../components/Table'
+import { Table, TableDataL, TableDataR, Caption, TableHeader, TableHeaderRow } from '../components/Table'
 import { useForm } from 'react-hook-form'
 import Dropdown from '../components/Dropdown'
 import styled from 'styled-components'
+import ErrorMsg from '../components/ErrorMsg'
 
 const Button = styled.button`
   width: 50%;
@@ -64,7 +65,10 @@ const SearchClient = () => {
                 </TableDataL>
               </tr>
               <tr>
-                <TableDataL><Input /></TableDataL>
+                <TableDataL>
+                  <Input name='field' type='text' placeholder='Ingrese el dato a buscar' ref={register({ required: true })} />
+                  {errors.field && <ErrorMsg> No puede estar vacio </ErrorMsg>}
+                </TableDataL>
                 <TableDataR><Button> Buscar </Button></TableDataR>
               </tr>
             </tbody>
