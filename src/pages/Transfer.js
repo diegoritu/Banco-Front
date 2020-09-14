@@ -81,7 +81,7 @@ const Transfer = props => {
                 <tr>
                   <TableDataL> Importe </TableDataL>
                   <TableDataR>
-                    <Input name='amountToOwned' type='number' min='0' step='any' ref={register({ required: true })} />
+                    <Input name='amountToOwned' type='number' min='0' step='any' ref={register({ required: true, min: 0 })} />
                     {errors.amountToOwned && <ErrorMsg> Debe ingresar un monto </ErrorMsg>}
                   </TableDataR>
                 </tr>

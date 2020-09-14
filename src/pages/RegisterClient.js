@@ -26,15 +26,19 @@ const Button = styled.button`
   width: 50%;
   padding: 10px;
 `
+const FixBar = styled.div`
+ height: 10vh;
+  width: 100%;
+`
 
 const RegisterClient = props => {
   const { register, handleSubmit, errors } = useForm()
-  const [ownedAcc, setOwnedAcc] = useState(true)
+  const [isLegal, setIsLegal] = useState(false)
 
-  const onSubmitOwned = (data) => {
+  const onSubmitNotLegal = (data) => {
     console.log(data)
   }
-  const onSubmitNotOwned = (data) => {
+  const onSubmitLegal = (data) => {
     console.log(data)
   }
   return (
@@ -43,29 +47,60 @@ const RegisterClient = props => {
       <Content id='content' direction='column'>
         <Text> Registro de nueva persona </Text>
         <ToggleWrapper>
-          <Button onClick={() => setOwnedAcc(true)}> Fisica </Button>
-          <Button onClick={() => setOwnedAcc(false)}> Juridica </Button>
+          <Button onClick={() => setIsLegal(false)}> Fisica </Button>
+          <Button onClick={() => setIsLegal(true)}> Juridica </Button>
         </ToggleWrapper>
 
-        {ownedAcc &&
-          <form onSubmit={handleSubmit(onSubmitOwned)}>
+        {!isLegal &&
+          <form onSubmit={handleSubmit(onSubmitNotLegal)}>
             <Table>
               <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
-                  <TableDataL> Desde </TableDataL>
-                  <TableDataR><Input /></TableDataR>
-                </tr>
-                <tr>
-                  <TableDataL> Hacia </TableDataL>
-                  <TableDataR><Input /></TableDataR>
-                </tr>
-                <tr>
-                  <TableDataL> Importe </TableDataL>
+                  <TableDataL> Nombre y Apellido </TableDataL>
                   <TableDataR>
-                    <Input name='amountToOwned' type='number' min='0' step='any' ref={register({ required: true })} />
-                    {errors.amountToOwned && <ErrorMsg> Debe ingresar un monto </ErrorMsg>}
+                    <Input name='fullname' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    {errors.fullname && <ErrorMsg> Invalido </ErrorMsg>}
                   </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> CUIT/CUIL </TableDataL>
+                  <TableDataR><Input name='cuitCuilNL' type='number' min='0' step='any' ref={register({ required: true })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> DNI </TableDataL>
+                  <TableDataR>
+                    <Input name='dni' type='number' step='any' ref={register({ required: true, min: 0 })} />
+                    {errors.dni && <ErrorMsg> Invalido </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Nombre de Usuario </TableDataL>
+                  <TableDataR><Input name='usernameNL' type='text' ref={register({ required: true })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Domicilio </TableDataL>
+                  <TableDataR><Input name='addressNL' type='text' ref={register({ required: true })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Fecha de nacimiento </TableDataL>
+                  <TableDataR><Input name='birthday' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} /> {errors.birthday && <ErrorMsg> Invalido </ErrorMsg>}</TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Telefono </TableDataL>
+                  <TableDataR><Input name='phoneNL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Celular </TableDataL>
+                  <TableDataR><Input name='mobileNL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Cuenta Corriente </TableDataL>
+                  <TableDataR><Input name='checkingNL' type='checkbox' ref={register()} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Descubierto </TableDataL>
+                  <TableDataR><Input name='overdraftNL' /></TableDataR>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
@@ -73,42 +108,53 @@ const RegisterClient = props => {
               </tbody>
             </Table>
           </form>}
-        {!ownedAcc &&
-          <form onSubmit={handleSubmit(onSubmitNotOwned)}>
+        {isLegal &&
+          <form onSubmit={handleSubmit(onSubmitLegal)}>
             <Table>
-              <Caption> Transferencia hacia otra cuenta </Caption>
+              <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
-                  <TableDataL> Cuenta Origen </TableDataL>
-                  <TableDataR><Input /></TableDataR>
+                  <TableDataL> Razon Social </TableDataL>
+                  <TableDataR><Input name='companyName' type='text' ref={register({ required: true })} /></TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> CBU </TableDataL>
+                  <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cbu' ref={register({ required: true })} />
-                    {errors.cbu && <span> Debe ingresar un cbu </span>}
+                    <Input name='cuitCuilL' type='number' step='any' ref={register({ required: true, min: 0 })} />
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Referencia </TableDataL>
+                  <TableDataL> Nombre de usuario </TableDataL>
                   <TableDataR>
-                    <Input name='reference' ref={register({ required: true })} />
-                    {errors.reference && <span> Debe ingresar una referencia </span>}
+                    <Input name='usernameL' type='text' ref={register({ required: true })} />
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Importe </TableDataL>
+                  <TableDataL> Domicilio </TableDataL>
                   <TableDataR>
-                    <Input name='amountToNotOwned' type='number' min='0' step='any' ref={register({ required: true })} />
+                    <Input name='addressL' type='text' ref={register({ required: true })} />
                     {errors.amountToNotOwned && <span> Debe ingresar un monto </span>}
                   </TableDataR>
                 </tr>
                 <tr>
+                  <TableDataL> Telefono </TableDataL>
+                  <TableDataR><Input name='phoneL' type='number' step='any' ref={register({ required: true, min: 0 })} /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Cuenta corriente </TableDataL>
+                  <TableDataR><Input name='checkingL' type='checkbox' /></TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Descubierto </TableDataL>
+                  <TableDataR><Input name='overdraftL' /></TableDataR>
+                </tr>
+                <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
             </Table>
           </form>}
+        <FixBar />
       </Content>
       <Footer id='footer' />
     </GlobalContainer>

@@ -18,5 +18,6 @@ export default styled.div`
   ${(props) => props.collapse && media[props.collapse]('background: #f5f5f7;')};
   min-height: 95vh;
   overflow: auto;
+  overflow-y: hidden;
 
 `
