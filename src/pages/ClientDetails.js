@@ -1,0 +1,209 @@
+import React, { useState } from 'react'
+import Content from '../components/Content'
+import Footer from '../components/Footer'
+import GlobalContainer from '../components/GlobalContainer'
+import Header from '../components/Header'
+import { useForm } from 'react-hook-form'
+import styled from 'styled-components'
+import ErrorMsg from '../components/ErrorMsg'
+import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
+
+const Input = styled.input`
+  padding: 10px;
+  margin: 10px;
+  width: 20vw;
+`
+
+const FixBar = styled.div`
+ height: 10vh;
+  width: 100%;
+`
+const data = {
+  fullname: 'Oliver Klein',
+  cuitCuil: '20-37054103-2',
+  dni: '37054103',
+  username: 'oklein',
+  address: 'Alto Palermo',
+  birthday: '1993-07-31',
+  phone: '0234615417139',
+  mobile: '5492346417139',
+  checking: true,
+  overdraft: 1000,
+  companyName: 'Alexander',
+  cuitCuilLegalEntity: '30-30123123-0',
+  usernameLegalEntity: 'alex01',
+  addressLegalEntity: 'Av Siempreviva',
+  phoneLegalEntity: '0234615417139',
+  checkingLegalEntity: false,
+  overdraftLegalEntity: 0
+}
+
+const ClientDetails = ({ isLegal = true }) => {
+  const { register, handleSubmit, errors } = useForm()
+
+  const onSubmitNotLegal = (data) => {
+    setIsDisabled(true)
+    setIsSaveDisabled(true)
+    console.log(data)
+  }
+  const onSubmitLegal = (data) => {
+    console.log(data)
+  }
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [isSaveDisabled, setIsSaveDisabled] = useState(true)
+
+  return (
+    <GlobalContainer id='globalContainer'>
+      <Header id='header' />
+      <Content id='content' direction='column'>
+        {!isLegal &&
+          <form onSubmit={handleSubmit(onSubmitNotLegal)} onChange={() => setIsSaveDisabled(false)}>
+            <Table>
+              <Caption> Datos de la persona </Caption>
+              <tbody>
+                <tr>
+                  <TableDataL> Nombre y Apellido </TableDataL>
+                  <TableDataR>
+                    <Input name='fullname' disabled={isDisabled} defaultValue={data.fullname} type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    {errors.fullname && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> CUIT/CUIL </TableDataL>
+                  <TableDataR>
+                    <Input name='cuitCuil' disabled={isDisabled} defaultValue={data.cuitCuil} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    {errors.cuitCuil && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> DNI </TableDataL>
+                  <TableDataR>
+                    <Input name='dni' disabled={isDisabled} defaultValue={data.dni} type='text' ref={register({ required: true, pattern: /^\d{8}(?:[-\s]\d{4})?$/ })} />
+                    {errors.dni && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Nombre de Usuario </TableDataL>
+                  <TableDataR>
+                    <Input name='username' disabled={isDisabled} defaultValue={data.username} type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.username && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Domicilio </TableDataL>
+                  <TableDataR>
+                    <Input name='address' disabled={isDisabled} defaultValue={data.address} type='text' ref={register({ required: true, max: 255 })} />
+                    {errors.address && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Fecha de nacimiento </TableDataL>
+                  <TableDataR>
+                    <Input name='birthday' disabled={isDisabled} defaultValue={data.birthday} type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                    {errors.birthday && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Telefono </TableDataL>
+                  <TableDataR>
+                    <Input name='phone' disabled={isDisabled} defaultValue={data.phone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.phone && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Celular </TableDataL>
+                  <TableDataR>
+                    <Input name='mobile' disabled={isDisabled} defaultValue={data.mobile} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.mobile && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Cuenta Corriente </TableDataL>
+                  <TableDataR>
+                    <Input name='checking' defaultValue={data.checking} type='checkbox' ref={register()} />
+                    {errors.checking && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Descubierto </TableDataL>
+                  <TableDataR>
+                    <Input name='overdraft' defaultValue={data.overdraft} type='number' step='any' ref={register()} />
+                    {errors.overdraft && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL><TButton type='button' onClick={() => setIsDisabled(false)}> Modificar </TButton></TableDataL>
+                  <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>
+                </tr>
+              </tbody>
+            </Table>
+          </form>}
+        {isLegal &&
+          <form onSubmit={handleSubmit(onSubmitLegal)} onChange={() => setIsSaveDisabled(false)}>
+            <Table>
+              <Caption> Registrar cliente </Caption>
+              <tbody>
+                <tr>
+                  <TableDataL> Razon Social </TableDataL>
+                  <TableDataR>
+                    <Input name='companyName' disabled={isDisabled} defaultValue={data.companyName} type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.companyName && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> CUIT/CUIL </TableDataL>
+                  <TableDataR>
+                    <Input name='cuitCuilLegalEntity' disabled={isDisabled} defaultValue={data.cuitCuilLegalEntity} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    {errors.cuitCuilLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Nombre de usuario </TableDataL>
+                  <TableDataR>
+                    <Input name='usernameLegalEntity' disabled={isDisabled} defaultValue={data.usernameLegalEntity} type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.usernameLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Domicilio </TableDataL>
+                  <TableDataR>
+                    <Input name='addressLegalEntity' disabled={isDisabled} defaultValue={data.addressLegalEntity} type='text' ref={register({ required: true, max: 255 })} />
+                    {errors.addressLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Telefono </TableDataL>
+                  <TableDataR>
+                    <Input name='phoneLegalEntity' disabled={isDisabled} defaultValue={data.phoneLegalEntity} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.phoneLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Cuenta corriente </TableDataL>
+                  <TableDataR>
+                    <Input name='checkingLegalEntity' disabled={isDisabled} defaultValue={data.checkingLegalEntity} type='checkbox' ref={register()} />
+                    {errors.checkingLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Descubierto </TableDataL>
+                  <TableDataR>
+                    <Input name='overdraftLegalEntity' disabled={isDisabled} defaultValue={data.overdraftLegalEntity} type='number' step='any' ref={register()} />
+                    {errors.overdraftLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL><TButton type='button' onClick={() => setIsDisabled(false)}> Modificar </TButton></TableDataL>
+                  <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>
+                </tr>
+              </tbody>
+            </Table>
+          </form>}
+        <FixBar />
+      </Content>
+      <Footer id='footer' />
+    </GlobalContainer>
+  )
+}
+
+export default ClientDetails
