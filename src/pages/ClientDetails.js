@@ -27,7 +27,7 @@ const data = {
   birthday: '1993-07-31',
   phone: '0234615417139',
   mobile: '5492346417139',
-  checking: true,
+  checking: '10101010',
   overdraft: 1000,
   companyName: 'Alexander',
   cuitCuilLegalEntity: '30-30123123-0',
@@ -38,16 +38,19 @@ const data = {
   overdraftLegalEntity: 0
 }
 
-const ClientDetails = ({ isLegal = true }) => {
+const ClientDetails = ({ isLegal = false }) => {
   const { register, handleSubmit, errors } = useForm()
 
-  const onSubmitNotLegal = (data) => {
+  const onSubmitNotLegal = (formData) => {
     setIsDisabled(true)
     setIsSaveDisabled(true)
-    console.log(data)
+    console.log(formData)
   }
-  const onSubmitLegal = (data) => {
-    console.log(data)
+  const onSubmitLegal = (formData) => {
+    setIsDisabled(true)
+    setIsSaveDisabled(true)
+    console.log(formData)
+    console.log(data.usernameLegalEntity)
   }
   const [isDisabled, setIsDisabled] = useState(true)
   const [isSaveDisabled, setIsSaveDisabled] = useState(true)
@@ -59,7 +62,7 @@ const ClientDetails = ({ isLegal = true }) => {
         {!isLegal &&
           <form onSubmit={handleSubmit(onSubmitNotLegal)} onChange={() => setIsSaveDisabled(false)}>
             <Table>
-              <Caption> Datos de la persona </Caption>
+              <Caption> Datos cliente </Caption>
               <tbody>
                 <tr>
                   <TableDataL> Nombre y Apellido </TableDataL>
@@ -71,14 +74,14 @@ const ClientDetails = ({ isLegal = true }) => {
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cuitCuil' disabled={isDisabled} defaultValue={data.cuitCuil} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    <Input name='cuitCuil' disabled defaultValue={data.cuitCuil} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
                     {errors.cuitCuil && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> DNI </TableDataL>
                   <TableDataR>
-                    <Input name='dni' disabled={isDisabled} defaultValue={data.dni} type='text' ref={register({ required: true, pattern: /^\d{8}(?:[-\s]\d{4})?$/ })} />
+                    <Input name='dni' disabled defaultValue={data.dni} type='text' ref={register({ required: true, pattern: /^\d{8}(?:[-\s]\d{4})?$/ })} />
                     {errors.dni && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -120,20 +123,20 @@ const ClientDetails = ({ isLegal = true }) => {
                 <tr>
                   <TableDataL> Cuenta Corriente </TableDataL>
                   <TableDataR>
-                    <Input name='checking' defaultValue={data.checking} type='checkbox' ref={register()} />
+                    <Input name='checking' disabled defaultValue={data.checking} type='text' />
                     {errors.checking && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
                   <TableDataR>
-                    <Input name='overdraft' defaultValue={data.overdraft} type='number' step='any' ref={register()} />
-                    {errors.overdraft && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='overdraft' disabled={isDisabled} defaultValue={data.overdraft} type='number' step='any' ref={register()} />
+                    {errors.mobile && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL><TButton type='button' onClick={() => setIsDisabled(false)}> Modificar </TButton></TableDataL>
-                  <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>
+                  <TableDataR><TButton type='button' onClick={() => setIsDisabled(!isDisabled)}> Modificar </TButton></TableDataR>
+                  {!isDisabled && <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>}
                 </tr>
               </tbody>
             </Table>
@@ -141,7 +144,7 @@ const ClientDetails = ({ isLegal = true }) => {
         {isLegal &&
           <form onSubmit={handleSubmit(onSubmitLegal)} onChange={() => setIsSaveDisabled(false)}>
             <Table>
-              <Caption> Registrar cliente </Caption>
+              <Caption> Datos cliente </Caption>
               <tbody>
                 <tr>
                   <TableDataL> Razon Social </TableDataL>
@@ -153,7 +156,7 @@ const ClientDetails = ({ isLegal = true }) => {
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cuitCuilLegalEntity' disabled={isDisabled} defaultValue={data.cuitCuilLegalEntity} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    <Input name='cuitCuilLegalEntity' disabled defaultValue={data.cuitCuilLegalEntity} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
                     {errors.cuitCuilLegalEntity && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -179,26 +182,20 @@ const ClientDetails = ({ isLegal = true }) => {
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Cuenta corriente </TableDataL>
-                  <TableDataR>
-                    <Input name='checkingLegalEntity' disabled={isDisabled} defaultValue={data.checkingLegalEntity} type='checkbox' ref={register()} />
-                    {errors.checkingLegalEntity && <ErrorMsg> x </ErrorMsg>}
-                  </TableDataR>
-                </tr>
-                <tr>
-                  <TableDataL> Descubierto </TableDataL>
-                  <TableDataR>
-                    <Input name='overdraftLegalEntity' disabled={isDisabled} defaultValue={data.overdraftLegalEntity} type='number' step='any' ref={register()} />
-                    {errors.overdraftLegalEntity && <ErrorMsg> x </ErrorMsg>}
-                  </TableDataR>
-                </tr>
-                <tr>
                   <TableDataL><TButton type='button' onClick={() => setIsDisabled(false)}> Modificar </TButton></TableDataL>
                   <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>
                 </tr>
               </tbody>
             </Table>
           </form>}
+        <Table>
+          <tbody>
+            {data.checking && <TableDataL><TButton type='button'> Cerrar cuenta corriente </TButton></TableDataL>}
+            {!data.checking && <TableDataL><TButton type='button'> Abrir Cuenta </TButton></TableDataL>}
+            <TableDataL><TButton type='button'> Deshabilitar cliente </TButton></TableDataL>
+            <TableDataL><TButton type='button'> Reiniciar contraseña </TButton></TableDataL>
+          </tbody>
+        </Table>
         <FixBar />
       </Content>
       <Footer id='footer' />
