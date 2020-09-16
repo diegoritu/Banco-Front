@@ -40,7 +40,7 @@ const ServicePay = () => {
               <tr>
                 <TableDataL><p> Identificador: </p></TableDataL>
                 <TableDataL>
-                  <Input name='amount' type='text' ref={register({ required: true })} />
+                  <Input name='identifier' type='text' ref={register({ required: true })} />
                   {errors.amount && <ErrorMsg> Debe ingresar un monto </ErrorMsg>}
                 </TableDataL>
                 <TableDataL>

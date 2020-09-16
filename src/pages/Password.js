@@ -2,6 +2,7 @@ import React from 'react'
 import Column from '../components/Column'
 import Content from '../components/Content'
 import GlobalContainer from '../components/GlobalContainer'
+import PasswordForm from '../components/PasswordForm'
 import Welcome from '../components/Welcome'
 
 const Password = () => {
@@ -11,6 +12,7 @@ const Password = () => {
         <Column size={8} collapse='xs' />
         <Column size={5}>
           <Welcome />
+          <PasswordForm />
         </Column>
       </Content>
     </GlobalContainer>
