@@ -39,6 +39,7 @@ const LoginForm = props => {
   const onSubmit = (data) => {
     console.log(data)
     auth.login(() => { props.history.push('/home') })
+    auth.loginAdmin(() => { props.history.push('/adminHome') })
   }
 
   return (

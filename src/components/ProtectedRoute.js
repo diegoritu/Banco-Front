@@ -7,7 +7,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (auth.isAuthenticated()) {
+        if (auth.isAuthenticated() || auth.isAuthenticatedAdmin()) {
           return <Component {...props} />
         } else {
           return (

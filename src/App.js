@@ -16,6 +16,7 @@ import AdminHome from './pages/AdminHome'
 import SearchClient from './pages/SearchClient'
 import RegisterClient from './pages/RegisterClient'
 import ClientDetails from './pages/ClientDetails'
+import ServicePay from './pages/ServicePay'
 
 const theme = {
   font: 'Calibri',
@@ -42,6 +43,7 @@ function App () {
         <ProtectedRoute exact path='/searchClient' component={SearchClient} />
         <ProtectedRoute exact path='/registerClient' component={RegisterClient} />
         <ProtectedRoute exact path='/clientDetails' component={ClientDetails} />
+        <ProtectedRoute exact path='/servicePay' component={ServicePay} />
         <Route path='*' component={NotFound} />
       </Switch>
     </ThemeProvider>
