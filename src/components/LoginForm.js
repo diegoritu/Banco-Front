@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
-import auth from './Auth'
 import { withRouter } from 'react-router-dom'
 import ErrorMsg from './ErrorMsg'
+import { userService } from '../services/userService'
 
 const Form = styled.form`
   display: flex;
@@ -35,11 +35,22 @@ margin-top: 10px;
 
 const LoginForm = props => {
   const { register, handleSubmit, errors } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = (data) => {
     console.log(data)
-    auth.login(() => { props.history.push('/home') })
-    auth.loginAdmin(() => { props.history.push('/adminHome') })
+    setIsLoading(true)
+    userService.login(data)
+      .then(
+        response => {
+          const { from } = props.location.state || { from: { pathname: response } }
+          props.history.push(from)
+        }
+      )
+      .catch(error => {
+        console.log(error)
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -51,6 +62,7 @@ const LoginForm = props => {
       <SubmitButton
         type='submit'
         value='Ingresar'
+        disabled={isLoading}
       />
     </Form>
   )
