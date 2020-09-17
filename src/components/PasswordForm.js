@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
-import auth from './Auth'
 import { withRouter } from 'react-router-dom'
 import ErrorMsg from './ErrorMsg'
 
@@ -43,8 +42,6 @@ const PasswordForm = props => {
 
   const onSubmit = (data) => {
     console.log(data)
-    auth.login(() => { props.history.push('/home') })
-    auth.loginAdmin(() => { props.history.push('/adminHome') })
   }
 
   return (

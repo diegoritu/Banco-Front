@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import auth from './Auth'
 import { withRouter } from 'react-router-dom'
+import { userService } from '../services/userService'
 
 const DdWrapper = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const Logout = (props) => {
   const toggle = () => setOpen(!open)
 
   const handleOnClick = () => {
-    auth.logout(() => { props.history.push('/') })
+    userService.logout()
   }
 
   return (
