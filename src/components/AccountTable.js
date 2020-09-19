@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { accountService } from '../services/accountService'
+import { useHistory } from 'react-router-dom';
 
 const Table = styled.table`
   width:60%;
@@ -13,7 +15,7 @@ const Table = styled.table`
 `
 
 const TableRow = styled.tr`
-  background: grey;
+  background: #3a74b0;
   
 `
 
@@ -30,37 +32,73 @@ const TableHeader = styled.th`
   border: 1px solid black;
   border-collapse: collapse;
   padding: 8px;
+  background: #000000;
+  color: white;
 `
 
 const TButton = styled.button`
   width: 100%;
   height: 100%;
-  
+  background-color: #000;
+  color: white;
+  padding: 6px;
+  border: none;
+  :hover, :active {
+    background-color: #646464;
+  }
 `
 
-const AccountTable = (data) => {
-  return (
-    <Table>
-      <tbody>
-        <TableRow>
-          <TableHeader> Tipo </TableHeader>
-          <TableHeader> Numero </TableHeader>
-          <TableHeader> Saldo </TableHeader>
-        </TableRow>
-        <TableRow>
-          <TableData>{data.type ? data.type : 'Cuenta'}</TableData>
-          <TableData>{data.num ? data.num : '0'}</TableData>
-          <TableData>{data.balance ? data.balance : '0'}</TableData>
-        </TableRow>
-        <TableRow>
-          <TableData><TButton> Transferir </TButton></TableData>
-          <TableData><TButton> CBU </TButton></TableData>
-          <TableData><TButton> Movimientos </TButton></TableData>
-        </TableRow>
-      </tbody>
-    </Table>
+function numberWithStyle (x) {
+  var number = (x.toString().replace('.', ',').replace(' ', ''))
+  var resultNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return (number % 1 == 0 ? resultNumber + '.00' : resultNumber)
+}
 
-  )
+const getAccount = (accountType) => {
+  return accountService.account(accountType)
+}
+
+
+const AccountTable = (props) => {
+  const history = useHistory()
+  const navigateToTransactions = () => history.push('/transactions')
+  const navigateToTransfer = () => history.push('/transfer')
+  const navigateToCBU = () => history.push('/cbu')
+
+
+  const [data, setAccount] = React.useState([])
+  React.useEffect(() => {
+    getAccount(props.accountType).then(data => setAccount(data))
+  }, [])
+  console.log()
+  if(Object.keys(data).length !== 0){
+    return (
+      <Table>
+        <tbody>
+          <TableRow>
+            <TableHeader> Tipo </TableHeader>
+            <TableHeader> Numero </TableHeader>
+            <TableHeader> Saldo </TableHeader>
+          </TableRow>
+          <TableRow>
+            <TableData>{data.accountType == 'CHECKING' ? 'Cuenta corriente' : 'Caja de ahorro'}</TableData>
+            <TableData>{data.accountNumber}</TableData>
+            <TableData>{'$ ' + numberWithStyle(data.balance)}</TableData>
+          </TableRow>
+          <TableRow>
+            <TableData><TButton onClick={navigateToTransfer} type="button"> Transferir </TButton></TableData>
+            <TableData><TButton onClick={navigateToCBU} type="button"> CBU </TButton></TableData>
+            <TableData><TButton onClick={navigateToTransactions} type="button"> Movimientos </TButton></TableData>
+          </TableRow>
+        </tbody>
+      </Table>
+  
+    )
+  }    
+  else {
+    return('')
+  }
+
 }
 
 export default AccountTable

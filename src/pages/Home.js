@@ -6,17 +6,24 @@ import Header from '../components/Header'
 import AccountTable from '../components/AccountTable'
 import Text from '../components/Text'
 import Button from '../components/Button'
+import { useHistory } from 'react-router-dom';
+
+
+
 
 const Home = () => {
+  const history = useHistory()
+  const navigateToServicePay = () => history.push('/servicePay')
+
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
       <Content id='content' direction='column'>
         <Text> Acciones </Text>
-        <Button> Pagar Servicios </Button>
+        <Button onClick={navigateToServicePay} type="button"> Pagar Servicios </Button>
         <Text> Mis Cuentas </Text>
-        <AccountTable />
-        <AccountTable />
+        <AccountTable accountType={'SAVINGS'} />
+        <AccountTable accountType={'CHECKING'} />
       </Content>
       <Footer id='footer' />
     </GlobalContainer>

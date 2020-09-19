@@ -92,6 +92,7 @@ const Logout = (props) => {
 
   const handleOnClick = () => {
     userService.logout()
+    window.location = '/';
   }
 
   return (
@@ -99,7 +100,7 @@ const Logout = (props) => {
       <DdHeader tabIndex={0} role='button' onKeyPress={() => toggle(!open)} onClick={() => toggle(!open)}>
         <DdHeaderTitle>
           <DdHeaderTitleBold>
-            Juan
+            {'Bienvenido/a ' + sessionStorage.getItem('userName')}
           </DdHeaderTitleBold>
         </DdHeaderTitle>
         <DdHeaderAction>

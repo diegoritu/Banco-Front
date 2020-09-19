@@ -24,7 +24,7 @@ const Header = () => {
       <HeaderTitle>
         KRRL Bank
       </HeaderTitle>
-      <Logout title='juan' />
+      <Logout title={'Bienvenido/a ' + sessionStorage.getItem('userName')} />
     </HeaderWrapper>
   )
 }

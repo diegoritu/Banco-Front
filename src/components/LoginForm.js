@@ -38,13 +38,19 @@ const LoginForm = props => {
   const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
     setIsLoading(true)
     userService.login(data)
       .then(
         response => {
-          const { from } = props.location.state || { from: { pathname: response } }
-          props.history.push(from)
+          const { from } = props.location.state || { from: { pathname: response } }          
+          if (from.pathname !== 'Error') {
+            props.history.push(from)
+          }
+          else
+          {
+            //SETEO DE MENSAJE DE ERROR
+            window.location.reload();
+          }
         }
       )
       .catch(error => {

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { withRouter } from 'react-router-dom'
 import ErrorMsg from './ErrorMsg'
+import { userService } from '../services/userService'
+import { useState } from 'react'
 
 const Form = styled.form`
   display: flex;
@@ -39,9 +41,29 @@ const Message = styled.p`
 
 const PasswordForm = props => {
   const { register, handleSubmit, errors } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
+    setIsLoading(true)
+    if(data.password !== data.repeatPassword) {
+
+      //ERROR CONTRASEÑAS DIFERENTES. FALTA VERIFICAR QUE NO SE PUEDA ACCEDER A ESTA PANTALLA A MENOS QUE VENGAS DESDE EL LOGIN
+    }
+    else {
+      userService.changePassword(data)
+        .then(
+          response => {
+            const { from } = props.location.state || { from: { pathname: response } }          
+            console.log(from)  
+            props.history.push(from)
+          }
+        )
+        .catch(error => {
+          console.log(error)
+          setIsLoading(false)
+        })
+    }
+
   }
 
   return (
@@ -51,7 +73,7 @@ const PasswordForm = props => {
       {errors.username && <ErrorMsg> x </ErrorMsg>}
       <Input name='repeatPassword' type='password' placeholder='Repita la contraseña' ref={register({ required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ })} />
       {errors.repeatPassword && <ErrorMsg> x </ErrorMsg>}
-      <SubmitButton type='submit' value='Confirmar' />
+      <SubmitButton type='submit' value='Confirmar' disabled={isLoading} />
     </Form>
   )
 }
