@@ -8,7 +8,8 @@ const urlWebService = {
   getPhysical: urlAPI + '/user/physical',
   getLegal: urlAPI + '/user/legal',
   getAdministrative: urlAPI + '/user/administrative',
-
+  transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
+  transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts'
 }
 
 export default urlWebService
