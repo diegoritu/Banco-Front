@@ -69,9 +69,9 @@ const PasswordForm = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Message> Su contraseña ha vencido, a continuacion ingrese una nueva:  </Message>
-      <Input name='password' type='password' placeholder='Nueva contraseña' ref={register({ required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ })} />
+      <Input name='password' type='password' placeholder='Nueva contraseña' ref={register({ required: true })} />
       {errors.username && <ErrorMsg> x </ErrorMsg>}
-      <Input name='repeatPassword' type='password' placeholder='Repita la contraseña' ref={register({ required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ })} />
+      <Input name='repeatPassword' type='password' placeholder='Repita la contraseña' ref={register({ required: true})} />
       {errors.repeatPassword && <ErrorMsg> x </ErrorMsg>}
       <SubmitButton type='submit' value='Confirmar' disabled={isLoading} />
     </Form>
