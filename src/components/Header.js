@@ -21,7 +21,7 @@ const HeaderTitle = styled.span`
 
 const Header = () => {
   const history = useHistory()
-  const navigateToHome = () => (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? history.push('/homeAdmin') : history.push('/home'))
+  const navigateToHome = () => (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? history.push('/adminHome') : history.push('/home'))
 
   return (
     <HeaderWrapper>
