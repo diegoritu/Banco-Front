@@ -66,4 +66,58 @@ const transferBetweenOwnAccounts = (data, originAcc, destinationAcc) => {
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
-export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts }
+const getTransactions = (data) =>{
+  const requestOptions = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    }
+  }
+  if(data === "CHECKING"){
+    return fetch(urlWebService.getMovements + '?accountNumber=' + window.sessionStorage.getItem('userChecking'), requestOptions)
+      .then(response => 
+        response.json().catch(err => {
+          console.log('Looks like there was a problem. Status Code: ' + response.status)
+          return {}
+        })
+        .then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        if (res.status === 404) {
+          return {}
+        }
+        else {
+          return res.data
+        }
+    }))
+      .catch(error => console.log('Fetch Error :-S', error))
+  } 
+  else{
+    return fetch(urlWebService.getMovements + '?accountNumber=' + window.sessionStorage.getItem('userSavings'), requestOptions)
+      .then(response => 
+        response.json().catch(err => {
+          console.log('Looks like there was a problem. Status Code: ' + response.status)
+          return {}
+        })
+        .then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        if (res.status === 404) {
+          return {}
+        }
+        else {
+          return res.data
+        }
+    }))
+      .catch(error => console.log('Fetch Error :-S', error))
+  }
+}
+
+export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions }

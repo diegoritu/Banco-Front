@@ -7,6 +7,8 @@ import Text from '../components/Text'
 import Details from '../components/Details'
 
 const TransactionDetails = (data) => {
+
+  console.log(data.history.location.state)
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />

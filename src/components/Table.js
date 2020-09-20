@@ -58,14 +58,14 @@ font-size: 14pt;
 
 const TableHeader = styled.th`
   border-collapse: collapse;
-  color: #000;
+  color: #FFF;
   width: 20%;
   text-align: center;
   padding: 8px;
   height: 5vh;
 `
 const TableHeaderRow = styled.tr`
-  background: grey;
+  background: #000;
 `
 
 export {

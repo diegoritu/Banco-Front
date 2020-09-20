@@ -71,7 +71,9 @@ const Transfer = props => {
   const onSubmitOwned = (data) => {
     var accountDestination = ''
     var accountOrigin = ''
-
+    console.log(originAcc)
+    console.log(destinationAcc)
+  
     items.forEach(element => {
       if(element.value === originAcc)
       {

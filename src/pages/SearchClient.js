@@ -8,8 +8,9 @@ import { useForm } from 'react-hook-form'
 import Dropdown from '../components/Dropdown'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
+import Button from '../components/Button'
 
-const Button = styled.button`
+const TButton = styled.button`
   width: 50%;
   padding: 10px;
   margin: auto;
@@ -60,8 +61,8 @@ const SearchClient = () => {
               <tr>
                 <TableDataL> Persona : </TableDataL>
                 <TableDataL>
-                  <Button> Fisica </Button>
-                  <Button> Juridica </Button>
+                  <TButton> Fisica </TButton>
+                  <TButton> Juridica </TButton>
                 </TableDataL>
               </tr>
               <tr>
