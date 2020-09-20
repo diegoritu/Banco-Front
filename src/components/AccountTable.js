@@ -76,7 +76,6 @@ const AccountTable = (props) => {
   React.useEffect(() => {
     getAccount(props.accountType).then(data => setAccount(data))
   }, [])
-  console.log()
   if(Object.keys(data).length !== 0){
     return (
       <Table>
