@@ -51,7 +51,7 @@ const TButton = styled.button`
 function numberWithStyle (x) {
   var number = (x.toString().replace('.', ',').replace(' ', ''))
   var resultNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-  return (number % 1 == 0 ? resultNumber + '.00' : resultNumber)
+  return (number % 1 === 0 ? resultNumber + '.00' : resultNumber)
 }
 
 const getAccount = (accountType) => {
@@ -61,9 +61,15 @@ const getAccount = (accountType) => {
 
 const AccountTable = (props) => {
   const history = useHistory()
-  const navigateToTransactions = () => history.push('/transactions')
+  const navigateToTransactions = () => history.push({
+    pathname: '/transactions',
+    state: { account: data.accountNumber }
+  })
   const navigateToTransfer = () => history.push('/transfer')
-  const navigateToCBU = () => history.push('/cbu')
+  const navigateToCBU = () => history.push({
+    pathname: '/cbu',
+    state: { account: data.accountNumber }
+  })
 
 
   const [data, setAccount] = React.useState([])
@@ -81,7 +87,7 @@ const AccountTable = (props) => {
             <TableHeader> Saldo </TableHeader>
           </TableRow>
           <TableRow>
-            <TableData>{data.accountType == 'CHECKING' ? 'Cuenta corriente' : 'Caja de ahorro'}</TableData>
+            <TableData>{data.accountType === 'CHECKING' ? 'Cuenta corriente' : 'Caja de ahorro'}</TableData>
             <TableData>{data.accountNumber}</TableData>
             <TableData>{'$ ' + numberWithStyle(data.balance)}</TableData>
           </TableRow>
