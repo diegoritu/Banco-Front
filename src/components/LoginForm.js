@@ -61,9 +61,9 @@ const LoginForm = props => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Input name='username' type='text' placeholder='Usuario' ref={register({ required: true, minLength: 3, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+      <Input name='username' type='text' placeholder='Usuario' ref={register({ required: true})} />
       {errors.username && <ErrorMsg> Usuario invalido </ErrorMsg>}
-      <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/ })} />
+      <Input name='password' type='password' placeholder='Contraseña' ref={register({ required: true})} />
       {errors.password && <ErrorMsg> Contraseña invalida </ErrorMsg>}
       <SubmitButton
         type='submit'
