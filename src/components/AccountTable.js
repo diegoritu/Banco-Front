@@ -49,9 +49,10 @@ const TButton = styled.button`
 `
 
 function numberWithStyle (x) {
+  x = x.toFixed(2)
   var number = (x.toString().replace('.', ',').replace(' ', ''))
   var resultNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-  return (number % 1 === 0 ? resultNumber + '.00' : resultNumber)
+  return resultNumber
 }
 
 const getAccount = (accountType) => {

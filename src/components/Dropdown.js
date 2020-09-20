@@ -96,15 +96,21 @@ const Dropdown = ({ title = 'Select', items = [], updateParent }) => {
     if (!selection.some(current => current.id === item.id)) {
       setSelection([item])
       setDropTitle(item.value)
+      toggle(!open)
       updateParent(item.value)
     } else {
-      let selectionAfterRemoval = selection
+      /*let selectionAfterRemoval = selection
       selectionAfterRemoval = selectionAfterRemoval.filter(
         current => current.id !== item.id
       )
       setSelection([...selectionAfterRemoval])
       setDropTitle(title)
-      updateParent('')
+      updateParent('')*/
+      setSelection([item])
+      setDropTitle(item.value)
+      toggle(!open)
+      updateParent(item.value)
+
     }
   }
 

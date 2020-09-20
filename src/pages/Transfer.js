@@ -8,18 +8,8 @@ import { useForm } from 'react-hook-form'
 import Text from '../components/Text'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
-import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
-
-const items = [
-  {
-    id: 1,
-    value: 'foo'
-  },
-  {
-    id: 2,
-    value: 'bar'
-  }
-]
+import { Table, TButton, TableDataL, Caption } from '../components/Table'
+import { transactionService } from '../services/transactionService'
 
 const Input = styled.input`
   padding: 10px;    
@@ -54,39 +44,124 @@ const TableDataRw = styled.td`
 `
 
 const Transfer = props => {
+  
+  var ownedAccInitialState = true
+
+  if(sessionStorage.getItem('userSavings') === 'null' || sessionStorage.getItem('userChecking') === 'null'){
+    ownedAccInitialState = false
+  }
+  
   const { register, handleSubmit, errors } = useForm()
   const [originAcc, setOriginAcc] = useState('')
   const [destinationAcc, setDestinationAcc] = useState('')
   const [originAccToNotOwned, setOriginAccToNotOwned] = useState('')
-  const [ownedAcc, setOwnedAcc] = useState(true)
+  const [ownedAcc, setOwnedAcc] = useState(ownedAccInitialState)
+
+  const items = []
+  
+  if(sessionStorage.getItem('userSavings') !== 'null'){
+    items.push({id: sessionStorage.getItem('userSavings'), value: 'CA ' + sessionStorage.getItem('userSavings')})
+  }
+  if(sessionStorage.getItem('userChecking') !== 'null'){
+    items.push({id: sessionStorage.getItem('userChecking'), value: 'CC ' + sessionStorage.getItem('userChecking')})
+  }
+
+
 
   const onSubmitOwned = (data) => {
-    console.log(data)
-    console.log(originAcc)
-    console.log(destinationAcc)
+    var accountDestination = ''
+    var accountOrigin = ''
+
+    items.forEach(element => {
+      if(element.value === originAcc)
+      {
+        accountOrigin = element.id
+      }
+      if(element.value === destinationAcc)
+      {
+        accountDestination = element.id
+      }      
+    })
+    transactionService.transferBetweenOwnAccounts(data, accountOrigin, accountDestination)
+      .then(
+        response => {
+          const { from } = props.location.state || { from: { pathname: response } }          
+          if (from.pathname !== 'accountNotFound' && from.pathname !== 'operationCantBePerformed') {
+            props.history.push('/home')
+          }
+          else
+          {
+            if(from.pathname === 'accountNotFound'){
+              //MENSAJE ERROR DE CUENTA NO ENCONTRADA
+              console.log(from.pathname)
+            }
+            else if(from.pathname === 'operationCantBePerformed'){
+              //MENSAJE ERROR DE OPERACION IMPOSIBLE DE REALIZAR
+              console.log(from.pathname)
+            }
+          }
+        }
+      )
+      .catch(error => {
+        console.log(error)
+      })
   }
   const onSubmitNotOwned = (data) => {
-    console.log(data)
-    console.log(originAccToNotOwned)
+    var accountOrigin = ''
+    items.forEach(element => {
+      if(element.value === originAccToNotOwned)
+      {
+        accountOrigin = element.id
+      }
+    })
+
+    transactionService.transferToOtherAccounts(data, accountOrigin)
+      .then(
+        response => {
+          const { from } = props.location.state || { from: { pathname: response } }          
+          if (from.pathname !== 'accountNotFound' && from.pathname !== 'operationCantBePerformed') {
+            props.history.push('/home')
+          }
+          else
+          {
+            if(from.pathname === 'accountNotFound'){
+              //MENSAJE ERROR DE CUENTA NO ENCONTRADA
+              console.log(from.pathname)
+            }
+            else if(from.pathname === 'operationCantBePerformed'){
+              //MENSAJE ERROR DE OPERACION IMPOSIBLE DE REALIZAR
+              console.log(from.pathname)
+            }
+          }
+        }
+      )
+      .catch(error => {
+        console.log(error)
+      })
   }
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
       <Content id='content' direction='column'>
-        <Text> Tipo de transferencia </Text>
-        <ToggleWrapper>
-          {ownedAcc ?
-            (<React.Fragment>
-              <ButtonSelected onClick={() => setOwnedAcc(true)}> Entre cuentas propias </ButtonSelected>
-              <Button onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </Button>
-            </React.Fragment>)
-          : 
-            (<React.Fragment>
-              <Button onClick={() => setOwnedAcc(true)}> Entre cuentas propias </Button>
-              <ButtonSelected onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </ButtonSelected>
-            </React.Fragment>)
-          }
-          </ToggleWrapper>
+        {sessionStorage.getItem('userSavings') !== 'null' && sessionStorage.getItem('userChecking') !== 'null' ?
+          <React.Fragment>
+            <Text> Tipo de transferencia </Text>
+            <ToggleWrapper>
+              {ownedAcc ?
+                (<React.Fragment>
+                  <ButtonSelected onClick={() => setOwnedAcc(true)}> Entre cuentas propias </ButtonSelected>
+                  <Button onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </Button>
+                </React.Fragment>)
+              : 
+                (<React.Fragment>
+                  <Button onClick={() => setOwnedAcc(true)}> Entre cuentas propias </Button>
+                  <ButtonSelected onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </ButtonSelected>
+                </React.Fragment>)
+              }
+              </ToggleWrapper>
+          </React.Fragment>
+        : ''
+        }
 
         {ownedAcc &&
           <form onSubmit={handleSubmit(onSubmitOwned)}>

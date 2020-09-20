@@ -44,7 +44,7 @@ const transferBetweenOwnAccounts = (data, originAcc, destinationAcc) => {
     },
     body: JSON.stringify({accountNumberFrom: originAcc, accountNumberTo: destinationAcc, amount: data.amountToOwned})
   }
-  return fetch(urlWebService.transferToOtherAccounts, requestOptions)
+  return fetch(urlWebService.transferBetweenOwnAccounts, requestOptions)
     .then(response => 
       response.json().catch(err => {
         
