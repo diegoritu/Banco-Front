@@ -22,9 +22,9 @@ const items = [
 ]
 
 const Input = styled.input`
-  padding: 10px;
-  margin: 10px;
-  width: 20vw;
+  padding: 10px;    
+  margin: 10px 0px;
+  width: 25vw;
 `
 
 const ToggleWrapper = styled.div`
@@ -36,7 +36,21 @@ const ToggleWrapper = styled.div`
 
 const Button = styled.button`
   width: 50%;
+  font-size: 15pt;
   padding: 10px;
+  background-color: #b2b2b28c;
+  
+`
+const ButtonSelected = styled.button`
+  width: 50%;
+  font-size: 15pt;
+  padding: 10px;
+  background-color: #3a74b0;
+  color: white;
+`
+
+const TableDataRw = styled.td`
+  padding: 10px 20%;
 `
 
 const Transfer = props => {
@@ -61,9 +75,18 @@ const Transfer = props => {
       <Content id='content' direction='column'>
         <Text> Tipo de transferencia </Text>
         <ToggleWrapper>
-          <Button onClick={() => setOwnedAcc(true)}> Entre cuentas propias </Button>
-          <Button onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </Button>
-        </ToggleWrapper>
+          {ownedAcc ?
+            (<React.Fragment>
+              <ButtonSelected onClick={() => setOwnedAcc(true)}> Entre cuentas propias </ButtonSelected>
+              <Button onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </Button>
+            </React.Fragment>)
+          : 
+            (<React.Fragment>
+              <Button onClick={() => setOwnedAcc(true)}> Entre cuentas propias </Button>
+              <ButtonSelected onClick={() => setOwnedAcc(false)}> Hacia otras cuentas </ButtonSelected>
+            </React.Fragment>)
+          }
+          </ToggleWrapper>
 
         {ownedAcc &&
           <form onSubmit={handleSubmit(onSubmitOwned)}>
@@ -72,18 +95,18 @@ const Transfer = props => {
               <tbody>
                 <tr>
                   <TableDataL> Desde </TableDataL>
-                  <TableDataR><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAcc(value)} /></TableDataR>
+                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAcc(value)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Hacia </TableDataL>
-                  <TableDataR><Dropdown title='Seleccione cuenta destino ' items={items} updateParent={value => setDestinationAcc(value)} /></TableDataR>
+                  <TableDataRw><Dropdown title='Seleccione cuenta destino ' items={items} updateParent={value => setDestinationAcc(value)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Importe </TableDataL>
-                  <TableDataR>
+                  <TableDataRw>
                     <Input name='amountToOwned' type='number' min='0' step='any' ref={register({ required: true, min: 0 })} />
                     {errors.amountToOwned && <ErrorMsg> Debe ingresar un monto </ErrorMsg>}
-                  </TableDataR>
+                  </TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
@@ -98,28 +121,28 @@ const Transfer = props => {
               <tbody>
                 <tr>
                   <TableDataL> Cuenta Origen </TableDataL>
-                  <TableDataR><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAccToNotOwned(value)} /></TableDataR>
+                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAccToNotOwned(value)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> CBU </TableDataL>
-                  <TableDataR>
+                  <TableDataRw>
                     <Input name='cbu' ref={register({ required: true })} />
                     {errors.cbu && <span> Debe ingresar un cbu </span>}
-                  </TableDataR>
+                  </TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Referencia </TableDataL>
-                  <TableDataR>
+                  <TableDataRw>
                     <Input name='reference' ref={register({ required: true })} />
                     {errors.reference && <span> Debe ingresar una referencia </span>}
-                  </TableDataR>
+                  </TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Importe </TableDataL>
-                  <TableDataR>
+                  <TableDataRw>
                     <Input name='amountToNotOwned' type='number' min='0' step='any' ref={register({ required: true })} />
                     {errors.amountToNotOwned && <span> Debe ingresar un monto </span>}
-                  </TableDataR>
+                  </TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>

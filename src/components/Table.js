@@ -13,10 +13,21 @@ const Table = styled.table`
   border-collapse: collapse;
 `
 const TButton = styled.button`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  margin: 0px;
+margin-top: 10px;
+margin-bottom: 10px;
+margin-left: 20%;
+margin-right: auto;
+background-color: #000;
+border: none;
+border-radius: 2px;
+font-size: 20px;
+color: #fff;
+line-height: 48px;
+padding: 0 16px;
+:active, :hover
+{
+  background: #646464;
+}
 `
 
 const TableDataR = styled.td`
@@ -39,7 +50,11 @@ const TableDataL = styled.td`
 
 const Caption = styled.caption`
 padding: 15px;
+background-color: black;
+color: white;
+font-size: 14pt;
 `
+
 
 const TableHeader = styled.th`
   border-collapse: collapse;
