@@ -4,16 +4,29 @@ import Footer from '../components/Footer'
 import GlobalContainer from '../components/GlobalContainer'
 import Header from '../components/Header'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom';
 
-const Link = styled.a`
+const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   width: 20vw;
-  height: 20vh;
+  height: auto;
   padding: 10px;
+  background-color: #3da1e794;
   
+`
+const Text = styled.p`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 20vw;
+  height: auto;
+  padding: 10px;
+  background-color: black;
+  color: white;  
 `
 
 const Wrapper = styled.div`
@@ -29,19 +42,23 @@ const Wrapper = styled.div`
 `
 
 const AdminHome = () => {
+  const history = useHistory()
+  const registerClient = () => history.push('/registerClient')
+  const searchClient = () => history.push('/searchClient')
+
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
       <Content id='content' direction='column'>
         <Wrapper>
-          <Link>
+          <ButtonBox onClick={registerClient}>
             <img src='https://www.flaticon.com/svg/static/icons/svg/554/554795.svg' alt='Employees' height='128' width='128' />
-            <p> Registrar Cliente </p>
-          </Link>
-          <Link>
+            <Text> Registrar Cliente </Text>
+          </ButtonBox>
+          <ButtonBox onClick={searchClient}>
             <img src='https://www.flaticon.es/svg/static/icons/svg/1935/1935840.svg' alt='Magnifying glass' height='128' width='128' />
-            <p> Buscar Cliente </p>
-          </Link>
+            <Text> Buscar Cliente </Text>
+          </ButtonBox>
         </Wrapper>
       </Content>
       <Footer id='footer' />
