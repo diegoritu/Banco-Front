@@ -77,6 +77,37 @@ const changePassword = (data) => {
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
+const legals = ()=>{
+  const requestOptions = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    }
+  }
+  return fetch(urlWebService.getLegals, requestOptions)
+    .then(response => 
+      response.json().catch(err => {
+        console.log('Looks like there was a problem. Status Code: ' + response.status)
+        return {}
+      })
+      .then(data => ({
+          data: data,
+          status: response.status
+      })
+  ).then(res => {
+      if (res.status === 404) {
+        return {}
+      }
+      else {
+        return res.data
+      }
+  }))
+    .catch(error => console.log('Fetch Error :-S', error))
+}
+
 const user = (data) => {
 
   if(data === 'PHYSICAL'){
@@ -224,4 +255,4 @@ const registerLegalUser = (data) => {
 }
 
 
-export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser }
+export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals }
