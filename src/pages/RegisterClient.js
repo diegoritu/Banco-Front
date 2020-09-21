@@ -39,31 +39,19 @@ const RegisterClient = () => {
   const [isLegal, setIsLegal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmitNotLegal = (data) => {
+  const onSubmit = (data) => {
     setIsLoading(true)
-    userService.registerPhysicalUser(data)
+    const createUser = isLegal ? userService.registerLegalUser(data) : userService.registerPhysicalUser(data)
+    createUser
       .then((data) => {
         alert.success('Usuario creado con exito! Contraseña: ' + data.password)
-        setIsLoading(false)
       })
       .catch((message) => {
         alert.error(message)
-        setIsLoading(false)
       })
+      .finally(() => setIsLoading(false))
   }
-  const onSubmitLegal = (data) => {
-    console.log(data)
-    setIsLoading(true)
-    userService.registerLegalUser(data)
-      .then((data) => {
-        alert.success('Usuario creado con exito! Contraseña: ' + data.password)
-        setIsLoading(false)
-      })
-      .catch((message) => {
-        alert.error(message)
-        setIsLoading(false)
-      })
-  }
+
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
@@ -74,7 +62,7 @@ const RegisterClient = () => {
           <Button onClick={() => setIsLegal(true)}> Juridica </Button>
         </ToggleWrapper>
         {!isLegal &&
-          <form onSubmit={handleSubmit(onSubmitNotLegal)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Table>
               <Caption> Registrar cliente </Caption>
               <tbody>
@@ -162,7 +150,7 @@ const RegisterClient = () => {
             </Table>
           </form>}
         {isLegal &&
-          <form onSubmit={handleSubmit(onSubmitLegal)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Table>
               <Caption> Registrar cliente </Caption>
               <tbody>
