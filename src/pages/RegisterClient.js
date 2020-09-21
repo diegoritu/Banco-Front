@@ -24,14 +24,26 @@ const ToggleWrapper = styled.div`
   padding: 10px;
 `
 
-const Button = styled.button`
-  width: 50%;
-  padding: 10px;
-`
 const FixBar = styled.div`
  height: 10vh;
   width: 100%;
 `
+
+const Button = styled.button`
+  width: 50%;
+  font-size: 15pt;
+  padding: 10px;
+  background-color: #b2b2b28c;
+  
+`
+const ButtonSelected = styled.button`
+  width: 50%;
+  font-size: 15pt;
+  padding: 10px;
+  background-color: #3a74b0;
+  color: white;
+`
+
 
 const RegisterClient = () => {
   const { register, handleSubmit, errors } = useForm()
@@ -58,23 +70,31 @@ const RegisterClient = () => {
       <Content id='content' direction='column'>
         <Text> Registro de nueva persona </Text>
         <ToggleWrapper>
-          <Button onClick={() => setIsLegal(false)}> Fisica </Button>
-          <Button onClick={() => setIsLegal(true)}> Juridica </Button>
-        </ToggleWrapper>
+        {isLegal ?
+            (<React.Fragment>
+                <Button onClick={() => setIsLegal(false)}> Fisica </Button>
+                <ButtonSelected onClick={() => setIsLegal(true)}> Juridica </ButtonSelected>
+            </React.Fragment>)
+          : 
+            (<React.Fragment>
+                <ButtonSelected onClick={() => setIsLegal(false)}> Fisica </ButtonSelected>
+                <Button onClick={() => setIsLegal(true)}> Juridica </Button>
+            </React.Fragment>)
+          }        </ToggleWrapper>
         {!isLegal &&
           <form onSubmit={handleSubmit(onSubmit)}>
             <Table>
               <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
-                  <TableDataL> Nombre y Apellido </TableDataL>
+                  <TableDataL> Nombre </TableDataL>
                   <TableDataR>
                     <Input name='firstName' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
                     {errors.firstName && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Nombre y Apellido </TableDataL>
+                  <TableDataL> Apellido </TableDataL>
                   <TableDataR>
                     <Input name='lastName' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
                     {errors.lastName && <ErrorMsg> x </ErrorMsg>}
@@ -84,7 +104,7 @@ const RegisterClient = () => {
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
                     <Input name='cuitCuil' type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
-                    {errors.cuitCuil && <ErrorMsg> x </ErrorMsg>}
+                    {errors.cuitCuil && <ErrorMsg> x Verifique que su CUIT tenga el siguiente formato: XX-XXXXXXXX-X </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import ErrorMsg from './ErrorMsg'
 import { userService } from '../services/userService'
 import { useState } from 'react'
+import { useAlert } from 'react-alert'
 
 const Form = styled.form`
   display: flex;
@@ -42,12 +43,12 @@ const Message = styled.p`
 const PasswordForm = props => {
   const { register, handleSubmit, errors } = useForm()
   const [isLoading, setIsLoading] = useState(false)
+  const alert = useAlert()
 
   const onSubmit = (data) => {
     setIsLoading(true)
     if(data.password !== data.repeatPassword) {
-
-      //ERROR CONTRASEÑAS DIFERENTES. FALTA VERIFICAR QUE NO SE PUEDA ACCEDER A ESTA PANTALLA A MENOS QUE VENGAS DESDE EL LOGIN
+      alert.error('Ambos campos de contraseña deben ser iguales. Por favor verifique nuevamente.')
     }
     else {
       userService.changePassword(data)

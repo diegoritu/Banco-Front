@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import { Table, TButton, TableDataL, Caption } from '../components/Table'
 import { transactionService } from '../services/transactionService'
+import { useAlert } from 'react-alert'
 
 const Input = styled.input`
   padding: 10px;    
@@ -46,6 +47,7 @@ const TableDataRw = styled.td`
 const Transfer = props => {
   
   var ownedAccInitialState = true
+  const alert = useAlert()
 
   if(sessionStorage.getItem('userSavings') === 'null' || sessionStorage.getItem('userChecking') === 'null'){
     ownedAccInitialState = false
@@ -94,11 +96,11 @@ const Transfer = props => {
           else
           {
             if(from.pathname === 'accountNotFound'){
-              //MENSAJE ERROR DE CUENTA NO ENCONTRADA
+              alert.error('No se encontró alguna de las cuentas implicadas en la operación.')
               console.log(from.pathname)
             }
             else if(from.pathname === 'operationCantBePerformed'){
-              //MENSAJE ERROR DE OPERACION IMPOSIBLE DE REALIZAR
+              alert.error('No fue posible realizar la operación. Por favor chequee que la cuenta origen tenga el saldo suficiente.')
               console.log(from.pathname)
             }
           }
@@ -127,11 +129,12 @@ const Transfer = props => {
           else
           {
             if(from.pathname === 'accountNotFound'){
-              //MENSAJE ERROR DE CUENTA NO ENCONTRADA
+              
+              alert.error('No se encontró la cuenta destino. Por favor verifique el número de cuenta')
               console.log(from.pathname)
             }
             else if(from.pathname === 'operationCantBePerformed'){
-              //MENSAJE ERROR DE OPERACION IMPOSIBLE DE REALIZAR
+              alert.error('No fue posible realizar la operación. Por favor chequee que la cuenta origen tenga el saldo suficiente.')
               console.log(from.pathname)
             }
           }

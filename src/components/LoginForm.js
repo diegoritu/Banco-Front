@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { withRouter } from 'react-router-dom'
 import ErrorMsg from './ErrorMsg'
 import { userService } from '../services/userService'
+import { useAlert } from 'react-alert'
 
 const Form = styled.form`
   display: flex;
@@ -36,6 +37,7 @@ margin-top: 10px;
 const LoginForm = props => {
   const { register, handleSubmit, errors } = useForm()
   const [isLoading, setIsLoading] = useState(false)
+  const alert = useAlert()
 
   const onSubmit = (data) => {
     setIsLoading(true)
@@ -48,7 +50,9 @@ const LoginForm = props => {
           }
           else
           {
-            window.location.reload();
+            setIsLoading(false)
+            alert.error('Usuario y/o contraseña incorrectos')
+            //window.location.reload();
           }
         }
       )
