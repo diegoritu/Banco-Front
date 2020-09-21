@@ -129,7 +129,7 @@ const Transactions = (props) => {
       <Content id='content' direction='column'>
         <Text> Detalle de cuenta </Text>
         <AccountDetail accountType={accountType}/>
-        <Text> Ultimos movimientos </Text>
+        <Text> Últimos movimientos </Text>
         <Table>
           <tbody>
             <TableHeaderRow>
