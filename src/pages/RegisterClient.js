@@ -72,13 +72,13 @@ const RegisterClient = () => {
         <ToggleWrapper>
         {isLegal ?
             (<React.Fragment>
-                <Button onClick={() => setIsLegal(false)}> Fisica </Button>
-                <ButtonSelected onClick={() => setIsLegal(true)}> Juridica </ButtonSelected>
+                <Button onClick={() => setIsLegal(false)}> Física </Button>
+                <ButtonSelected onClick={() => setIsLegal(true)}> Jurídica </ButtonSelected>
             </React.Fragment>)
           : 
             (<React.Fragment>
-                <ButtonSelected onClick={() => setIsLegal(false)}> Fisica </ButtonSelected>
-                <Button onClick={() => setIsLegal(true)}> Juridica </Button>
+                <ButtonSelected onClick={() => setIsLegal(false)}> Física </ButtonSelected>
+                <Button onClick={() => setIsLegal(true)}> Jurídica </Button>
             </React.Fragment>)
           }        </ToggleWrapper>
         {!isLegal &&
@@ -136,7 +136,7 @@ const RegisterClient = () => {
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Telefono </TableDataL>
+                  <TableDataL> Teléfono </TableDataL>
                   <TableDataR>
                     <Input name='phone' type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
                     {errors.phone && <ErrorMsg> x </ErrorMsg>}
@@ -175,7 +175,7 @@ const RegisterClient = () => {
               <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
-                  <TableDataL> Razon Social </TableDataL>
+                  <TableDataL> Razón Social </TableDataL>
                   <TableDataR>
                     <Input name='businessName' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
                     {errors.businessName && <ErrorMsg> x </ErrorMsg>}
@@ -203,7 +203,7 @@ const RegisterClient = () => {
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Telefono </TableDataL>
+                  <TableDataL> Teléfono </TableDataL>
                   <TableDataR>
                     <Input name='phoneLegalEntity' type='text' step='any' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
                     {errors.phoneLegalEntity && <ErrorMsg> x </ErrorMsg>}
