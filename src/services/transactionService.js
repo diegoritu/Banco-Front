@@ -120,4 +120,31 @@ const getTransactions = (data) =>{
   }
 }
 
-export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions }
+const getTransaction = (data) =>{
+  const requestOptions = {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    }
+  }
+  return fetch(urlWebService.getMovement + '?id=' + data, requestOptions)
+    .then(response => 
+      response.json().catch(err => {
+        console.log('Looks like there was a problem. Status Code: ' + response.status)
+        return {}
+      })
+      .then(data => ({
+          data: data,
+          status: response.status
+      })
+  ).then(res => {
+      return res.data
+  }))
+    .catch(error => console.log('Fetch Error :-S', error))
+}
+
+
+export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction }

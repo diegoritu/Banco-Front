@@ -81,51 +81,41 @@ const Transactions = (props) => {
       if(account === null){
         account = (item.chExitAccount !== null ? item.chExitAccount : item.saExitAccount)
       }
-      var concepto = 'CONCEPTO'
+      var concept = 'CONCEPTO'
       switch(item.movementType){
         case 0:
-          concepto = 'DEPÓSITO'
+          concept = 'DEPÓSITO'
           break
         case 1:
-          concepto = 'EXTRACCIÓN'
+          concept = 'EXTRACCIÓN'
           break
         case 2:
-          concepto = 'COMISIÓN'
+          concept = 'COMISIÓN'
           break
         case 3:
-          concepto = 'MANTENIMIENTO'
+          concept = 'MANTENIMIENTO'
           break
         case 4:
-          concepto = 'PAGO DE SERVICIOS'
+          concept = 'PAGO DE SERVICIOS'
           break
         case 5:
-          concepto = 'TRANSFERENCIA'
+          concept = 'TRANSFERENCIA'
           break
         case 6:
-          concepto = 'TRANSFERENCIA'
+          concept = 'TRANSFERENCIA'
           break
         case 7:
-          concepto = 'INTERESES'
+          concept = 'INTERESES'
           break
         default:
-          concepto = 'CONCEPTO'
+          concept = 'CONCEPTO'
           break
       }
-	/*	Database meanings for movementType:
-	 * DEPOSIT = 0
-	 * EXTRACTION = 1
-	 * COMMISSION = 2
-	 * MAINTENANCE = 3
-	 * SERVICES_PAYMENT = 4
-	 * TRANSFER_BETWEEN_OWN_ACCOUNTS = 5
-	 * TRANSFER_TO_OTHER_ACCOUNTS = 6
-	 * INTERESTS = 7
-	 */
 
       return (
         <TableRow key={index}>
           <TableDataL>{formatDate(item.dayAndHour)}</TableDataL>
-          <TableDataL>{concepto}</TableDataL>
+          <TableDataL>{concept}</TableDataL>
           <TableDataL>{(!isEntryBalanceBeforeMovement ? <RedText>{'$ ' + numberWithStyle(item.amount)}</RedText> : '$ ' + numberWithStyle(item.amount))}</TableDataL>
           <TableDataL>{'$ ' + (isEntryBalanceBeforeMovement ? numberWithStyle(parseFloat(item.entryBalanceBeforeMovement + item.amount)) : numberWithStyle(parseFloat(item.exitBalanceBeforeMovement - item.amount)))}</TableDataL>
           <TableDataL><Button value={item.idMovement} onClick={e => goToTransactionDetail(e.target.value)} type="button"> Ver detalle </Button></TableDataL>

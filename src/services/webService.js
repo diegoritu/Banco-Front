@@ -10,7 +10,8 @@ const urlWebService = {
   getAdministrative: urlAPI + '/user/administrative',
   transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
   transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts',
-  getMovements: urlAPI + '/movement/movements'
+  getMovements: urlAPI + '/movement/movements',
+  getMovement: urlAPI + '/movement/movementById'
 }
 
 export default urlWebService

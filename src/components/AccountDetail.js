@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { accountService } from '../services/accountService'
-import { useHistory } from 'react-router-dom';
 
 const Table = styled.table`
   width:60%;
@@ -61,8 +60,6 @@ const getAccount = (accountType) => {
 
 
 const AccountTable = (props) => {
-  const history = useHistory()
-
 
   const [data, setAccount] = React.useState([])
   React.useEffect(() => {

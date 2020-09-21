@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Logout from './Logout'
-import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
@@ -22,9 +21,6 @@ const HeaderTitle = styled(Link)`
 `
 
 const Header = () => {
-  const history = useHistory()
-  const navigateToHome = () => (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? history.push('/adminHome') : history.push('/home'))
-
   return (
     <HeaderWrapper>
         <HeaderTitle to={{pathname: (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? '/adminHome' : '/home')}}> 
