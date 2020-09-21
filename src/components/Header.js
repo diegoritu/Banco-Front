@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Logout from './Logout'
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -13,21 +13,19 @@ const HeaderWrapper = styled.header`
   min-height: 40px;
 `
 
-const HeaderTitle = styled.span`
+const HeaderTitle = styled(Link)`
   color: #FFF;
   padding: 10px;
   align-self:center;
+  text-decoration: none;
 `
 
 const Header = () => {
-  const history = useHistory()
-  const navigateToHome = () => (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? history.push('/adminHome') : history.push('/home'))
-
   return (
     <HeaderWrapper>
-      <HeaderTitle onClick={navigateToHome}>
-        KRRL Bank
-      </HeaderTitle>
+        <HeaderTitle to={{pathname: (sessionStorage.getItem('userType') === 'ADMINISTRATIVE' ? '/adminHome' : '/home')}}> 
+          KRRL Bank
+        </HeaderTitle>
       <Logout title={'Bienvenido/a ' + sessionStorage.getItem('userName')} />
     </HeaderWrapper>
   )

@@ -11,7 +11,9 @@ const urlWebService = {
   createPhysicalUser : urlAPI + '/user/physical',
   createLegalUser : urlAPI + '/user/legal',
   transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
-  transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts'
+  transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts',
+  getMovements: urlAPI + '/movement/movements',
+  getMovement: urlAPI + '/movement/movementById'
 }
 
 export default urlWebService
