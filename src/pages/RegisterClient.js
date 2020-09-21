@@ -80,7 +80,8 @@ const RegisterClient = () => {
                 <ButtonSelected onClick={() => setIsLegal(false)}> Física </ButtonSelected>
                 <Button onClick={() => setIsLegal(true)}> Jurídica </Button>
             </React.Fragment>)
-          }        </ToggleWrapper>
+          }        
+        </ToggleWrapper>
         {!isLegal &&
           <form onSubmit={handleSubmit(onSubmit)}>
             <Table>

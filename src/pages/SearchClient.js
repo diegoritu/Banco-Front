@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Content from '../components/Content'
 import Footer from '../components/Footer'
 import GlobalContainer from '../components/GlobalContainer'
@@ -10,16 +10,30 @@ import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import Button from '../components/Button'
 
-const TButton = styled.button`
-  width: 50%;
-  padding: 10px;
-  margin: auto;
-`
+
 const Input = styled.input`
   padding: 10px;
   margin: 10px;
   width: 20vw;
 `
+
+const TButton = styled.button`
+  width: 50%;
+  font-size: 15pt;
+  padding: 10px;
+  background-color: #b2b2b28c;
+  
+`
+const ButtonSelected = styled.button`
+  width: 50%;
+  font-size: 15pt;
+  padding: 10px;
+  background-color: #3a74b0;
+  color: white;
+`
+
+
+
 const data = [
   {
     id: 1,
@@ -31,6 +45,7 @@ const data = [
 
 const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
+  const [isLegal, setIsLegal] = useState(false)
   const onSubmit = (data) => {
     console.log(data)
   }
@@ -52,17 +67,26 @@ const SearchClient = () => {
       <Content id='content' direction='column'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Table>
-            <Caption> Busqueda Cliente </Caption>
+            <Caption> Búsqueda Cliente </Caption>
             <tbody>
               <tr>
-                <TableDataL> Busqueda por:  </TableDataL>
+                <TableDataL> Búsqueda por:  </TableDataL>
                 <TableDataR><Dropdown /></TableDataR>
               </tr>
               <tr>
                 <TableDataL> Persona : </TableDataL>
                 <TableDataL>
-                  <TButton> Fisica </TButton>
-                  <TButton> Juridica </TButton>
+                {isLegal ?
+                  (<React.Fragment>
+                      <TButton onClick={() => setIsLegal(false)}> Física </TButton>
+                      <ButtonSelected onClick={() => setIsLegal(true)}> Jurídica </ButtonSelected>
+                  </React.Fragment>)
+                : 
+                  (<React.Fragment>
+                      <ButtonSelected onClick={() => setIsLegal(false)}> Física </ButtonSelected>
+                      <TButton onClick={() => setIsLegal(true)}> Jurídica </TButton>
+                  </React.Fragment>)
+                }        
                 </TableDataL>
               </tr>
               <tr>
@@ -78,7 +102,7 @@ const SearchClient = () => {
         <Table>
           <tbody>
             <TableHeaderRow>
-              <TableHeader> <span>Nombre / </span> <span>Razon Social</span> </TableHeader>
+              <TableHeader> <span>Nombre / </span> <span>Razón Social</span> </TableHeader>
               <TableHeader> <span>CUIT /</span> <span>CUIL</span></TableHeader>
               <TableHeader> Detalle </TableHeader>
               <TableHeader> Operaciones </TableHeader>
