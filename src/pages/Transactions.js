@@ -149,7 +149,7 @@ const Transactions = (props) => {
               <TableHeader> Saldo </TableHeader>
               <TableHeader> Detalle </TableHeader>
             </TableHeaderRow>
-            {renderTableData().length === 0 ? <tr><td colSpan='5'><EmptyTableMessage>No hay registrados movimientos de esta cuenta</EmptyTableMessage></td></tr> : renderTableData()}
+            {renderTableData().length === 0 ? <tr><td colSpan='5'><EmptyTableMessage>Esta cuenta no registra movimientos</EmptyTableMessage></td></tr> : renderTableData()}
           </tbody>
         </Table>
 
