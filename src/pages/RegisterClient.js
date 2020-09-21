@@ -8,6 +8,8 @@ import Text from '../components/Text'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
+import { userService } from '../services/userService'
+import { useAlert } from 'react-alert'
 
 const Input = styled.input`
   padding: 10px;
@@ -33,13 +35,34 @@ const FixBar = styled.div`
 
 const RegisterClient = () => {
   const { register, handleSubmit, errors } = useForm()
+  const alert = useAlert()
   const [isLegal, setIsLegal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmitNotLegal = (data) => {
-    console.log(data)
+    setIsLoading(true)
+    userService.registerPhysicalUser(data)
+      .then((data) => {
+        alert.success('Usuario creado con exito! Contraseña: ' + data.password)
+        setIsLoading(false)
+      })
+      .catch((message) => {
+        alert.error(message)
+        setIsLoading(false)
+      })
   }
   const onSubmitLegal = (data) => {
     console.log(data)
+    setIsLoading(true)
+    userService.registerLegalUser(data)
+      .then((data) => {
+        alert.success('Usuario creado con exito! Contraseña: ' + data.password)
+        setIsLoading(false)
+      })
+      .catch((message) => {
+        alert.error(message)
+        setIsLoading(false)
+      })
   }
   return (
     <GlobalContainer id='globalContainer'>
@@ -58,8 +81,15 @@ const RegisterClient = () => {
                 <tr>
                   <TableDataL> Nombre y Apellido </TableDataL>
                   <TableDataR>
-                    <Input name='fullname' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
-                    {errors.fullname && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='firstName' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    {errors.firstName && <ErrorMsg> x </ErrorMsg>}
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Nombre y Apellido </TableDataL>
+                  <TableDataR>
+                    <Input name='lastName' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    {errors.lastName && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
@@ -93,8 +123,8 @@ const RegisterClient = () => {
                 <tr>
                   <TableDataL> Fecha de nacimiento </TableDataL>
                   <TableDataR>
-                    <Input name='birthday' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
-                    {errors.birthday && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='birthDate' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                    {errors.birthDatey && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
@@ -107,26 +137,26 @@ const RegisterClient = () => {
                 <tr>
                   <TableDataL> Celular </TableDataL>
                   <TableDataR>
-                    <Input name='mobile' type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
-                    {errors.mobile && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='mobilePhone' type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    {errors.mobilePhone && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cuenta Corriente </TableDataL>
                   <TableDataR>
-                    <Input name='checking' type='checkbox' ref={register()} />
-                    {errors.checking && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='withCheckingAccount' type='checkbox' ref={register()} />
+                    {errors.withCheckingAccount && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
                   <TableDataR>
-                    <Input name='overdraft' type='number' step='any' ref={register()} />
-                    {errors.overdraft && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='maxOverdraft' type='number' step='any' ref={register()} />
+                    {errors.maxOverdraft && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
+                  <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
             </Table>
@@ -139,14 +169,14 @@ const RegisterClient = () => {
                 <tr>
                   <TableDataL> Razon Social </TableDataL>
                   <TableDataR>
-                    <Input name='companyName' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
-                    {errors.companyName && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='businessName' type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
+                    {errors.businessName && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cuitCuilLegalEntity' type='number' step='any' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    <Input name='cuitCuilLegalEntity' type='text' step='any' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
                     {errors.cuitCuilLegalEntity && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -167,26 +197,26 @@ const RegisterClient = () => {
                 <tr>
                   <TableDataL> Telefono </TableDataL>
                   <TableDataR>
-                    <Input name='phoneLegalEntity' type='number' step='any' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    <Input name='phoneLegalEntity' type='text' step='any' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
                     {errors.phoneLegalEntity && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cuenta corriente </TableDataL>
                   <TableDataR>
-                    <Input name='checkingLegalEntity' type='checkbox' ref={register()} />
-                    {errors.checkingLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='withCheckingAccountLegalEntity' type='checkbox' ref={register()} />
+                    {errors.withCheckingAccountLegalEntity && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
                   <TableDataR>
-                    <Input name='overdraftLegalEntity' type='number' step='any' ref={register()} />
-                    {errors.overdraftLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='maxOverdraftLegalEntity' type='number' step='any' ref={register()} />
+                    {errors.maxOverdraftLegalEntity && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
+                  <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
             </Table>

@@ -48,7 +48,6 @@ const LoginForm = props => {
           }
           else
           {
-            //SETEO DE MENSAJE DE ERROR
             window.location.reload();
           }
         }

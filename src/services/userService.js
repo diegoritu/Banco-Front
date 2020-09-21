@@ -1,4 +1,5 @@
 import urlWebService from './webService'
+import request from './requestHelper'
 const urlOrigin = 'http://localhost:3000'
 
 const login = (data) => {
@@ -172,4 +173,55 @@ const user = (data) => {
 }
 
 
-export const userService = { login, logout, changePassword, user }
+const registerPhysicalUser = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({
+        "address": data.address,
+        "birthDate": data.birthDate,
+        "cuitCuilCdi": data.cuitCuil,
+        "dni": data.dni,
+        "firstName": data.firstName,
+        "lastName": data.lastName,
+        "mobilePhone": data.mobilePhone,
+        "phone": data.phone,
+        "username": data.username,
+        "withCheckingAccount": data.withCheckingAccount,
+        "maxOverdraft": data.maxOverdraft,
+      })
+  }
+
+  return request(urlWebService.createPhysicalUser, requestOptions)
+}
+
+const registerLegalUser = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({
+        "address": data.addressLegalEntity,
+        "businessName": data.businessName,
+        "cuitCuilCdi": data.cuitCuilLegalEntity,
+        "phone": data.phoneLegalEntity,
+        "username": data.usernameLegalEntity,
+        "withCheckingAccount": data.withCheckingAccountLegalEntity,
+        "maxOverdraft": data.maxOverdraftLegalEntity
+      })
+  }
+
+  return request(urlWebService.createLegalUser, requestOptions)
+}
+
+
+export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser }
