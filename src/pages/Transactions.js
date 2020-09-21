@@ -126,7 +126,7 @@ const Transactions = (props) => {
         <TableRow key={index}>
           <TableDataL>{formatDate(item.dayAndHour)}</TableDataL>
           <TableDataL>{concepto}</TableDataL>
-          <TableDataL>{(isEntryBalanceBeforeMovement ? <RedText>{'$ ' + numberWithStyle(item.amount)}</RedText> : '$ ' + numberWithStyle(item.amount))}</TableDataL>
+          <TableDataL>{(!isEntryBalanceBeforeMovement ? <RedText>{'$ ' + numberWithStyle(item.amount)}</RedText> : '$ ' + numberWithStyle(item.amount))}</TableDataL>
           <TableDataL>{'$ ' + (isEntryBalanceBeforeMovement ? numberWithStyle(parseFloat(item.entryBalanceBeforeMovement + item.amount)) : numberWithStyle(parseFloat(item.exitBalanceBeforeMovement - item.amount)))}</TableDataL>
           <TableDataL><Button value={item.idMovement} onClick={e => goToTransactionDetail(e.target.value)} type="button"> Ver detalle </Button></TableDataL>
         </TableRow>
