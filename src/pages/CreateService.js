@@ -10,7 +10,7 @@ import ErrorMsg from '../components/ErrorMsg'
 import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
 import { userService } from '../services/userService'
 import { useAlert } from 'react-alert'
-import { Select2 } from "select2-react-component";
+import Select from 'react-select'
 
 const Input = styled.input`
   padding: 10px;
@@ -41,6 +41,19 @@ const FixBar = styled.div`
  height: 10vh;
   width: 100%;
 `
+
+function loadLegalSelect(legals)
+{
+  var legalArray = []
+  
+  legals.forEach((item, index) => {
+    legalArray.push({value: item.businessName, label: item.businessName})
+  })
+
+  return legalArray
+
+}
+
 const CreateService = () => {
   const { register, handleSubmit, errors } = useForm()
   const alert = useAlert()
@@ -70,20 +83,8 @@ const getLegals = () => {
   const [legals, setLegals] = React.useState([])
 
   React.useEffect(() => {
-    getLegals().then(legals => setLegals())
+    getLegals().then(legals => setLegals(legals))
   }, [])
-  const renderLegals = () =>{
-    return legals.map((item, index) => {
-      return(
-        <tr>
-          <Select2 legals={legals}
-            value={item.businessName}
-            update={value => this.update(value)}>
-          </Select2>
-        </tr>
-      );
-    }
-    );}
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
@@ -122,7 +123,7 @@ const getLegals = () => {
                     {errors.due && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
-                {renderLegals()}
+                <Select options={loadLegalSelect(legals)}/>
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
