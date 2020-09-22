@@ -11,6 +11,7 @@ import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/T
 import { userService } from '../services/userService'
 import { useAlert } from 'react-alert'
 import Select from 'react-select'
+import Dropdown from '../components/Dropdown'
 
 const Input = styled.input`
   padding: 10px;
@@ -47,6 +48,9 @@ const FixBar = styled.div`
  height: 10vh;
   width: 100%;
 `
+const TableDataRw = styled.td`
+  padding: 10px 20%;
+`
 
 function loadLegalSelect(legals)
 {
@@ -63,11 +67,15 @@ function loadLegalSelect(legals)
 const CreateService = () => {
   const { register, handleSubmit, errors } = useForm()
   const alert = useAlert()
-  const items = []
+  const accounts = []
   const [isLegal, setIsLegal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [originAcc, setOriginAcc] = useState('')
+  const [legalSelected, setlegalSelected] = useState()
 
-  
+  const onChangeLegalField = (legalSelected) => {
+    setlegalSelected(legalSelected)
+  }
 
   const onSubmit = (data) => {
     setIsLoading(true)
@@ -82,6 +90,20 @@ const CreateService = () => {
       .finally(() => setIsLoading(false))
   }
 
+  const accountLoader = () => {
+    console.log(legalSelected)
+    legals.forEach((item, index) => {
+      if(item.id === legalSelected.id){
+        if(item.checking != null){
+          accounts.push({value: "Cuenta Corriente", label:  item.checking.accountNumber})
+        }
+        if(item.savings != null){
+          accounts.push({value: "Caja de Ahorro", label:  item.savings.accountNumber})
+        }
+    }
+    })
+  }
+
 const getLegals = () => {
   return userService.legals()
 }
@@ -90,6 +112,7 @@ const getLegals = () => {
   React.useEffect(() => {
     getLegals().then(legals => setLegals(legals))
   }, [])
+
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
@@ -131,8 +154,12 @@ const getLegals = () => {
                 <tr>
                   <TableDataL> Dueño del servicio </TableDataL>
                   <TableDataR>
-                    <SelectLegal options={loadLegalSelect(legals)}/>
+                    <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} />
                   </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Cuenta de pago </TableDataL>
+                  <TableDataRw><Dropdown title='Seleccione cuenta de pago' onClick={accountLoader} items={accounts} key={accounts.index} updateParent={value => setOriginAcc(value)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
