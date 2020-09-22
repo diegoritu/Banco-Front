@@ -71,21 +71,11 @@ const Transfer = props => {
 
 
   const onSubmitOwned = (data) => {
-    var accountDestination = ''
-    var accountOrigin = ''
+    var accountDestination = destinationAcc
+    var accountOrigin = originAcc
     console.log(originAcc)
     console.log(destinationAcc)
   
-    items.forEach(element => {
-      if(element.value === originAcc)
-      {
-        accountOrigin = element.id
-      }
-      if(element.value === destinationAcc)
-      {
-        accountDestination = element.id
-      }      
-    })
     transactionService.transferBetweenOwnAccounts(data, accountOrigin, accountDestination)
       .then(
         response => {
@@ -100,7 +90,7 @@ const Transfer = props => {
               console.log(from.pathname)
             }
             else if(from.pathname === 'operationCantBePerformed'){
-              alert.error('No fue posible realizar la operación. Por favor chequee que la cuenta origen tenga el saldo suficiente.')
+              alert.error('No fue posible realizar la operación. Por favor revise que la cuenta origen tenga el saldo suficiente.')
               console.log(from.pathname)
             }
           }
@@ -111,13 +101,7 @@ const Transfer = props => {
       })
   }
   const onSubmitNotOwned = (data) => {
-    var accountOrigin = ''
-    items.forEach(element => {
-      if(element.value === originAccToNotOwned)
-      {
-        accountOrigin = element.id
-      }
-    })
+    var accountOrigin = originAccToNotOwned
 
     transactionService.transferToOtherAccounts(data, accountOrigin)
       .then(
@@ -179,7 +163,7 @@ const Transfer = props => {
                 </tr>
                 <tr>
                   <TableDataL> Hacia </TableDataL>
-                  <TableDataRw><Dropdown title='Seleccione cuenta destino ' items={items} updateParent={value => setDestinationAcc(value)} /></TableDataRw>
+                  <TableDataRw><Dropdown title='Seleccione cuenta destino ' items={items} updateParent={id => setDestinationAcc(id)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Importe </TableDataL>
@@ -201,7 +185,7 @@ const Transfer = props => {
               <tbody>
                 <tr>
                   <TableDataL> Cuenta Origen </TableDataL>
-                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAccToNotOwned(value)} /></TableDataRw>
+                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={id => setOriginAccToNotOwned(id)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> CBU </TableDataL>

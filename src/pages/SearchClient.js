@@ -32,8 +32,6 @@ const ButtonSelected = styled.button`
   color: white;
 `
 
-
-
 const data = [
   {
     id: 1,
@@ -43,11 +41,37 @@ const data = [
   }
 ]
 
+const fieldOptions = {
+  legal: [
+    new OptionItem('username', 'Nombre de usuario'), 
+    new OptionItem('businessName', 'Razón social'), 
+    new OptionItem('cuitCuil', 'CUIT/CUIL')
+  ],
+  physical: [
+    new OptionItem('username', 'Nombre de usuario'), 
+    new OptionItem('fullname', 'Nombre y/o apellido'), 
+    new OptionItem('cuitCuil', 'CUIT/CUIL'),
+    new OptionItem('dni', 'DNI')
+  ]
+}
+
+function OptionItem (id, value) {
+  this.id = id;
+  this.value = value;
+}
+
 const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
   const [isLegal, setIsLegal] = useState(false)
+  const [searchField, setSearchField] = useState()
+
+  const getFieldOptions = () => {
+    return isLegal ? fieldOptions.legal : fieldOptions.physical
+  }
+
   const onSubmit = (data) => {
     console.log(data)
+    console.log('field:'+searchField)
   }
   const renderTableData = () => {
     return data.map((item, index) => {
@@ -71,7 +95,9 @@ const SearchClient = () => {
             <tbody>
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
-                <TableDataR><Dropdown /></TableDataR>
+                <TableDataR>
+                    <Dropdown title='Seleccione opción de búsqueda' items={getFieldOptions()} updateParent={id => setSearchField(id)}/>
+                </TableDataR>
               </tr>
               <tr>
                 <TableDataL> Persona : </TableDataL>
@@ -91,7 +117,7 @@ const SearchClient = () => {
               </tr>
               <tr>
                 <TableDataL>
-                  <Input name='field' type='text' placeholder='Ingrese el dato a buscar' ref={register({ required: true })} />
+                  <Input name='field' type='text' placeholder='Ingrese el término de búsqueda' ref={register({ required: true })} />
                   {errors.field && <ErrorMsg> No puede estar vacio </ErrorMsg>}
                 </TableDataL>
                 <TableDataR><Button> Buscar </Button></TableDataR>
