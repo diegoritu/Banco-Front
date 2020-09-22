@@ -10,6 +10,8 @@ const urlWebService = {
   getAdministrative: urlAPI + '/user/administrative',
   createPhysicalUser : urlAPI + '/user/physical',
   createLegalUser : urlAPI + '/user/legal',
+  searchPhysicalUser : urlAPI + '/user/physical/search',
+  searchLegalUser : urlAPI + '/user/legal/search',
   transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
   transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts',
   getMovements: urlAPI + '/movement/movements',

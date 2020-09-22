@@ -5,10 +5,13 @@ import GlobalContainer from '../components/GlobalContainer'
 import Header from '../components/Header'
 import { Table, TableDataL, TableDataR, Caption, TableHeader, TableHeaderRow } from '../components/Table'
 import { useForm } from 'react-hook-form'
-import Dropdown from '../components/Dropdown'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import Button from '../components/Button'
+import Select from 'react-select'
+import { useAlert } from 'react-alert'
+import { searchUserService } from '../services/searchUserService'
+import { timeout } from 'select2-react-component'
 
 
 const Input = styled.input`
@@ -32,55 +35,80 @@ const ButtonSelected = styled.button`
   color: white;
 `
 
-const data = [
-  {
-    id: 1,
-    nombre: 'Carlos',
-    cuitCuil: '12312542353',
-    detalle: 'this is a detail'
-  }
-]
+const usernameOption = new OptionItem('username', 'Nombre de usuario')
+const cuitCuilOption = new OptionItem('cuitCuil', 'CUIT/CUIL')
 
 const fieldOptions = {
   legal: [
-    new OptionItem('username', 'Nombre de usuario'), 
-    new OptionItem('businessName', 'Razón social'), 
-    new OptionItem('cuitCuil', 'CUIT/CUIL')
+    usernameOption, 
+    cuitCuilOption,
+    new OptionItem('businessName', 'Razón social')
   ],
   physical: [
-    new OptionItem('username', 'Nombre de usuario'), 
+    usernameOption, 
+    cuitCuilOption,
     new OptionItem('fullname', 'Nombre y/o apellido'), 
-    new OptionItem('cuitCuil', 'CUIT/CUIL'),
     new OptionItem('dni', 'DNI')
   ]
 }
 
-function OptionItem (id, value) {
-  this.id = id;
+function OptionItem (value, label) {
   this.value = value;
+  this.label = label;
 }
 
 const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
+  const [isLoading, setIsLoading] = useState(false)
   const [isLegal, setIsLegal] = useState(false)
-  const [searchField, setSearchField] = useState()
+  const [selectedSearchField, setSelectedSearchField] = useState()
+  const [items, setItems] = useState([])
+  const alert = useAlert()
 
   const getFieldOptions = () => {
     return isLegal ? fieldOptions.legal : fieldOptions.physical
   }
 
-  const onSubmit = (data) => {
-    console.log(data)
-    console.log('field:'+searchField)
+  const onChangeSearchField = (option) => {
+    setSelectedSearchField(option)
   }
+
+  const updateIsLegal = (newValue) => {
+    if (isLegal != newValue) {
+      setSelectedSearchField('')
+    }
+    setIsLegal(newValue)
+  }
+
+  const onSubmit = (data) => {
+    setIsLoading(true)
+    const params = {field: selectedSearchField.value, term: data.term}
+    const search = isLegal ? searchUserService.searchLegalUsers(params) : searchUserService.searchPhysicalUsers(params)
+    search
+      .then((data) => {
+        if (!(Array.isArray(data) && data.length)) {
+          alert.info('No se encontraron usuarios', {timeout: 7000})
+          setItems([])
+        } else {
+          setItems(data)
+        }
+      })
+      .catch((message) => {
+        alert.error(message)
+      })
+      .finally(() => setIsLoading(false))
+  }
+
   const renderTableData = () => {
-    return data.map((item, index) => {
-      const { nombre, cuitCuil, detalle } = item
+    return items.map((item, index) => {
+      const name = item.userType == 'LEGAL' ? item  .businessName : (item.firstName + ' ' + item.lastName);
+      const cuitCuil = item.cuitCuilCdi
       return (
         <tr key={index}>
-          <TableDataL>{nombre}</TableDataL>
+          <TableDataL>{name}</TableDataL>
           <TableDataL>{cuitCuil}</TableDataL>
-          <TableDataL>{detalle}</TableDataL>
+          <TableDataL>{'(boton a detalle)'}</TableDataL>
+          <TableDataL>{'(opciones depositar / extraer)'}</TableDataL>
         </tr>
       )
     })
@@ -94,33 +122,34 @@ const SearchClient = () => {
             <Caption> Búsqueda Cliente </Caption>
             <tbody>
               <tr>
-                <TableDataL> Búsqueda por:  </TableDataL>
-                <TableDataR>
-                    <Dropdown title='Seleccione opción de búsqueda' items={getFieldOptions()} updateParent={id => setSearchField(id)}/>
-                </TableDataR>
-              </tr>
-              <tr>
                 <TableDataL> Persona : </TableDataL>
                 <TableDataL>
                 {isLegal ?
                   (<React.Fragment>
-                      <TButton onClick={() => setIsLegal(false)}> Física </TButton>
-                      <ButtonSelected onClick={() => setIsLegal(true)}> Jurídica </ButtonSelected>
+                      <TButton onClick={() => updateIsLegal(false)}> Física </TButton>
+                      <ButtonSelected onClick={() => updateIsLegal(true)}> Jurídica </ButtonSelected>
                   </React.Fragment>)
                 : 
                   (<React.Fragment>
-                      <ButtonSelected onClick={() => setIsLegal(false)}> Física </ButtonSelected>
-                      <TButton onClick={() => setIsLegal(true)}> Jurídica </TButton>
+                      <ButtonSelected onClick={() => updateIsLegal(false)}> Física </ButtonSelected>
+                      <TButton onClick={() => updateIsLegal(true)}> Jurídica </TButton>
                   </React.Fragment>)
                 }        
                 </TableDataL>
               </tr>
               <tr>
+                <TableDataL> Búsqueda por:  </TableDataL>
+                <TableDataR>
+                    <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} 
+                    placeholder={'Selecione una opción de búsqueda...'}></Select>
+                </TableDataR>
+              </tr>
+              <tr>
                 <TableDataL>
-                  <Input name='field' type='text' placeholder='Ingrese el término de búsqueda' ref={register({ required: true })} />
-                  {errors.field && <ErrorMsg> No puede estar vacio </ErrorMsg>}
+                  <Input name='term' type='text' placeholder='Ingrese el término de búsqueda' ref={register({ required: true })} />
+                  {errors.term && <ErrorMsg> No puede estar vacio </ErrorMsg>}
                 </TableDataL>
-                <TableDataR><Button> Buscar </Button></TableDataR>
+                <TableDataR><Button disabled={isLoading}> Buscar </Button></TableDataR>
               </tr>
             </tbody>
           </Table>
@@ -128,7 +157,7 @@ const SearchClient = () => {
         <Table>
           <tbody>
             <TableHeaderRow>
-              <TableHeader> <span>Nombre / </span> <span>Razón Social</span> </TableHeader>
+              <TableHeader> <span>{isLegal ? 'Razón social' : 'Nombre'} </span> </TableHeader>
               <TableHeader> <span>CUIT /</span> <span>CUIL</span></TableHeader>
               <TableHeader> Detalle </TableHeader>
               <TableHeader> Operaciones </TableHeader>
