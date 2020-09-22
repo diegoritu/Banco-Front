@@ -17,6 +17,12 @@ const Input = styled.input`
   margin: 10px;
   width: 20vw;
 `
+
+const SelectLegal = styled(Select)`
+  width: 20vw;
+  margin: auto;
+`
+
 const TableRow = styled.tr`
 background-color: #FFF;  
 border-bottom: 1px solid black;
@@ -77,7 +83,6 @@ const CreateService = () => {
   }
 
 const getLegals = () => {
-  console.log(userService.legals())
   return userService.legals()
 }
   const [legals, setLegals] = React.useState([])
@@ -123,7 +128,12 @@ const getLegals = () => {
                     {errors.due && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
-                <Select options={loadLegalSelect(legals)}/>
+                <tr>
+                  <TableDataL> Dueño del servicio </TableDataL>
+                  <TableDataR>
+                    <SelectLegal options={loadLegalSelect(legals)}/>
+                  </TableDataR>
+                </tr>
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
