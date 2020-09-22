@@ -15,12 +15,12 @@ const alertOptions = {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <BrowserRouter>
       <AlertProvider template={AlertTemplate} {...alertOptions}>
         <App />
       </AlertProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root')
 )

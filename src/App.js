@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import CBU from './pages/CBU'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRouteAdmin from './components/ProtectedRouteAdmin'
+import NotProtectedRoute from './components/NotProtectedRoute'
 import NotFound from './pages/NotFound'
 import Transactions from './pages/Transactions'
 import Transfer from './pages/Transfer'
@@ -18,6 +20,7 @@ import RegisterClient from './pages/RegisterClient'
 import ClientDetails from './pages/ClientDetails'
 import ServicePay from './pages/ServicePay'
 import CreateService from './pages/CreateService'
+import ForgotPassword from './pages/ForgotPassword'
 
 const theme = {
   font: 'Calibri',
@@ -31,22 +34,22 @@ function App () {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <Route exact path='/' component={Login} />
+        <NotProtectedRoute exact path='/' component={Login} />
         <ProtectedRoute exact path='/home' component={Home} />
         <ProtectedRoute exact path='/cbu' component={CBU} />
         <ProtectedRoute exact path='/transfer' component={Transfer} />
         <ProtectedRoute exact path='/transactions' component={Transactions} />
         <ProtectedRoute exact path='/transactionDetails' component={TransactionDetails} />
-        <ProtectedRoute exact path='/deposit' component={Deposit} />
-        <ProtectedRoute exact path='/extraction' component={Extraction} />
+        <ProtectedRouteAdmin exact path='/deposit' component={Deposit} />
+        <ProtectedRouteAdmin exact path='/extraction' component={Extraction} />
         <ProtectedRoute exact path='/password' component={Password} />
-        <ProtectedRoute exact path='/adminHome' component={AdminHome} />
-        <ProtectedRoute exact path='/searchClient' component={SearchClient} />
-        <ProtectedRoute exact path='/registerClient' component={RegisterClient} />
-        <ProtectedRoute exact path='/clientDetails' component={ClientDetails} />
+        <ProtectedRouteAdmin exact path='/adminHome' component={AdminHome} />
+        <ProtectedRouteAdmin exact path='/searchClient' component={SearchClient} />
+        <ProtectedRouteAdmin exact path='/registerClient' component={RegisterClient} />
+        <ProtectedRouteAdmin exact path='/clientDetails' component={ClientDetails} />
         <ProtectedRoute exact path='/servicePay' component={ServicePay} />
-        <ProtectedRoute exact path='/createService' component={CreateService} />
-
+        <ProtectedRouteAdmin exact path='/createService' component={CreateService} />
+        <NotProtectedRoute exact path='/forgotPassword' component={ForgotPassword} />
         <Route path='*' component={NotFound} />
       </Switch>
     </ThemeProvider>

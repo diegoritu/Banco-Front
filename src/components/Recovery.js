@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const RecoveryWrapper = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const RecoveryWrapper = styled.div`
 const RecoveryMsg = styled.span`
 
 `
-const RecoveryLink = styled.a`
+const RecoveryLink = styled(Link)`
   padding: 10px;
 
 `
@@ -21,9 +22,9 @@ const Recovery = () => {
       <RecoveryMsg>
       ¿No podes iniciar sesion?
       </RecoveryMsg>
-      <RecoveryLink href=''>
+      <Link to='/forgotPassword'>
         Recuperar clave
-      </RecoveryLink>
+      </Link>
     </RecoveryWrapper>
   )
 }
