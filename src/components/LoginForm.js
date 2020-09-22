@@ -46,7 +46,10 @@ const LoginForm = props => {
         response => {
           const { from } = props.location.state || { from: { pathname: response } }          
           if (from.pathname !== 'Error') {
-            props.history.push(from)
+            props.history.push({
+              pathname: from.pathname,
+              state: { comesFromLogin: true }
+            })
           }
           else
           {
