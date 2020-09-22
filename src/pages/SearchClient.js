@@ -86,7 +86,7 @@ const SearchClient = () => {
     const search = isLegal ? searchUserService.searchLegalUsers(params) : searchUserService.searchPhysicalUsers(params)
     search
       .then((data) => {
-        if (!(Array.isArray(data) && data.length)) {
+        if (!Array.isArray(data) || !data.length) {
           alert.info('No se encontraron usuarios', {timeout: 7000})
           setItems([])
         } else {
@@ -100,6 +100,15 @@ const SearchClient = () => {
   }
 
   const renderTableData = () => {
+    if (!Array.isArray(items) || !items.length) {
+      return (<tr key={0}>
+        <TableDataL>-</TableDataL>
+        <TableDataL>-</TableDataL>
+        <TableDataL>-</TableDataL>
+        <TableDataL>-</TableDataL>
+      </tr>)
+    }
+
     return items.map((item, index) => {
       const name = item.userType == 'LEGAL' ? item  .businessName : (item.firstName + ' ' + item.lastName);
       const cuitCuil = item.cuitCuilCdi
@@ -113,6 +122,7 @@ const SearchClient = () => {
       )
     })
   }
+
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
