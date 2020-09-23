@@ -57,7 +57,7 @@ function loadLegalSelect(legals)
   var legalArray = []
   
   legals.forEach((item, index) => {
-    legalArray.push({value: item.businessName, label: item.businessName})
+    legalArray.push({value: item.id, label: item.businessName})
   })
 
   return legalArray
@@ -67,14 +67,26 @@ function loadLegalSelect(legals)
 const CreateService = () => {
   const { register, handleSubmit, errors } = useForm()
   const alert = useAlert()
-  const accounts = []
   const [isLegal, setIsLegal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [originAcc, setOriginAcc] = useState('')
-  const [legalSelected, setlegalSelected] = useState()
+  const [legalSelected, setlegalSelected] = useState(null)
+  const [accounts, setAccounts] = useState([])
 
   const onChangeLegalField = (legalSelected) => {
+    var accs = []
+    legals.forEach((item, index) => {
+      if(item.id === legalSelected.value){
+        if(item.checking != null){
+          accs.push({value: "Cuenta Corriente", label:  item.checking.accountNumber})
+        }
+        if(item.savings != null){
+          accs.push({value: "Caja de Ahorro", label:  item.savings.accountNumber})
+        }
+      }
+    })
     setlegalSelected(legalSelected)
+    setAccounts(accs)
   }
 
   const onSubmit = (data) => {
@@ -91,9 +103,8 @@ const CreateService = () => {
   }
 
   const accountLoader = () => {
-    console.log(legalSelected)
     legals.forEach((item, index) => {
-      if(item.id === legalSelected.id){
+      if(item.id === legalSelected.value){
         if(item.checking != null){
           accounts.push({value: "Cuenta Corriente", label:  item.checking.accountNumber})
         }
@@ -107,10 +118,15 @@ const CreateService = () => {
 const getLegals = () => {
   return userService.legals()
 }
+
+const getAccounts = () => {
+  return accounts
+}
   const [legals, setLegals] = React.useState([])
 
   React.useEffect(() => {
     getLegals().then(legals => setLegals(legals))
+
   }, [])
 
   return (
@@ -157,10 +173,11 @@ const getLegals = () => {
                     <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} />
                   </TableDataR>
                 </tr>
-                <tr>
-                  <TableDataL> Cuenta de pago </TableDataL>
-                  <TableDataRw><Dropdown title='Seleccione cuenta de pago' onClick={accountLoader} items={accounts} key={accounts.index} updateParent={value => setOriginAcc(value)} /></TableDataRw>
-                </tr>
+                {legalSelected ? console.log(accounts) : console.log(accounts)}
+                {legalSelected ?<tr>
+                    <TableDataL> Cuenta de pago </TableDataL>
+                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} key={accounts.value} updateParent={value => setOriginAcc(value)} /></TableDataRw>
+                  </tr> : <tr></tr>}
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
