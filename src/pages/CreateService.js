@@ -77,11 +77,11 @@ const CreateService = () => {
     var accs = []
     legals.forEach((item, index) => {
       if(item.id === legalSelected.value){
-        if(item.checking != null){
-          accs.push({value: "Cuenta Corriente", label:  item.checking.accountNumber})
-        }
         if(item.savings != null){
-          accs.push({value: "Caja de Ahorro", label:  item.savings.accountNumber})
+          accs.push({value: "CA " + item.savings.accountNumber , id:  item.savings.accountNumber})
+        }
+        if(item.checking != null){
+          accs.push({value: "CC " + item.checking.accountNumber, id:  item.checking.accountNumber})
         }
       }
     })
@@ -173,10 +173,9 @@ const getAccounts = () => {
                     <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} />
                   </TableDataR>
                 </tr>
-                {legalSelected ? console.log(accounts) : console.log(accounts)}
                 {legalSelected ?<tr>
                     <TableDataL> Cuenta de pago </TableDataL>
-                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} key={accounts.value} updateParent={value => setOriginAcc(value)} /></TableDataRw>
+                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setOriginAcc(value)} /></TableDataRw>
                   </tr> : <tr></tr>}
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>

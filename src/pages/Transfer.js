@@ -159,7 +159,7 @@ const Transfer = props => {
               <tbody>
                 <tr>
                   <TableDataL> Desde </TableDataL>
-                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={value => setOriginAcc(value)} /></TableDataRw>
+                  <TableDataRw><Dropdown title='Seleccione cuenta origen' items={items} updateParent={id => setOriginAcc(id)} /></TableDataRw>
                 </tr>
                 <tr>
                   <TableDataL> Hacia </TableDataL>
