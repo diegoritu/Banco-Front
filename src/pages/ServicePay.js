@@ -85,7 +85,7 @@ const ServicePay = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Pago de servicios </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Table>

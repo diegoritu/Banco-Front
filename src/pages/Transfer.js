@@ -133,7 +133,7 @@ const Transfer = props => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         {sessionStorage.getItem('userSavings') !== 'null' && sessionStorage.getItem('userChecking') !== 'null' ?
           <React.Fragment>
             <Text> Tipo de transferencia </Text>

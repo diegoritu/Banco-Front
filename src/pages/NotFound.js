@@ -14,7 +14,7 @@ const NotFoundMsg = styled.h1`
 const NotFound = () => {
   return (
     <GlobalContainer id='globalcontainer'>
-      <Content id='content'>
+      <Content id='content' url="background.png">
         <NotFoundMsg>
           404 Page not found
         </NotFoundMsg>

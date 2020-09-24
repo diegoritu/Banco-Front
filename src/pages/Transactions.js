@@ -126,7 +126,7 @@ const Transactions = (props) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Detalle de cuenta </Text>
         <AccountDetail accountType={accountType}/>
         <Text> Últimos movimientos </Text>

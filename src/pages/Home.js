@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Acciones </Text>
         <Button onClick={navigateToServicePay} type="button"> Pagar Servicios </Button>
         <Text> Mis Cuentas </Text>

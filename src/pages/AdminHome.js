@@ -50,7 +50,7 @@ const AdminHome = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Wrapper>
           <ButtonBox onClick={registerClient}>
             <img src='https://www.flaticon.com/svg/static/icons/svg/554/554795.svg' alt='Employees' height='128' width='128' />

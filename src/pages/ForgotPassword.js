@@ -37,7 +37,7 @@ const ForgotPassword = () => {
             KRRL Bank
           </HeaderTitle>
       </HeaderWrapper>
-      <Content id='content' direction='column' url='https://www.cdbeco.com.vn/wp-content/uploads/2019/02/326780-P9JGF8-718.jpg' collapse='xs'>
+      <Content id='content'url="background.png" direction='column' url='https://www.cdbeco.com.vn/wp-content/uploads/2019/02/326780-P9JGF8-718.jpg' collapse='xs'>
         <Details>
           <Text> ¿Olvidó su contraseña? </Text>        
         </Details>

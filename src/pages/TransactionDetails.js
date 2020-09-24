@@ -74,7 +74,7 @@ const TransactionDetails = (props) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Detalle de movimiento </Text>
         <Details>
           <h4> Número de transacción: #{data.idMovement} </h4>

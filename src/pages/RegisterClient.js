@@ -67,7 +67,7 @@ const RegisterClient = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Registro de nueva persona </Text>
         <ToggleWrapper>
         {isLegal ?

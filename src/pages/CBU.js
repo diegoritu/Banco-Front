@@ -32,7 +32,7 @@ const CBU = (props) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <Text> Cuentas {'>>'} CBU </Text>
         <Details>
           <h4> Tipo de cuenta: {(accountType === 'CHECKING' ? 'Cuenta corrinete' : 'Caja de ahorro')} </h4>
