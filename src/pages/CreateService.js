@@ -58,7 +58,7 @@ function loadLegalSelect(legals)
   var legalArray = []
   
   legals.forEach((item, index) => {
-    legalArray.push({value: item.id, label: item.businessName})
+    legalArray.push({value: item.username, label: item.businessName})
   })
 
   return legalArray
@@ -76,7 +76,7 @@ const CreateService = () => {
   const onChangeLegalField = (legalSelected) => {
     var accs = []
     legals.forEach((item, index) => {
-      if(item.id === legalSelected.value){
+      if(item.username === legalSelected.value){
         if(item.savings != null){
           accs.push({value: "CA " + item.savings.accountNumber , id:  item.savings.accountNumber})
         }
@@ -91,7 +91,16 @@ const CreateService = () => {
 
   const onSubmit = (data) => {
     setIsLoading(true)
-    const createService = serviceService.createService(data)
+    var accountType = 'CHECKING'
+
+    getAccounts().forEach((item, index) => {
+      if(index === 0){
+        accountType = 'SAVINGS'
+      }
+    })
+
+
+    const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
     createService
       .then((data) => {
         alert.success('Servicio creado con exito!' + data)
@@ -100,19 +109,6 @@ const CreateService = () => {
         alert.error(message)
       })
       .finally(() => setIsLoading(false))
-  }
-
-  const accountLoader = () => {
-    legals.forEach((item, index) => {
-      if(item.id === legalSelected.value){
-        if(item.checking != null){
-          accounts.push({value: "Cuenta Corriente", label:  item.checking.accountNumber})
-        }
-        if(item.savings != null){
-          accounts.push({value: "Caja de Ahorro", label:  item.savings.accountNumber})
-        }
-    }
-    })
   }
 
 const getLegals = () => {

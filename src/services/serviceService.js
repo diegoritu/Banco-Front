@@ -1,7 +1,11 @@
 import webService from './webService'
 const urlOrigin = 'http://localhost:3000'
 
-const createService = (data, amountOfIds, dueDate, name, vendorAccountNumber, vendorAccountType, vendorUsername) => {
+const createService = (data, legalSelected, accountNumber, accountType) => {
+  console.log(data)
+  console.log(legalSelected)
+  console.log(accountNumber)
+  console.log(accountType)
 const requestOptions = {
     method: 'POST',
     mode: 'cors',
@@ -10,7 +14,7 @@ const requestOptions = {
       'Content-Type': 'application/json',
       Origin: urlOrigin
     },
-    body: JSON.stringify({amount: data.amount, amountOfIds: amountOfIds, dueDate: dueDate, name : name, vendorAccountNumber : vendorAccountNumber, vendorAccountType : vendorAccountType, vendorUsername : vendorUsername})
+    body: JSON.stringify({amount: data.amount, amountOfIds: data.amountOfIds, dueDate: data.dueDate, name : data.name, vendorAccountNumber : accountNumber, vendorAccountType : accountType, vendorUsername : legalSelected.value})
   }
   return fetch(webService.createService, requestOptions)
     .then(response => 
