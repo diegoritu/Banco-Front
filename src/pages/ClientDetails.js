@@ -10,6 +10,7 @@ import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/T
 import { userService } from '../services/userService'
 import { accountService } from '../services/accountService'
 import { useAlert } from 'react-alert'
+import { useHistory } from 'react-router-dom';
 
 const Input = styled.input`
   padding: 10px;
@@ -23,6 +24,7 @@ const FixBar = styled.div`
 `
 
 const ClientDetails = (props) => {
+  const history = useHistory()
   const alert = useAlert()
   const { register, handleSubmit, errors } = useForm()
   const {
@@ -42,9 +44,11 @@ const ClientDetails = (props) => {
     modifyUser
       .then((data) => {
         alert.success('Los cambios han sido guardados')
+        history.push('/searchClient')
       })
       .catch((message) => {
         alert.error(message)
+        history.push('/searchClient')
       })
   }
   const onSubmitLegal = (formData) => {
@@ -54,9 +58,12 @@ const ClientDetails = (props) => {
     modifyUser
       .then((data) => {
         alert.success('Los cambios han sido guardados')
+        history.push('/searchClient')
+
       })
       .catch((message) => {
         alert.error(message)
+        history.push('/searchClient')
       })
   }
 
@@ -73,10 +80,12 @@ const ClientDetails = (props) => {
       response => {
         if (response !== 'balanceError') {
           alert.success('Se cerró la Cuenta Corriente del usuario')
+          history.push('/searchClient')
         }
         else
         {
           alert.error('No se pudo cerrar la cuenta. Chequee que esta tenga saldo 0')
+          history.push('/searchClient')
         }
       }
     )
@@ -96,9 +105,11 @@ const ClientDetails = (props) => {
       openChecking
         .then((data) => {
           alert.success('Se abrió la Cuenta Corriente del usuario')
+          history.push('/searchClient')
         })
         .catch((message) => {
           alert.error(message)
+          history.push('/searchClient')
         })
 
     }
@@ -108,9 +119,11 @@ const ClientDetails = (props) => {
       modifyChecking
         .then((data) => {
           alert.success('Se modificó el monto de giro en descubierto')
+          history.push('/searchClient')
         })
         .catch((message) => {
           alert.error(message)
+          history.push('/searchClient')
         })
   
     }
