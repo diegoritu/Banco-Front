@@ -29,7 +29,7 @@ const Extraction = (props) => {
     transactionService.makeExtraction(account, data.amount)
       .then((response) => {
         alert.success('Extraccion realizada con exito ')
-        console.log(response)
+        //console.log(response)
       })
       .catch((message) => {
         alert.error(message)
@@ -39,8 +39,8 @@ const Extraction = (props) => {
 
   const user = props.location.state.user
   const items = []
-  if (user.savings !== null) items.push({ id: user.savings.id, value: 'CA ' + user.savings.accountNumber })
-  if (user.checking !== null) items.push({ id: user.checking.id, value: 'CC ' + user.checking.accountNumber })
+  if (user.savings !== null) items.push({ id: user.savings.accountNumber, value: 'CA ' + user.savings.accountNumber })
+  if (user.checking !== null) items.push({ id: user.checking.accountNumber, value: 'CC ' + user.checking.accountNumber })
 
   return (
     <GlobalContainer id='globalContainer'>

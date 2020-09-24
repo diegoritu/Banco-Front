@@ -145,7 +145,7 @@ const makeExtraction = (account, amount) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Origin: 'http://localhost:3000'
+      Origin: urlOrigin
     },
     body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
   }
@@ -159,7 +159,7 @@ const makeDeposit = (account, amount) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Origin: 'http://localhost:3000'
+      Origin: urlOrigin
     },
     body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
   }
