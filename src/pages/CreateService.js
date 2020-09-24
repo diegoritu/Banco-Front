@@ -72,10 +72,10 @@ const CreateService = () => {
   const [accountNumber, setAccountNumber] = useState('')
   const [legalSelected, setlegalSelected] = useState(null)
   const [accounts, setAccounts] = useState([])
+  var selectedItem = ''
 
   const onChangeLegalField = (legalSelected) => {
     var accs = []
-    var selectedItem = ''
     legals.forEach((item, index) => {
       if(item.username === legalSelected.value){
         selectedItem = item
