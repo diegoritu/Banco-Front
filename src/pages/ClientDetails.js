@@ -67,7 +67,23 @@ const ClientDetails = (props) => {
     setIsDisabledChecking(false)   
   }
   const closeChecking = () =>{
-    
+
+    accountService.closeChecking(data.username)
+    .then(
+      response => {
+        if (response !== 'balanceError') {
+          alert.success('Se cerró la Cuenta Corriente del usuario')
+        }
+        else
+        {
+          alert.error('No se pudo cerrar la cuenta. Chequee que esta tenga saldo 0')
+        }
+      }
+    )
+    .catch(error => {
+      console.log(error)
+    })
+
   }
 
   const onSubmitChecking = (formData) => {
@@ -76,7 +92,6 @@ const ClientDetails = (props) => {
 
     if(!startWithChecking){
       //Open checking
-      console.log("Open!")
       const openChecking = accountService.openChecking(formData, data.username)
       openChecking
         .then((data) => {

@@ -6,6 +6,7 @@ const urlWebService = {
   getSavings: urlAPI + '/account/savings',
   modifyCheckingAccount: urlAPI + '/account/checking',
   newCheckingAccount: urlAPI + '/account/checking',
+  closeCheckingAccount: urlAPI + '/account/checking/close-account',
 
   transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
   transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts',

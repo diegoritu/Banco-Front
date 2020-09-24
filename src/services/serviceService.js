@@ -27,8 +27,9 @@ const requestOptions = {
 }
 
 const searchService = (data) => {
+console.log(data)
 const requestOptions = {
-    method: 'POST',
+    method: 'GET',
     mode: 'cors',
     headers: {
       Accept: 'application/json',

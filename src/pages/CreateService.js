@@ -75,8 +75,10 @@ const CreateService = () => {
 
   const onChangeLegalField = (legalSelected) => {
     var accs = []
+    var selectedItem = ''
     legals.forEach((item, index) => {
       if(item.username === legalSelected.value){
+        selectedItem = item
         if(item.savings != null){
           accs.push({value: "CA " + item.savings.accountNumber , id:  item.savings.accountNumber})
         }
@@ -93,12 +95,9 @@ const CreateService = () => {
     setIsLoading(true)
     var accountType = 'CHECKING'
 
-    getAccounts().forEach((item, index) => {
-      if(index === 0){
-        accountType = 'SAVINGS'
-      }
-    })
-
+    if(selectedItem.savings && selectedItem.savings.accountNumber == accountNumber){
+      accountType = 'SAVINGS'
+    }
 
     const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
     createService
