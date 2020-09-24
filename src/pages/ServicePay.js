@@ -28,6 +28,20 @@ const FixBar = styled.div`
  height: 10vh;
   width: 100%;
 `
+
+const TableAlt = styled(Table)`
+  width:60%;
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-collapse: collapse;
+  background-color: #e1e1e182;
+`
+
 const ServicePay = () => {
   const alert = useAlert()
   const { register, handleSubmit, errors } = useForm()
@@ -88,7 +102,7 @@ const ServicePay = () => {
       <Content id='content' url="background.png" direction='column'>
         <Text> Pago de servicios </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Table>
+          <TableAlt>
             <tbody>
               <tr>
                 <TableDataL><p> Identificador del proveedor: </p></TableDataL>
@@ -110,10 +124,10 @@ const ServicePay = () => {
                 </TableDataL>
               </tr>
               </tbody>
-          </Table>
+          </TableAlt>
         </form>
         <form onSubmit={handleSubmitA(onSubmitA)}>
-          <Table>
+          <TableAlt>
             <tbody>
               <tr>
                 <TableDataL> Nombre del Proveedor: </TableDataL>
@@ -137,7 +151,7 @@ const ServicePay = () => {
                 <TableDataL><TButton type='submit'> Pagar </TButton></TableDataL>
               </tr>
             </tbody>
-          </Table>
+          </TableAlt>
         </form>
         <FixBar />
       </Content>
