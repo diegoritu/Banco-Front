@@ -94,6 +94,32 @@ const ClientDetails = (props) => {
     })
 
   }
+  const disableClient = () =>{
+
+    userService.disableUser(data.username)
+    .then(
+      response => {
+        if (response === 'notFoud') {
+          alert.error('No se encontró el usuario a deshabilitar.')
+          history.push('/searchClient')
+        }
+        else if(response === 'closeError' || response.status === 404){
+          alert.error('No se puedo deshabilitar al usuario. Chequee que sus cuentas tengan saldo 0')
+          history.push('/searchClient')
+
+        }
+        else
+        {
+          alert.success('Se deshabilitó al usuario.')
+          history.push('/searchClient')
+        }
+      }
+    )
+    .catch(error => {
+      console.log(error)
+    })
+
+  }
 
   const onSubmitChecking = (formData) => {
     setIsDisabledChecking(true)
@@ -312,8 +338,8 @@ const ClientDetails = (props) => {
             <tr>
               {data.checking && <TableDataL><TButton type='button' onClick={() => closeChecking()}> Cerrar cuenta corriente </TButton></TableDataL>}
               {!data.checking && <TableDataL><TButton type='button' onClick={() => openChecking()}> Abrir cuenta corriente </TButton></TableDataL>}
-              <TableDataL><TButton type='button'> Deshabilitar cliente </TButton></TableDataL>
-              <TableDataL><TButton type='button'> Reiniciar contraseña </TButton></TableDataL>
+              <TableDataL><TButton type='button' onClick={() => disableClient()}> Deshabilitar cliente </TButton></TableDataL>
+              <TableDataL><TButton type='button'> Resetear contraseña </TButton></TableDataL>
             </tr>
           </tbody>
         </Table>
