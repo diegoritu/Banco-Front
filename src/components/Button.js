@@ -12,7 +12,6 @@ export default styled.button`
   font-size: 20px;
   color: #fff;
   line-height: 48px;
-  padding: 0 16px;
   :active, :hover
   {
     background: #646464;

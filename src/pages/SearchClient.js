@@ -41,7 +41,24 @@ const ActionButton = styled.button`
   font-size: 12pt;
   padding: 2px;
   min-width: 100px;
+  background-color: #000;
+  color: #fff;
+  :active, :hover
+  {
+    background: #646464;
+  }
+
 `
+
+const TableRow = styled.tr`
+  background-color: #FFF;  
+  border-bottom: 1px solid black;
+  :active, :hover
+  {
+    background: #e9e9e9;
+  }
+`
+
 
 const usernameOption = new OptionItem('username', 'Nombre de usuario')
 const cuitCuilOption = new OptionItem('cuitCuil', 'CUIT/CUIL')
@@ -112,19 +129,19 @@ const SearchClient = () => {
   const renderTableData = () => {
     if (!Array.isArray(items) || !items.length) {
       return (
-        <tr key={0}>
+        <TableRow key={0}>
           <TableDataL>-</TableDataL>
           <TableDataL>-</TableDataL>
           <TableDataL>-</TableDataL>
           <TableDataL>-</TableDataL>
-        </tr>)
+        </TableRow>)
     }
 
     return items.map((item, index) => {
       const name = item.userType === 'LEGAL' ? item.businessName : (item.firstName + ' ' + item.lastName)
       const cuitCuil = item.cuitCuilCdi
       return (
-        <tr key={index}>
+        <TableRow key={index}>
           <TableDataL>{name}</TableDataL>
           <TableDataL>{cuitCuil}</TableDataL>
           <TableDataL><ActionButton onClick={() => history.push({ pathname: '/clientDetails', state: { user: item } })}> Detalle </ActionButton></TableDataL>
@@ -132,7 +149,7 @@ const SearchClient = () => {
             <ActionButton onClick={() => history.push({ pathname: '/deposit', state: { user: item } })}> Depositar </ActionButton>
             <ActionButton onClick={() => history.push({ pathname: '/extraction', state: { user: item } })}> Extraer </ActionButton>
           </TableDataL>
-        </tr>
+        </TableRow>
       )
     })
   }

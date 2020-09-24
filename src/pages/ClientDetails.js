@@ -175,7 +175,7 @@ const ClientDetails = (props) => {
           <tbody>
             <tr>
               {data.checking && <TableDataL><TButton type='button'> Cerrar cuenta corriente </TButton></TableDataL>}
-              {!data.checking && <TableDataL><TButton type='button'> Abrir Cuenta </TButton></TableDataL>}
+              {!data.checking && <TableDataL><TButton type='button'> Abrir cuenta corriente </TButton></TableDataL>}
               <TableDataL><TButton type='button'> Deshabilitar cliente </TButton></TableDataL>
               <TableDataL><TButton type='button'> Reiniciar contraseña </TButton></TableDataL>
             </tr>
