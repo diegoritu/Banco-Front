@@ -4,6 +4,8 @@ const urlOrigin = 'http://localhost:3000'
 const urlWebService = {
   getChecking: urlAPI + '/account/checking',
   getSavings: urlAPI + '/account/savings',
+  modifyCheckingAccount: urlAPI + '/account/checking',
+  newCheckingAccount: urlAPI + '/account/checking',
 
   transferToOtherAccounts: urlAPI + '/movement/transferToOtherAccounts',
   transferBetweenOwnAccounts: urlAPI + '/movement/transferBetweenOwnAccounts',
@@ -23,7 +25,10 @@ const urlWebService = {
   getLegals: urlAPI + '/user/legals',
   createLegalUser: urlAPI + '/user/legal',
   searchPhysicalUser: urlAPI + '/user/physical/search',
-  searchLegalUser: urlAPI + '/user/legal/search'
+  searchLegalUser: urlAPI + '/user/legal/search',
+  getPhysical: urlAPI + '/user/physical',
+  modifyPhysicalUser: urlAPI + '/user/physical/modify',
+  modifyLegalUser: urlAPI + '/user/legal/modify'
 }
 
 export { urlWebService, urlOrigin }

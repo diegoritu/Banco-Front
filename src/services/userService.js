@@ -347,5 +347,48 @@ const registerLegalUser = (data) => {
   return request(urlWebService.createLegalUser, requestOptions)
 }
 
+const modifyPhysicalUser = (data, oldUsername) => {
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({
+        "address": data.address,
+        "birthDate": data.birthDate,
+        "firstName": data.firstName,
+        "lastName": data.lastName,
+        "mobilePhone": data.mobilePhone,
+        "oldUsername": oldUsername,
+        "phone": data.phone,
+        "username": data.username,
+      })
+  }
 
-export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals, getAnotherUser }
+  return request(urlWebService.modifyPhysicalUser, requestOptions)
+}
+
+const modifyLegalUser = (data, oldUsername) => {
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({
+        "address": data.address,
+        "businessName": data.businessName,
+        "oldUsername": oldUsername,
+        "phone": data.phone,
+        "username": data.username,
+      })
+  }  
+  return request(urlWebService.modifyLegalUser, requestOptions)
+}
+
+export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals, getAnotherUser, modifyPhysicalUser, modifyLegalUser }

@@ -1,4 +1,5 @@
 import { urlWebService, urlOrigin } from './webService'
+import request from './requestHelper'
 
 const account = (data) => {
 
@@ -64,4 +65,32 @@ const account = (data) => {
   }
 }
 
-export const accountService = { account }
+const modifyChecking = (data, accountNumber) => {
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({ accountNumber: accountNumber, maxOverDraft: data.maxOverdraft })
+  }  
+  return request(urlWebService.modifyCheckingAccount, requestOptions)
+}
+
+const openChecking = (data, username) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({ maxOverdraft: data.maxOverdraft, username: username })
+  }  
+  return request(urlWebService.newCheckingAccount, requestOptions)
+}
+
+export const accountService = { account, modifyChecking, openChecking }
