@@ -103,7 +103,15 @@ const CreateService = () => {
     const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
     createService
       .then((data) => {
-        alert.success('Servicio creado con exito!' + data)
+        alert.success('¡Servicios creados con exito! El archivo con las claves se descargó correctamente.' )
+        const element = document.createElement("a");
+        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n # " + data.ids.toString().replace(/,/g, '\n# ');
+        textToWrite = textToWrite.replace(/\n/g, "\r\n");
+        const file = new Blob([textToWrite], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "Ids de Servicio.txt";
+        document.body.appendChild(element); // Required for this to work in FireFox
+        element.click();
       })
       .catch((message) => {
         alert.error(message)
