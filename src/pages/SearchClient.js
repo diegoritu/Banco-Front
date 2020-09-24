@@ -154,7 +154,7 @@ const SearchClient = () => {
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
                 <TableDataR>
-                  <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione una opción de búsqueda...' />
+                  <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione una opción de búsqueda...' ref={register({ required: true})}/>
                 </TableDataR>
               </tr>
               <tr>

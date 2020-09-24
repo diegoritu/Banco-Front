@@ -18,6 +18,14 @@ const Input = styled.input`
   width: 20vw;
 `
 
+function numberWithStyle (x) {
+  x = x.toFixed(2)
+  var number = (x.toString().replace('.', ',').replace(' ', ''))
+  var resultNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return resultNumber
+}
+
+
 const Extraction = (props) => {
   const { register, handleSubmit, errors } = useForm()
   const [account, setAccount] = useState('')
@@ -28,8 +36,12 @@ const Extraction = (props) => {
     setIsLoading(true)
     transactionService.makeExtraction(account, data.amount)
       .then((response) => {
-        alert.success('Extraccion realizada con exito ')
-        //console.log(response)
+        if(response !== 'transactionError'){
+          alert.success('Extraccion realizada con exito ')
+        }
+        else{
+          alert.error('Operación fallida. Chequee que la cuenta tenga el saldo suficiente para realizar la operación.')
+        }
       })
       .catch((message) => {
         alert.error(message)
@@ -39,20 +51,20 @@ const Extraction = (props) => {
 
   const user = props.location.state.user
   const items = []
-  if (user.savings !== null) items.push({ id: user.savings.accountNumber, value: 'CA ' + user.savings.accountNumber })
-  if (user.checking !== null) items.push({ id: user.checking.accountNumber, value: 'CC ' + user.checking.accountNumber })
+  if (user.savings !== null) items.push({ id: user.savings.accountNumber, value: 'CA ' + user.savings.accountNumber + ' ($' + numberWithStyle(user.savings.balance) + ')'})
+  if (user.checking !== null) items.push({ id: user.checking.accountNumber, value: 'CC ' + user.checking.accountNumber + ' ($' + numberWithStyle(user.checking.balance)  + ')'})
 
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
       <Content id='content' direction='column'>
-        <Text> Extraccion </Text>
+        <Text> Extracción </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Table>
             <tbody>
               <tr>
                 <TableDataL><p> Cuenta: </p></TableDataL>
-                <TableDataR><Dropdown items={items} updateParent={value => setAccount(value)} /></TableDataR>
+                <TableDataR><Dropdown title={'Seleccione una cuenta'} items={items} updateParent={value => setAccount(value)} /></TableDataR>
               </tr>
               <tr>
                 <TableDataL><p> Monto a extraer: </p></TableDataL>

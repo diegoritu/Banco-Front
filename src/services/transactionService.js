@@ -149,7 +149,22 @@ const makeExtraction = (account, amount) => {
     },
     body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
   }
-  return request(urlWebService.extract, requestOptions)
+  return fetch(urlWebService.extract, requestOptions)
+  .then(response =>
+    response.json().catch(err => {
+      console.log('Looks like there was a problem. Status Code: ' + response.status)
+      if(response.status === 418){
+        return 'transactionError'
+      }
+    })
+      .then(data => ({
+        data: data,
+        status: response.status
+      })
+      ).then(res => {
+        return res.data
+      }))
+  .catch(error => console.log('Fetch Error :-S', error))
 }
 
 const makeDeposit = (account, amount) => {
@@ -163,7 +178,22 @@ const makeDeposit = (account, amount) => {
     },
     body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
   }
-  return request(urlWebService.deposit, requestOptions)
+  return fetch(urlWebService.deposit, requestOptions)
+  .then(response =>
+    response.json().catch(err => {
+      console.log('Looks like there was a problem. Status Code: ' + response.status)
+      if(response.status === 418){
+        return 'transactionError'
+      }
+    })
+      .then(data => ({
+        data: data,
+        status: response.status
+      })
+      ).then(res => {
+        return res.data
+      }))
+  .catch(error => console.log('Fetch Error :-S', error))
 }
 
 export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction, makeExtraction, makeDeposit }

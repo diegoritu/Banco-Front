@@ -202,6 +202,100 @@ const user = (data) => {
   }
 }
 
+const getAnotherUser = (userType, username) => {
+
+  if(userType === 'PHYSICAL'){
+    const requestOptions = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Origin: urlOrigin
+      }
+    }
+    return fetch(urlWebService.getPhysical + '?username=' + username, requestOptions)
+      .then(response => 
+        response.json().catch(err => {
+          console.log('Looks like there was a problem. Status Code: ' + response.status)
+          return {}
+        })
+        .then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        if (res.status === 404) {
+          return {}
+        }
+        else {
+          return res.data
+        }
+    }))
+      .catch(error => console.log('Fetch Error :-S', error))
+  }
+  else if(userType === 'LEGAL'){
+      const requestOptions = {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Origin: urlOrigin
+        }
+      }
+      return fetch(urlWebService.getLegal + '?username=' + username, requestOptions)
+        .then(response => 
+          response.json().catch(err => {
+            console.log('Looks like there was a problem. Status Code: ' + response.status)
+            return {}
+          })
+          .then(data => ({
+              data: data,
+              status: response.status
+          })
+      ).then(res => {
+          if (res.status === 404) {
+            return {}
+          }
+          else {
+            return res.data
+          }
+      }))
+        .catch(error => console.log('Fetch Error :-S', error))  
+  }
+  else{
+    const requestOptions = {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Origin: urlOrigin
+      }
+    }
+    return fetch(urlWebService.getAdministrative + '?username=' + username, requestOptions)
+      .then(response => 
+        response.json().catch(err => {
+          console.log('Looks like there was a problem. Status Code: ' + response.status)
+          return {}
+        })
+        .then(data => ({
+            data: data,
+            status: response.status
+        })
+    ).then(res => {
+        if (res.status === 404) {
+          return {}
+        }
+        else {
+          return res.data
+        }
+    }))
+      .catch(error => console.log('Fetch Error :-S', error))  
+
+  }
+}
 
 const registerPhysicalUser = (data) => {
   const requestOptions = {
@@ -254,4 +348,4 @@ const registerLegalUser = (data) => {
 }
 
 
-export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals }
+export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals, getAnotherUser }

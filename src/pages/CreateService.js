@@ -103,7 +103,7 @@ const CreateService = () => {
     const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
     createService
       .then((data) => {
-        alert.success('¡Servicios creados con exito! El archivo con las claves se descargó correctamente.' )
+        alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
         const element = document.createElement("a");
         var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
         textToWrite = textToWrite.replace(/\n/g, "\r\n");
@@ -146,7 +146,7 @@ const getAccounts = () => {
                 <tr>
                   <TableDataL> Servicio </TableDataL>
                   <TableDataR>
-                    <Input name='name' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    <Input name='name' type='text' ref={register({ required: true})} />
                     {errors.name && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -160,7 +160,7 @@ const getAccounts = () => {
                 <tr>
                   <TableDataL> Monto </TableDataL>
                   <TableDataR>
-                  <Input name='amount' type='number' min="0" step='any' ref={register()} />
+                  <Input name='amount' type='number' min="0" step='any' ref={register({ required: true})} />
                     {errors.amount && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -174,12 +174,12 @@ const getAccounts = () => {
                 <tr>
                   <TableDataL> Dueño del servicio </TableDataL>
                   <TableDataR>
-                    <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} />
+                    <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} ref={register({ required: true})}/>
                   </TableDataR>
                 </tr>
                 {legalSelected ?<tr>
                     <TableDataL> Cuenta de pago </TableDataL>
-                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setAccountNumber(value)} /></TableDataRw>
+                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setAccountNumber(value)} ref={register({ required: true})} /></TableDataRw>
                   </tr> : <tr></tr>}
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
