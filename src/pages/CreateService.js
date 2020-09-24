@@ -105,7 +105,7 @@ const CreateService = () => {
       .then((data) => {
         alert.success('¡Servicios creados con exito! El archivo con las claves se descargó correctamente.' )
         const element = document.createElement("a");
-        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n # " + data.ids.toString().replace(/,/g, '\n# ');
+        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
         textToWrite = textToWrite.replace(/\n/g, "\r\n");
         const file = new Blob([textToWrite], {type: 'text/plain'});
         element.href = URL.createObjectURL(file);
