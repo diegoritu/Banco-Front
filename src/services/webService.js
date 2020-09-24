@@ -15,6 +15,7 @@ const urlWebService = {
   deposit: urlAPI + '/movement/deposit',
 
   createService: urlAPI + '/service-bill/create',
+  searchService: urlAPI + '/service-bill/search',
 
   getAdministrative: urlAPI + '/user/administrative',
   createPhysicalUser: urlAPI + '/user/physical',

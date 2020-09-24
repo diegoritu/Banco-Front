@@ -26,5 +26,26 @@ const requestOptions = {
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
+const searchService = (data) => {
+const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+  }
+  return fetch(urlWebService.searchService + '?servicePaymentId=' + data.servicePaymentId + "&vendorId=" + data.vendorId, requestOptions)
+    .then(response => 
+      response.json().catch(err => {
+        if(response.status === 404){
+          return 'serviceBillNotFound'  
+        }
+      })
+     )
+    .catch(error => console.log('Fetch Error :-S', error))
+}
 
-export const serviceService = { createService }
+
+export const serviceService = { createService , searchService}

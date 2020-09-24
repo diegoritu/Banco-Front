@@ -6,6 +6,8 @@ import GlobalContainer from '../components/GlobalContainer'
 import Header from '../components/Header'
 import Text from '../components/Text'
 import { useForm } from 'react-hook-form'
+import { serviceService } from '../services/serviceService'
+import { useAlert } from 'react-alert'
 
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
@@ -20,13 +22,30 @@ const Input = styled.input`
 `
 const data = {
   serviceName: 'Edesur',
-  debt: 100,
-  expirationDate: '2020-09-09'
+  amount: 100,
+  due: '2020-09-09'
 }
 
 const ServicePay = () => {
+  const alert = useAlert()
   const { register, handleSubmit, errors } = useForm()
+  const {
+    register: registerA,
+    errors: errorsA,
+    handleSubmit: handleSubmitA
+  } = useForm();
+
+
   const onSubmit = (data) => {
+    const searchService = serviceService.searchService(data)
+    searchService
+    .then((data) =>{
+      console.log(data)
+      alert.success('¡Lo econtramos!' )
+    })
+  }
+
+  const onSubmitA = (data) => {
     console.log(data)
   }
   return (
@@ -38,28 +57,45 @@ const ServicePay = () => {
           <Table>
             <tbody>
               <tr>
-                <TableDataL><p> Identificador: </p></TableDataL>
+                <TableDataL><p> Identificador del proveedor: </p></TableDataL>
                 <TableDataL>
-                  <Input name='identifier' type='text' ref={register({ required: true })} />
-                  {errors.amount && <ErrorMsg> Debe ingresar un monto </ErrorMsg>}
+                  <Input name='vendorId' type='text' ref={register({ required: true })} />
+                  {errors.vendorId && <ErrorMsg> Debe ingresar un id de proveedor </ErrorMsg>}
+                </TableDataL>      
+              </tr>
+              <tr>
+                <TableDataL><p> Identificador del servicio: </p></TableDataL>
+                <TableDataL>
+                  <Input name='servicePaymentId' type='text' ref={register({ required: true })} />
+                  {errors.servicePaymentId && <ErrorMsg> Debe ingresar un id de servicio </ErrorMsg>}
                 </TableDataL>
-                <TableDataL>
-                  <TButton type='button'>
+                 <TableDataL>
+                  <TButton type='submit'>
                     Buscar
                   </TButton>
                 </TableDataL>
               </tr>
+              </tbody>
+          </Table>
+        </form>
+        <form onSubmit={handleSubmitA(onSubmitA)}>
+          <Table>
+            <tbody>
               <tr>
-                <TableDataL> Nombre del servicio: </TableDataL>
+                <TableDataL> Nombre del Proveedor: </TableDataL>
+                <TableDataR> {data.vendorName} </TableDataR>
+              </tr>
+              <tr>
+                <TableDataL> Nombre del Servicio: </TableDataL>
                 <TableDataR> {data.serviceName} </TableDataR>
               </tr>
               <tr>
                 <TableDataL> Monto adeudado: </TableDataL>
-                <TableDataR> {data.debt} </TableDataR>
+                <TableDataR> {data.amount} </TableDataR>
               </tr>
               <tr>
                 <TableDataL> Fecha de vencimiento: </TableDataL>
-                <TableDataR> {data.expirationDate} </TableDataR>
+                <TableDataR> {data.due} </TableDataR>
               </tr>
               <tr>
                 <TableDataL><p> Cuenta a debitar: </p></TableDataL>
