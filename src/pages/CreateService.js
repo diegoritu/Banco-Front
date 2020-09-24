@@ -8,6 +8,7 @@ import Text from '../components/Text'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/Table'
+import { serviceService } from '../services/serviceService'
 import { userService } from '../services/userService'
 import { useAlert } from 'react-alert'
 import Select from 'react-select'
@@ -67,9 +68,8 @@ function loadLegalSelect(legals)
 const CreateService = () => {
   const { register, handleSubmit, errors } = useForm()
   const alert = useAlert()
-  const [isLegal, setIsLegal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [originAcc, setOriginAcc] = useState('')
+  const [accountNumber, setAccountNumber] = useState('')
   const [legalSelected, setlegalSelected] = useState(null)
   const [accounts, setAccounts] = useState([])
 
@@ -91,10 +91,10 @@ const CreateService = () => {
 
   const onSubmit = (data) => {
     setIsLoading(true)
-    const createUser = isLegal ? userService.registerLegalUser(data) : userService.registerPhysicalUser(data)
-    createUser
+    const createService = serviceService.createService(data)
+    createService
       .then((data) => {
-        alert.success('Usuario creado con exito! Contraseña: ' + data.password)
+        alert.success('Servicio creado con exito!' + data)
       })
       .catch((message) => {
         alert.error(message)
@@ -142,15 +142,15 @@ const getAccounts = () => {
                 <tr>
                   <TableDataL> Servicio </TableDataL>
                   <TableDataR>
-                    <Input name='service' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
-                    {errors.service && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='name' type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    {errors.name && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cantidad de códigos </TableDataL>
                   <TableDataR>
-                    <Input name='amountOfCodes' type='number' min="1" ref={register({ required: true})} />
-                    {errors.amountOfCodes && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='amountOfIds' type='number' min="1" ref={register({ required: true})} />
+                    {errors.amountOfIds && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
@@ -163,8 +163,8 @@ const getAccounts = () => {
                 <tr>
                 <TableDataL> Fecha de vencimiento </TableDataL>
                   <TableDataR>
-                    <Input name='due' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
-                    {errors.due && <ErrorMsg> x </ErrorMsg>}
+                    <Input name='dueDate' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                    {errors.dueDate && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
@@ -175,7 +175,7 @@ const getAccounts = () => {
                 </tr>
                 {legalSelected ?<tr>
                     <TableDataL> Cuenta de pago </TableDataL>
-                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setOriginAcc(value)} /></TableDataRw>
+                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setAccountNumber(value)} /></TableDataRw>
                   </tr> : <tr></tr>}
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
