@@ -60,6 +60,36 @@ const transferBetweenOwnAccounts = (data, originAcc, destinationAcc) => {
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
+const payService = (accountNumberFrom, idServicePayment, usernameFrom, vendorId) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    },
+    body: JSON.stringify({ accountNumberFrom: accountNumberFrom, idServicePayment: idServicePayment, usernameFrom: usernameFrom, vendorId: vendorId })
+  }
+  return fetch(urlWebService.payService, requestOptions)
+    .then(response =>
+      response.json().catch(err => {
+        if (response.status === 418) {
+          return 'transactionError'
+        } else {
+          return 'operationCantBePerformed'
+        }
+      })
+        .then(data => ({
+          data: data,
+          status: response.status
+        })
+        ).then(res => {
+          return res.data
+        }))
+    .catch(error => console.log('Fetch Error :-S', error))
+}
+
 const getTransactions = (data) => {
   const requestOptions = {
     method: 'GET',
@@ -196,4 +226,4 @@ const makeDeposit = (account, amount) => {
   .catch(error => console.log('Fetch Error :-S', error))
 }
 
-export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction, makeExtraction, makeDeposit }
+export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction, makeExtraction, makeDeposit, payService }
