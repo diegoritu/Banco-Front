@@ -73,6 +73,10 @@ const Transfer = props => {
   const onSubmitOwned = (data) => {
     var accountDestination = destinationAcc
     var accountOrigin = originAcc
+
+    console.log(data)
+    console.log(accountOrigin)
+    console.log(accountDestination)
   
     transactionService.transferBetweenOwnAccounts(data, accountOrigin, accountDestination)
       .then(

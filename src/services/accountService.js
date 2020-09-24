@@ -1,5 +1,4 @@
-import urlWebService from './webService'
-const urlOrigin = 'http://localhost:3000'
+import { urlWebService, urlOrigin } from './webService'
 
 const account = (data) => {
 

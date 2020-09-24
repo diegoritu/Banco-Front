@@ -1,5 +1,5 @@
-import urlWebService from './webService'
-const urlOrigin = 'http://localhost:3000'
+import request from './requestHelper'
+import { urlWebService, urlOrigin } from './webService'
 
 const transferToOtherAccounts = (data, originAcc) => {
   const requestOptions = {
@@ -10,27 +10,24 @@ const transferToOtherAccounts = (data, originAcc) => {
       'Content-Type': 'application/json',
       Origin: urlOrigin
     },
-    body: JSON.stringify({accountNumberFrom: originAcc, amount: data.amountToNotOwned, cbuTo: data.cbu, reference: data.reference})
+    body: JSON.stringify({ accountNumberFrom: originAcc, amount: data.amountToNotOwned, cbuTo: data.cbu, reference: data.reference })
   }
   return fetch(urlWebService.transferToOtherAccounts, requestOptions)
-    .then(response => 
+    .then(response =>
       response.json().catch(err => {
-        
-        if(response.status === 409){
-          return 'accountNotFound'  
-        }
-        else{
-          return 'operationCantBePerformed'  
-
+        if (response.status === 409) {
+          return 'accountNotFound'
+        } else {
+          return 'operationCantBePerformed'
         }
       })
-      .then(data => ({
+        .then(data => ({
           data: data,
           status: response.status
-      })
-    ).then(res => {
-      return res.data
-  }))
+        })
+        ).then(res => {
+          return res.data
+        }))
     .catch(error => console.log('Fetch Error :-S', error))
 }
 const transferBetweenOwnAccounts = (data, originAcc, destinationAcc) => {
@@ -42,31 +39,28 @@ const transferBetweenOwnAccounts = (data, originAcc, destinationAcc) => {
       'Content-Type': 'application/json',
       Origin: urlOrigin
     },
-    body: JSON.stringify({accountNumberFrom: originAcc, accountNumberTo: destinationAcc, amount: data.amountToOwned})
+    body: JSON.stringify({ accountNumberFrom: originAcc, accountNumberTo: destinationAcc, amount: data.amountToOwned })
   }
   return fetch(urlWebService.transferBetweenOwnAccounts, requestOptions)
-    .then(response => 
+    .then(response =>
       response.json().catch(err => {
-        
-        if(response.status === 409){
-          return 'accountNotFound'  
-        }
-        else{
-          return 'operationCantBePerformed'  
-
+        if (response.status === 409) {
+          return 'accountNotFound'
+        } else {
+          return 'operationCantBePerformed'
         }
       })
-      .then(data => ({
+        .then(data => ({
           data: data,
           status: response.status
-      })
-    ).then(res => {
-      return res.data
-  }))
+        })
+        ).then(res => {
+          return res.data
+        }))
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
-const getTransactions = (data) =>{
+const getTransactions = (data) => {
   const requestOptions = {
     method: 'GET',
     mode: 'cors',
@@ -76,51 +70,49 @@ const getTransactions = (data) =>{
       Origin: urlOrigin
     }
   }
-  if(data === "CHECKING"){
+  if (data === 'CHECKING') {
     return fetch(urlWebService.getMovements + '?accountNumber=' + window.sessionStorage.getItem('userChecking'), requestOptions)
-      .then(response => 
+      .then(response =>
         response.json().catch(err => {
           console.log('Looks like there was a problem. Status Code: ' + response.status)
           return {}
         })
-        .then(data => ({
+          .then(data => ({
             data: data,
             status: response.status
-        })
-    ).then(res => {
-        if (res.status === 404) {
-          return {}
-        }
-        else {
-          return res.data
-        }
-    }))
+          })
+          ).then(res => {
+            if (res.status === 404) {
+              return {}
+            } else {
+              return res.data
+            }
+          }))
       .catch(error => console.log('Fetch Error :-S', error))
-  } 
-  else{
+  } else {
     return fetch(urlWebService.getMovements + '?accountNumber=' + window.sessionStorage.getItem('userSavings'), requestOptions)
-      .then(response => 
+      .then(response =>
         response.json().catch(err => {
           console.log('Looks like there was a problem. Status Code: ' + response.status)
-          return {}
-        })
-        .then(data => ({
+          return ({})
+        }
+        )
+          .then(data => ({
             data: data,
             status: response.status
-        })
-    ).then(res => {
-        if (res.status === 404) {
-          return {}
-        }
-        else {
-          return res.data
-        }
-    }))
+          })
+          ).then(res => {
+            if (res.status === 404) {
+              return {}
+            } else {
+              return res.data
+            }
+          }))
       .catch(error => console.log('Fetch Error :-S', error))
   }
 }
 
-const getTransaction = (data) =>{
+const getTransaction = (data) => {
   const requestOptions = {
     method: 'GET',
     mode: 'cors',
@@ -131,20 +123,47 @@ const getTransaction = (data) =>{
     }
   }
   return fetch(urlWebService.getMovement + '?id=' + data, requestOptions)
-    .then(response => 
+    .then(response =>
       response.json().catch(err => {
         console.log('Looks like there was a problem. Status Code: ' + response.status)
         return {}
       })
-      .then(data => ({
+        .then(data => ({
           data: data,
           status: response.status
-      })
-  ).then(res => {
-      return res.data
-  }))
+        })
+        ).then(res => {
+          return res.data
+        }))
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
+const makeExtraction = (account, amount) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: 'http://localhost:3000'
+    },
+    body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
+  }
+  return request(urlWebService.extract, requestOptions)
+}
 
-export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction }
+const makeDeposit = (account, amount) => {
+  const requestOptions = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: 'http://localhost:3000'
+    },
+    body: JSON.stringify({ accountNumberEntryAccount: account, amount: amount })
+  }
+  return request(urlWebService.deposit, requestOptions)
+}
+
+export const transactionService = { transferToOtherAccounts, transferBetweenOwnAccounts, getTransactions, getTransaction, makeExtraction, makeDeposit }

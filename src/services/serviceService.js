@@ -1,5 +1,4 @@
-import webService from './webService'
-const urlOrigin = 'http://localhost:3000'
+import { urlWebService, urlOrigin } from './webService'
 
 const createService = (data, legalSelected, accountNumber, accountType) => {
   console.log(data)
@@ -16,7 +15,7 @@ const requestOptions = {
     },
     body: JSON.stringify({amount: data.amount, amountOfIds: data.amountOfIds, dueDate: data.dueDate, name : data.name, vendorAccountNumber : accountNumber, vendorAccountType : accountType, vendorUsername : legalSelected.value})
   }
-  return fetch(webService.createService, requestOptions)
+  return fetch(urlWebService.createService, requestOptions)
     .then(response => 
       response.json().catch(err => {
         if(response.status === 409){

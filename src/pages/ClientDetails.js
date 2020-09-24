@@ -18,28 +18,11 @@ const FixBar = styled.div`
  height: 10vh;
   width: 100%;
 `
-const data = {
-  fullname: 'Oliver Klein',
-  cuitCuil: '20-37054103-2',
-  dni: '37054103',
-  username: 'oklein',
-  address: 'Alto Palermo',
-  birthday: '1993-07-31',
-  phone: '0234615417139',
-  mobile: '5492346417139',
-  checking: '10101010',
-  overdraft: 1000,
-  companyName: 'Alexander',
-  cuitCuilLegalEntity: '30-30123123-0',
-  usernameLegalEntity: 'alex01',
-  addressLegalEntity: 'Av Siempreviva',
-  phoneLegalEntity: '0234615417139',
-  checkingLegalEntity: false,
-  overdraftLegalEntity: 0
-}
 
-const ClientDetails = ({ isLegal = false }) => {
+const ClientDetails = (props) => {
   const { register, handleSubmit, errors } = useForm()
+  const data = props.location.state ? props.location.state.user : {}
+  console.log(data)
 
   const onSubmitNotLegal = (formData) => {
     setIsDisabled(true)
@@ -59,7 +42,7 @@ const ClientDetails = ({ isLegal = false }) => {
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
       <Content id='content' direction='column'>
-        {!isLegal &&
+        {(data.userType === 'PHYSICAL') &&
           <form onSubmit={handleSubmit(onSubmitNotLegal)} onChange={() => setIsSaveDisabled(false)}>
             <Table>
               <Caption> Datos cliente </Caption>
@@ -67,14 +50,14 @@ const ClientDetails = ({ isLegal = false }) => {
                 <tr>
                   <TableDataL> Nombre y Apellido </TableDataL>
                   <TableDataR>
-                    <Input name='fullname' disabled={isDisabled} defaultValue={data.fullname} type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
+                    <Input name='fullname' disabled={isDisabled} defaultValue={data.firstName + ' ' + data.lastName} type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
                     {errors.fullname && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
-                    <Input name='cuitCuil' disabled defaultValue={data.cuitCuil} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
+                    <Input name='cuitCuil' disabled defaultValue={data.cuitCuilCdi} type='text' ref={register({ required: true, pattern: /^[0-9]{2}-[0-9]{8}-[0-9]$/ })} />
                     {errors.cuitCuil && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -102,7 +85,7 @@ const ClientDetails = ({ isLegal = false }) => {
                 <tr>
                   <TableDataL> Fecha de nacimiento </TableDataL>
                   <TableDataR>
-                    <Input name='birthday' disabled={isDisabled} defaultValue={data.birthday} type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                    <Input name='birthday' disabled={isDisabled} defaultValue={data.birthDate} type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
                     {errors.birthday && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -116,21 +99,21 @@ const ClientDetails = ({ isLegal = false }) => {
                 <tr>
                   <TableDataL> Celular </TableDataL>
                   <TableDataR>
-                    <Input name='mobile' disabled={isDisabled} defaultValue={data.mobile} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
+                    <Input name='mobile' disabled={isDisabled} defaultValue={data.mobilePhone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
                     {errors.mobile && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Cuenta Corriente </TableDataL>
                   <TableDataR>
-                    <Input name='checking' disabled defaultValue={data.checking} type='text' />
+                    <Input name='checking' disabled defaultValue={data.checking ? data.checking.accountNumber : ''} type='text' />
                     {errors.checking && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Descubierto </TableDataL>
                   <TableDataR>
-                    <Input name='overdraft' disabled={isDisabled} defaultValue={data.overdraft} type='number' step='any' ref={register()} />
+                    <Input name='overdraft' disabled={isDisabled} defaultValue={data.checking ? data.checking.maxOverdraft : ''} type='number' step='any' ref={register()} />
                     {errors.mobile && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
@@ -141,7 +124,7 @@ const ClientDetails = ({ isLegal = false }) => {
               </tbody>
             </Table>
           </form>}
-        {isLegal &&
+        {(data.userType === 'LEGAL') &&
           <form onSubmit={handleSubmit(onSubmitLegal)} onChange={() => setIsSaveDisabled(false)}>
             <Table>
               <Caption> Datos cliente </Caption>
@@ -190,10 +173,12 @@ const ClientDetails = ({ isLegal = false }) => {
           </form>}
         <Table>
           <tbody>
-            {data.checking && <TableDataL><TButton type='button'> Cerrar cuenta corriente </TButton></TableDataL>}
-            {!data.checking && <TableDataL><TButton type='button'> Abrir Cuenta </TButton></TableDataL>}
-            <TableDataL><TButton type='button'> Deshabilitar cliente </TButton></TableDataL>
-            <TableDataL><TButton type='button'> Reiniciar contraseña </TButton></TableDataL>
+            <tr>
+              {data.checking && <TableDataL><TButton type='button'> Cerrar cuenta corriente </TButton></TableDataL>}
+              {!data.checking && <TableDataL><TButton type='button'> Abrir Cuenta </TButton></TableDataL>}
+              <TableDataL><TButton type='button'> Deshabilitar cliente </TButton></TableDataL>
+              <TableDataL><TButton type='button'> Reiniciar contraseña </TButton></TableDataL>
+            </tr>
           </tbody>
         </Table>
         <FixBar />

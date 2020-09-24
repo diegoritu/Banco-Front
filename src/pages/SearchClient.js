@@ -11,8 +11,8 @@ import Button from '../components/Button'
 import Select from 'react-select'
 import { useAlert } from 'react-alert'
 import { searchUserService } from '../services/searchUserService'
+import { useHistory } from 'react-router-dom'
 import { timeout } from 'select2-react-component'
-
 
 const Input = styled.input`
   padding: 10px;
@@ -25,6 +25,7 @@ const TButton = styled.button`
   font-size: 15pt;
   padding: 10px;
   background-color: #b2b2b28c;
+  min-width: 100px;
   
 `
 const ButtonSelected = styled.button`
@@ -33,6 +34,13 @@ const ButtonSelected = styled.button`
   padding: 10px;
   background-color: #3a74b0;
   color: white;
+  min-width: 100px;
+`
+const ActionButton = styled.button`
+  width: 50%;
+  font-size: 12pt;
+  padding: 2px;
+  min-width: 100px;
 `
 
 const usernameOption = new OptionItem('username', 'Nombre de usuario')
@@ -40,21 +48,21 @@ const cuitCuilOption = new OptionItem('cuitCuil', 'CUIT/CUIL')
 
 const fieldOptions = {
   legal: [
-    usernameOption, 
+    usernameOption,
     cuitCuilOption,
     new OptionItem('businessName', 'Razón social')
   ],
   physical: [
-    usernameOption, 
+    usernameOption,
     cuitCuilOption,
-    new OptionItem('fullname', 'Nombre y/o apellido'), 
+    new OptionItem('fullname', 'Nombre y/o apellido'),
     new OptionItem('dni', 'DNI')
   ]
 }
 
 function OptionItem (value, label) {
-  this.value = value;
-  this.label = label;
+  this.value = value
+  this.label = label
 }
 
 const SearchClient = () => {
@@ -74,7 +82,7 @@ const SearchClient = () => {
   }
 
   const updateIsLegal = (newValue) => {
-    if (isLegal != newValue) {
+    if (isLegal !== newValue) {
       setSelectedSearchField('')
     }
     setIsLegal(newValue)
@@ -82,12 +90,12 @@ const SearchClient = () => {
 
   const onSubmit = (data) => {
     setIsLoading(true)
-    const params = {field: selectedSearchField.value, term: data.term}
+    const params = { field: selectedSearchField.value, term: data.term }
     const search = isLegal ? searchUserService.searchLegalUsers(params) : searchUserService.searchPhysicalUsers(params)
     search
       .then((data) => {
         if (!Array.isArray(data) || !data.length) {
-          alert.info('No se encontraron usuarios', {timeout: 7000})
+          alert.info('No se encontraron usuarios', { timeout: 7000 })
           setItems([])
         } else {
           setItems(data)
@@ -99,25 +107,31 @@ const SearchClient = () => {
       .finally(() => setIsLoading(false))
   }
 
+  const history = useHistory()
+
   const renderTableData = () => {
     if (!Array.isArray(items) || !items.length) {
-      return (<tr key={0}>
-        <TableDataL>-</TableDataL>
-        <TableDataL>-</TableDataL>
-        <TableDataL>-</TableDataL>
-        <TableDataL>-</TableDataL>
-      </tr>)
+      return (
+        <tr key={0}>
+          <TableDataL>-</TableDataL>
+          <TableDataL>-</TableDataL>
+          <TableDataL>-</TableDataL>
+          <TableDataL>-</TableDataL>
+        </tr>)
     }
 
     return items.map((item, index) => {
-      const name = item.userType == 'LEGAL' ? item  .businessName : (item.firstName + ' ' + item.lastName);
+      const name = item.userType === 'LEGAL' ? item.businessName : (item.firstName + ' ' + item.lastName)
       const cuitCuil = item.cuitCuilCdi
       return (
         <tr key={index}>
           <TableDataL>{name}</TableDataL>
           <TableDataL>{cuitCuil}</TableDataL>
-          <TableDataL>{'(boton a detalle)'}</TableDataL>
-          <TableDataL>{'(opciones depositar / extraer)'}</TableDataL>
+          <TableDataL><ActionButton onClick={() => history.push({ pathname: '/clientDetails', state: { user: item } })}> Detalle </ActionButton></TableDataL>
+          <TableDataL>
+            <ActionButton onClick={() => history.push({ pathname: '/deposit', state: { user: item } })}> Depositar </ActionButton>
+            <ActionButton onClick={() => history.push({ pathname: '/extraction', state: { user: item } })}> Extraer </ActionButton>
+          </TableDataL>
         </tr>
       )
     })
@@ -134,24 +148,13 @@ const SearchClient = () => {
               <tr>
                 <TableDataL> Persona : </TableDataL>
                 <TableDataL>
-                {isLegal ?
-                  (<React.Fragment>
-                      <TButton onClick={() => updateIsLegal(false)}> Física </TButton>
-                      <ButtonSelected onClick={() => updateIsLegal(true)}> Jurídica </ButtonSelected>
-                  </React.Fragment>)
-                : 
-                  (<React.Fragment>
-                      <ButtonSelected onClick={() => updateIsLegal(false)}> Física </ButtonSelected>
-                      <TButton onClick={() => updateIsLegal(true)}> Jurídica </TButton>
-                  </React.Fragment>)
-                }        
+                  {isLegal ? (<><TButton onClick={() => updateIsLegal(false)}> Física </TButton><ButtonSelected onClick={() => updateIsLegal(true)}> Jurídica </ButtonSelected></>) : (<><ButtonSelected onClick={() => updateIsLegal(false)}> Física </ButtonSelected><TButton onClick={() => updateIsLegal(true)}> Jurídica </TButton></>)}
                 </TableDataL>
               </tr>
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
                 <TableDataR>
-                    <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} 
-                    placeholder={'Selecione una opción de búsqueda...'}></Select>
+                  <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione una opción de búsqueda...' />
                 </TableDataR>
               </tr>
               <tr>

@@ -1,6 +1,5 @@
-import urlWebService from './webService'
+import { urlWebService, urlOrigin } from './webService'
 import request from './requestHelper'
-const urlOrigin = 'http://localhost:3000'
 
 const searchPhysicalUsers = (params) => {
     const url = urlWebService.searchPhysicalUser + '?field=' + params.field + '&term=' + params.term

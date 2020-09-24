@@ -1,6 +1,5 @@
-import urlWebService from './webService'
+import { urlWebService, urlOrigin } from './webService'
 import request from './requestHelper'
-const urlOrigin = 'http://localhost:3000'
 
 const login = (data) => {
   const requestOptions = {
