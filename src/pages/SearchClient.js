@@ -157,7 +157,7 @@ const SearchClient = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Table>
             <Caption> Búsqueda Cliente </Caption>

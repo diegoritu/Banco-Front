@@ -171,7 +171,7 @@ const ClientDetails = (props) => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' direction='column'>
+      <Content id='content' url="background.png" direction='column'>
         {(data.userType === 'PHYSICAL') &&
           <form onSubmit={handleSubmit(onSubmitNotLegal)} onChange={() => setIsSaveDisabled(false)}>
             <Table>
