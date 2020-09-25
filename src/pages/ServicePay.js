@@ -41,6 +41,20 @@ const TableAlt = styled(Table)`
   border-collapse: collapse;
   background-color: #e1e1e182;
 `
+function numberWithStyle (x) {
+  x = x.toFixed(2)
+  var number = (x.toString().replace('.', ',').replace(' ', ''))
+  var resultNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  return resultNumber
+}
+
+function formatDate(inputDate) {
+  var date = new Date(inputDate)
+  if (!isNaN(date.getTime())) {
+      return  (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + (date.getMonth() < 9 ? '0' + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1))  + '/' + date.getFullYear()
+  }
+}
+
 
 const ServicePay = () => {
   const alert = useAlert()
@@ -57,6 +71,7 @@ const ServicePay = () => {
   const [amount, setAmount] = useState()
   const [due, setDue] = useState()
   const [acc, setAcc] = useState('')
+  const [findService, setFindService] = useState(false)
 
   const items = []
   
@@ -78,6 +93,7 @@ const ServicePay = () => {
       setVendorName(data.vendor.businessName)
       setAmount(data.amount)
       setDue(data.dueDate)
+      setFindService(true)
     })
   }
 
@@ -126,6 +142,7 @@ const ServicePay = () => {
               </tbody>
           </TableAlt>
         </form>
+        {findService &&
         <form onSubmit={handleSubmitA(onSubmitA)}>
           <TableAlt>
             <tbody>
@@ -139,11 +156,11 @@ const ServicePay = () => {
               </tr>
               <tr>
                 <TableDataL> Monto adeudado: </TableDataL>
-                <TableDataR> {amount} </TableDataR>
+                <TableDataR> {'$ ' + numberWithStyle(amount)} </TableDataR>
               </tr>
               <tr>
                 <TableDataL> Fecha de vencimiento: </TableDataL>
-                <TableDataR> {due} </TableDataR>
+                <TableDataR> {formatDate(due)} </TableDataR>
               </tr>
               <tr>
                 <TableDataL><p> Cuenta a debitar: </p></TableDataL>
@@ -153,6 +170,7 @@ const ServicePay = () => {
             </tbody>
           </TableAlt>
         </form>
+        }
         <FixBar />
       </Content>
       <Footer id='footer' />

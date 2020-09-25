@@ -15,7 +15,6 @@ const Table = styled.table`
 const TButton = styled.button`
 margin-top: 10px;
 margin-bottom: 10px;
-margin-left: 20%;
 margin-right: auto;
 background-color: #000;
 border: none;

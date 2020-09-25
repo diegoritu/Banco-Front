@@ -15,7 +15,7 @@ const Table = styled.table`
 `
 
 const TableRow = styled.tr`
-  background: #3a74b0;
+  background: #1877f2;
   
 `
 

@@ -32,7 +32,7 @@ const ButtonSelected = styled.button`
   width: 50%;
   font-size: 15pt;
   padding: 10px;
-  background-color: #3a74b0;
+  background-color: #1877f2;
   color: white;
   min-width: 100px;
 `

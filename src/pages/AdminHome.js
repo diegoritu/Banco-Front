@@ -14,7 +14,7 @@ const ButtonBox = styled.div`
   width: 20vw;
   height: auto;
   padding: 10px;
-  background-color: #3da1e794;
+  background-color: #1877f2;
   
 `
 const Text = styled.p`

@@ -2,7 +2,6 @@ import React from 'react'
 import Content from '../components/Content'
 import Footer from '../components/Footer'
 import GlobalContainer from '../components/GlobalContainer'
-import Details from '../components/Details'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -27,7 +26,21 @@ const HeaderTitle = styled(Link)`
   align-self:center;
   text-decoration: none;
 `
+const DetailsWhite = styled.div`
+  width: 60%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #fff;
 
+`
 const ForgotPassword = () => {
 
   return (
@@ -38,12 +51,12 @@ const ForgotPassword = () => {
           </HeaderTitle>
       </HeaderWrapper>
       <Content id='content'url="background.png" direction='column' url='https://www.cdbeco.com.vn/wp-content/uploads/2019/02/326780-P9JGF8-718.jpg' collapse='xs'>
-        <Details>
+        <DetailsWhite>
           <Text> ¿Olvidó su contraseña? </Text>        
-        </Details>
-        <Details>
+        </DetailsWhite>
+        <DetailsWhite>
           <h3>Para recuperarla debe ir a su sucursal más cercana y hablar con un representante del área comercial, o puede cambiarla llamando al 0800-333-KRRL(5775), marcando la opción de cambio de contraseña.</h3>
-        </Details>
+        </DetailsWhite>
       </Content>
       <Footer id='footer' />
     </GlobalContainer>

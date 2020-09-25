@@ -4,7 +4,6 @@ export default styled.button`
   
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 20%;
   margin-right: auto;
   background-color: #000;
   border: none;
