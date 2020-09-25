@@ -111,28 +111,33 @@ const SearchClient = () => {
 
   const updateIsLegal = (newValue) => {
     if (isLegal !== newValue) {
-      setSelectedSearchField('')
+      setSelectedSearchField(null)
     }
     setIsLegal(newValue)
   }
 
   const onSubmit = (data) => {
-    setIsLoading(true)
-    const params = { field: selectedSearchField.value, term: data.term }
-    const search = isLegal ? searchUserService.searchLegalUsers(params) : searchUserService.searchPhysicalUsers(params)
-    search
-      .then((data) => {
-        if (!Array.isArray(data) || !data.length) {
-          alert.info('No se encontraron usuarios', { timeout: 7000 })
-          setItems([])
-        } else {
-          setItems(data)
-        }
-      })
-      .catch((message) => {
-        alert.error(message)
-      })
-      .finally(() => setIsLoading(false))
+    if ( selectedSearchField == null ) {
+      alert.error("Debe seleccionar un campo de búsqueda")
+    } else {
+      setIsLoading(true)
+      const params = { field: selectedSearchField.value, term: data.term }
+      const search = isLegal ? searchUserService.searchLegalUsers(params) : searchUserService.searchPhysicalUsers(params)
+      search
+        .then((data) => {
+          if (!Array.isArray(data) || !data.length) {
+            alert.info('No se encontraron usuarios')
+            setItems([])
+          } else {
+            setItems(data)
+          }
+        })
+        .catch((message) => {
+          alert.error(message)
+        })
+        .finally(() => setIsLoading(false))
+    }
+    
   }
 
   const history = useHistory()
@@ -182,13 +187,15 @@ const SearchClient = () => {
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
                 <TableDataR>
-                  <Select value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione una opción de búsqueda...' ref={register({ required: true})}/>
+                  <Select name="searchField" value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione un campo de búsqueda...' ref={register({ required: true })}/>
                 </TableDataR>
               </tr>
               <tr>
                 <TableDataL>
                   <Input name='term' type='text' placeholder='Ingrese el término de búsqueda' ref={register({ required: true })} />
-                  {errors.term && <ErrorMsg> No puede estar vacio </ErrorMsg>}
+                  <div>
+                    {errors.term && <ErrorMsg> Debe ingresar un término de búsqueda </ErrorMsg>}
+                  </div>
                 </TableDataL>
                 <TableDataR><Button disabled={isLoading}> Buscar </Button></TableDataR>
               </tr>

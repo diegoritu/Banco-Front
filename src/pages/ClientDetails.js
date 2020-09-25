@@ -117,7 +117,7 @@ const ClientDetails = (props) => {
           history.push('/searchClient')
         }
         else{
-          alert.success('Se reseteó la clave del usuario. Su contraseña temporal es: ' + response.password)
+          alert.success('Se reseteó la clave del usuario. Su contraseña temporal es: ' + response.password, {timeout: 0})
           history.push('/searchClient')
 
         }

@@ -68,7 +68,7 @@ const RegisterClient = () => {
     const createUser = isLegal ? userService.registerLegalUser(data) : userService.registerPhysicalUser(data)
     createUser
       .then((data) => {
-        alert.success('Usuario creado con exito! Contraseña: ' + data.password)
+        alert.success('Usuario creado con exito! Contraseña: ' + data.password, {timeout: 0})
       })
       .catch((message) => {
         alert.error(message)

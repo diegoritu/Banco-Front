@@ -9,9 +9,9 @@ import AlertTemplate from 'react-alert-template-basic'
 
 const alertOptions = {
   position: positions.BOTTOM_RIGHT,
-  timeout: 0,
+  timeout: 7000,
   offset: '30px',
-  transition: transitions.FASE
+  transition: transitions.FASE,
 }
 
 ReactDOM.render(
