@@ -94,6 +94,29 @@ const ClientDetails = (props) => {
     })
 
   }
+
+  const resetPassword = () =>{
+
+    userService.resetPassword(data.username)
+    .then(
+      response => {
+        if (response === 'notFoud') {
+          alert.error('No se encontró el usuario.')
+          history.push('/searchClient')
+        }
+        else{
+          alert.success('Se reseteó la clave del usuario. Su contraseña temporal es: ' + response.password)
+          history.push('/searchClient')
+
+        }
+      }
+    )
+    .catch(error => {
+      console.log(error)
+    })
+
+  }
+
   const disableClient = () =>{
 
     userService.disableUser(data.username)
@@ -339,7 +362,7 @@ const ClientDetails = (props) => {
               {data.checking && <TableDataL><TButton type='button' onClick={() => closeChecking()}> Cerrar cuenta corriente </TButton></TableDataL>}
               {!data.checking && <TableDataL><TButton type='button' onClick={() => openChecking()}> Abrir cuenta corriente </TButton></TableDataL>}
               <TableDataL><TButton type='button' onClick={() => disableClient()}> Deshabilitar cliente </TButton></TableDataL>
-              <TableDataL><TButton type='button'> Resetear contraseña </TButton></TableDataL>
+              <TableDataL><TButton type='button'onClick={() => resetPassword()}> Resetear contraseña </TButton></TableDataL>
             </tr>
           </tbody>
         </Table>

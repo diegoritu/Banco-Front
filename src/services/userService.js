@@ -428,4 +428,37 @@ const disableUser = (username)=>{
 }
 
 
-export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals, getAnotherUser, modifyPhysicalUser, modifyLegalUser, disableUser }
+const resetPassword = (username)=>{
+  const requestOptions = {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Origin: urlOrigin
+    }
+  }
+  return fetch(urlWebService.resetPassword + '?username=' + username, requestOptions)
+    .then(response => 
+      response.json().catch(err => {
+        console.log('Looks like there was a problem. Status Code: ' + response.status)
+        if(response.status === 404){
+          return 'notFound'
+        }
+      })
+      .then(data => ({
+          data: data,
+          status: response.status
+      })
+  ).then(res => {
+      if (res.status === 404) {
+        return 'notFound'
+      }
+      else {
+        return res.data
+      }
+  }))
+    .catch(error => console.log('Fetch Error :-S', error))
+}
+
+export const userService = { login, logout, changePassword, user, registerPhysicalUser, registerLegalUser, legals, getAnotherUser, modifyPhysicalUser, modifyLegalUser, disableUser, resetPassword }

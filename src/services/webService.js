@@ -32,7 +32,8 @@ const urlWebService = {
   getPhysical: urlAPI + '/user/physical',
   modifyPhysicalUser: urlAPI + '/user/physical/modify',
   modifyLegalUser: urlAPI + '/user/legal/modify',
-  disableUser: urlAPI + '/user/disable-user'
+  disableUser: urlAPI + '/user/disable-user',
+  resetPassword: urlAPI + '/user/reset-password'
 }
 
 export { urlWebService, urlOrigin }
