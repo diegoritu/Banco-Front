@@ -17,6 +17,18 @@ const Input = styled.input`
   margin: 10px;
   width: 20vw;
 `
+const TableAlt = styled(Table)`
+width:60%;
+@media only screen and (max-width: 480px) {
+  width: 100%;
+}
+margin-left: auto;
+margin-right: auto;
+margin-top: 2%;
+margin-bottom: 2%;
+border-collapse: collapse;
+background-color: #e1e1e182;
+`
 
 function numberWithStyle (x) {
   x = x.toFixed(2)
@@ -60,7 +72,7 @@ const Extraction = (props) => {
       <Content id='content' url="background.png" direction='column'>
         <Text> Extracción </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Table>
+          <TableAlt>
             <tbody>
               <tr>
                 <TableDataL><p> Cuenta: </p></TableDataL>
@@ -77,7 +89,7 @@ const Extraction = (props) => {
                 <TableDataL><TButton type='submit' disable={isLoading}> Confirmar </TButton></TableDataL>
               </tr>
             </tbody>
-          </Table>
+          </TableAlt>
         </form>
       </Content>
       <Footer id='footer' />

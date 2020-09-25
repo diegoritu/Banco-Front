@@ -121,7 +121,7 @@ const CreateService = () => {
         const file = new Blob([textToWrite], {type: 'text/plain'});
         element.href = URL.createObjectURL(file);
         element.download = "Ids de Servicio.txt";
-        document.body.appendChild(element); // Required for this to work in FireFox
+        document.body.appendChild(element);
         element.click();
       })
       .catch((message) => {
