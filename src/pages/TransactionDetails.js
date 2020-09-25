@@ -79,7 +79,7 @@ const TransactionDetails = (props) => {
         <Details>
           <h4> Número de transacción: #{data.idMovement} </h4>
           <h4> Fecha y hora: {formatDate(data.dayAndHour)} </h4>
-          <h4> Tipo de transaccion: {concept}</h4>
+          <h4> Tipo de transacción: {concept}</h4>
           { entryAccount ? <h4> {entryAccount && !exitAccount ? 'Cuenta: ' : 'Cuenta origen: '}{entryAccount.accountNumber} </h4> : ''}
           { exitAccount ? <h4> {!entryAccount && exitAccount ? 'Cuenta: ' : 'Cuenta destino: '}{exitAccount.accountNumber} </h4> : ''}
           <h4> Importe: $ {numberWithStyle(parseFloat(data.amount))}</h4>

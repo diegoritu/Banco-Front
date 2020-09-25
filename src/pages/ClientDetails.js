@@ -216,63 +216,63 @@ const ClientDetails = (props) => {
                   <TableDataL> Nombre </TableDataL>
                   <TableDataR>
                     <Input name='firstName' disabled={isDisabled} defaultValue={data.firstName} type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
-                    {errors.fullname && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.fullname && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Apellido </TableDataL>
                   <TableDataR>
                     <Input name='lastName' disabled={isDisabled} defaultValue={data.lastName} type='text' ref={register({ required: true, pattern: /^[A-Z][a-z]+(?:[ -][A-Z][a-z]+)*$/ })} />
-                    {errors.fullname && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.fullname && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
                     <Input name='cuitCuilCdi' disabled defaultValue={data.cuitCuilCdi} type='text' />
-                    {errors.cuitCuil && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.cuitCuil && <ErrorMsg> x Verifique que su CUIT tenga el siguiente formato: XX-XXXXXXXX-X </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> DNI </TableDataL>
                   <TableDataR>
                     <Input name='dni' disabled defaultValue={data.dni} type='text' />
-                    {errors.dni && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.dni && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Nombre de Usuario </TableDataL>
                   <TableDataR>
                     <Input name='username' disabled={isDisabled} defaultValue={data.username} type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
-                    {errors.username && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.username && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Domicilio </TableDataL>
                   <TableDataR>
                     <Input name='address' disabled={isDisabled} defaultValue={data.address} type='text' ref={register({ required: true, max: 255 })} />
-                    {errors.address && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.address && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Fecha de nacimiento </TableDataL>
                   <TableDataR>
                     <Input name='birthDate' disabled={isDisabled} defaultValue={data.birthDate} type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
-                    {errors.birthday && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.birthday && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Telefono </TableDataL>
+                  <TableDataL> Teléfono </TableDataL>
                   <TableDataR>
                     <Input name='phone' disabled={isDisabled} defaultValue={data.phone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
-                    {errors.phone && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.phone && <ErrorMsg> x Verifique que su teléfono tenga el siguiente formato: XXXXXXXXXX</ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Celular </TableDataL>
                   <TableDataR>
                     <Input name='mobilePhone' disabled={isDisabled} defaultValue={data.mobilePhone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
-                    {errors.mobile && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.mobile && <ErrorMsg> x Verifique que su teléfono tenga el siguiente formato: XXXXXXXXXX</ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
@@ -291,35 +291,35 @@ const ClientDetails = (props) => {
                   <TableDataL> Razon Social </TableDataL>
                   <TableDataR>
                     <Input name='businessName' disabled={isDisabled} defaultValue={data.businessName} type='text' ref={register({ required: true})} />
-                    {errors.businessName && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.businessName && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> CUIT/CUIL </TableDataL>
                   <TableDataR>
                     <Input name='cuitCuilCdi' disabled defaultValue={data.cuitCuilCdi} type='text' />
-                    {errors.cuitCuilCdi && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.cuitCuilCdi && <ErrorMsg> x Verifique que su CUIT tenga el siguiente formato: XX-XXXXXXXX-X</ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Nombre de usuario </TableDataL>
                   <TableDataR>
                     <Input name='username' disabled={isDisabled} defaultValue={data.username} type='text' ref={register({ required: true, pattern: /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/ })} />
-                    {errors.usernameLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.usernameLegalEntity && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
                   <TableDataL> Domicilio </TableDataL>
                   <TableDataR>
                     <Input name='address' disabled={isDisabled} defaultValue={data.address} type='text' ref={register({ required: true, max: 255 })} />
-                    {errors.address && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.address && <ErrorMsg> x </ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Telefono </TableDataL>
+                  <TableDataL> Teléfono </TableDataL>
                   <TableDataR>
                     <Input name='phone' disabled={isDisabled} defaultValue={data.phone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
-                    {errors.phoneLegalEntity && <ErrorMsg> x </ErrorMsg>}
+                    <div>{errors.phoneLegalEntity && <ErrorMsg> x Verifique que su teléfono tenga el siguiente formato: XXXXXXXXXX</ErrorMsg>}</div>
                   </TableDataR>
                 </tr>
                 <tr>
@@ -340,7 +340,7 @@ const ClientDetails = (props) => {
                       <TableDataL> Cuenta Corriente </TableDataL>
                       <TableDataR>
                         <Input name='accountNumber' disabled defaultValue={data.checking ? data.checking.accountNumber : ''} type='text' />
-                        {errorsChecking.accountNumber && <ErrorMsg> x </ErrorMsg>}
+                        <div>{errorsChecking.accountNumber && <ErrorMsg> x </ErrorMsg>}</div>
                       </TableDataR>
                     </tr>
                   }
@@ -348,7 +348,7 @@ const ClientDetails = (props) => {
                     <TableDataL> Descubierto </TableDataL>
                     <TableDataR>
                       <Input name='maxOverdraft' disabled={isDisabledChecking} defaultValue={data.checking ? data.checking.maxOverdraft : ''} type='number' step='any' ref={registerChecking()} />
-                      {errorsChecking.maxOverdraft && <ErrorMsg> x </ErrorMsg>}
+                      <div>{errorsChecking.maxOverdraft && <ErrorMsg> x </ErrorMsg>}</div>
                     </TableDataR>
                   </tr>
                   {startWithChecking ? 

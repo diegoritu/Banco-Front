@@ -82,7 +82,7 @@ const AccountTable = (props) => {
         <tbody>
           <TableRow>
             <TableHeader> Tipo </TableHeader>
-            <TableHeader> Numero </TableHeader>
+            <TableHeader> Número </TableHeader>
             <TableHeader> Saldo </TableHeader>
           </TableRow>
           <TableRow>
