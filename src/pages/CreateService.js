@@ -104,30 +104,34 @@ const CreateService = () => {
   }
 
   const onSubmit = (data) => {
-    setIsLoading(true)
-    var accountType = 'CHECKING'
+    if (legalSelected == null) {
+      alert.error("Debe especificar el dueño del servicio")
+    } else {
+      setIsLoading(true)
+      var accountType = 'CHECKING'
 
-    if(selectedItem.savings && selectedItem.savings.accountNumber == accountNumber){
-      accountType = 'SAVINGS'
+      if(selectedItem.savings && selectedItem.savings.accountNumber == accountNumber){
+        accountType = 'SAVINGS'
+      }
+
+      const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
+      createService
+        .then((data) => {
+          alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
+          const element = document.createElement("a");
+          var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
+          textToWrite = textToWrite.replace(/\n/g, "\r\n");
+          const file = new Blob([textToWrite], {type: 'text/plain'});
+          element.href = URL.createObjectURL(file);
+          element.download = "Ids de Servicio.txt";
+          document.body.appendChild(element);
+          element.click();
+        })
+        .catch((message) => {
+          alert.error(message)
+        })
+        .finally(() => setIsLoading(false))
     }
-
-    const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
-    createService
-      .then((data) => {
-        alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
-        const element = document.createElement("a");
-        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
-        textToWrite = textToWrite.replace(/\n/g, "\r\n");
-        const file = new Blob([textToWrite], {type: 'text/plain'});
-        element.href = URL.createObjectURL(file);
-        element.download = "Ids de Servicio.txt";
-        document.body.appendChild(element);
-        element.click();
-      })
-      .catch((message) => {
-        alert.error(message)
-      })
-      .finally(() => setIsLoading(false))
   }
 
 const getLegals = () => {

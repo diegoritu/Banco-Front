@@ -1,4 +1,5 @@
 import { urlWebService, urlOrigin } from './webService'
+import request from './requestHelper'
 
 const createService = (data, legalSelected, accountNumber, accountType) => {
   console.log(data)
@@ -15,6 +16,8 @@ const requestOptions = {
     },
     body: JSON.stringify({amount: data.amount, amountOfIds: data.amountOfIds, dueDate: data.dueDate, name : data.name, vendorAccountNumber : accountNumber, vendorAccountType : accountType, vendorUsername : legalSelected.value})
   }
+  return request(urlWebService.createService, requestOptions)
+  /*
   return fetch(urlWebService.createService, requestOptions)
     .then(response => 
       response.json().catch(err => {
@@ -24,6 +27,7 @@ const requestOptions = {
       })
      )
     .catch(error => console.log('Fetch Error :-S', error))
+    */
 }
 
 const searchService = (data) => {
