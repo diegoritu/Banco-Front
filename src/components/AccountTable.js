@@ -20,7 +20,7 @@ const TableRow = styled.tr`
 `
 
 const TableData = styled.td`
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   border-collapse: collapse;
   color: #fff;
   width: 20%;
@@ -66,7 +66,6 @@ const AccountTable = (props) => {
     pathname: '/transactions',
     state: { account: data.accountNumber }
   })
-  const navigateToTransfer = () => history.push('/transfer')
   const navigateToCBU = () => history.push({
     pathname: '/cbu',
     state: { account: data.accountNumber }
@@ -83,7 +82,7 @@ const AccountTable = (props) => {
         <tbody>
           <TableRow>
             <TableHeader> Tipo </TableHeader>
-            <TableHeader> Numero </TableHeader>
+            <TableHeader> Número </TableHeader>
             <TableHeader> Saldo </TableHeader>
           </TableRow>
           <TableRow>
@@ -92,13 +91,12 @@ const AccountTable = (props) => {
             <TableData>{'$ ' + numberWithStyle(data.balance)}</TableData>
           </TableRow>
           <TableRow>
-            <TableData><TButton onClick={navigateToTransfer} type="button"> Transferir </TButton></TableData>
             <TableData><TButton onClick={navigateToCBU} type="button"> CBU </TButton></TableData>
+            <TableData></TableData>
             <TableData><TButton onClick={navigateToTransactions} type="button"> Movimientos </TButton></TableData>
           </TableRow>
         </tbody>
       </Table>
-  
     )
   }    
   else {

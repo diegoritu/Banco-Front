@@ -93,22 +93,28 @@ const Transfer = props => {
     transactionService.transferBetweenOwnAccounts(data, accountOrigin, accountDestination)
       .then(
         response => {
-          const { from } = props.location.state || { from: { pathname: response } }          
-          if (from.pathname !== 'accountNotFound' && from.pathname !== 'operationCantBePerformed') {
-            props.history.push('/home')
-          }
-          else
-          {
-            if(from.pathname === 'accountNotFound'){
-              alert.error('No se encontró alguna de las cuentas implicadas en la operación.')
-              console.log(from.pathname)
+          const { from } = props.location.state || { from: { pathname: response } }
+          if(accountOrigin !== accountDestination){          
+                if (from.pathname !== 'accountNotFound' && from.pathname !== 'operationCantBePerformed') {            
+                    props.history.push('/home')
+                    alert.success("Transferencia realizada con éxito.") 
+                }
+                else
+                {
+                  if(from.pathname === 'accountNotFound'){
+                    alert.error('No se encontró alguna de las cuentas implicadas en la operación.')
+                    console.log(from.pathname)
+                  }
+                  else if(from.pathname === 'operationCantBePerformed'){
+                    alert.error('No fue posible realizar la operación. Por favor revise que la cuenta origen tenga el saldo suficiente.')
+                    console.log(from.pathname)
+                  }
+                }
+              }            
+            else{
+              alert.error("La cuenta de origen no puede ser igual a la cuenta de destino.")
             }
-            else if(from.pathname === 'operationCantBePerformed'){
-              alert.error('No fue posible realizar la operación. Por favor revise que la cuenta origen tenga el saldo suficiente.')
-              console.log(from.pathname)
-            }
           }
-        }
       )
       .catch(error => {
         console.log(error)
