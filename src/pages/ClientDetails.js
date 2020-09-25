@@ -17,6 +17,18 @@ const Input = styled.input`
   margin: 10px;
   width: 20vw;
 `
+const TableAlt = styled(Table)`
+width:60%;
+@media only screen and (max-width: 480px) {
+  width: 100%;
+}
+margin-left: auto;
+margin-right: auto;
+margin-top: 2%;
+margin-bottom: 2%;
+border-collapse: collapse;
+background-color: #e1e1e182;
+`
 
 const FixBar = styled.div`
  height: 10vh;
@@ -197,7 +209,7 @@ const ClientDetails = (props) => {
       <Content id='content' url="background.png" direction='column'>
         {(data.userType === 'PHYSICAL') &&
           <form onSubmit={handleSubmit(onSubmitNotLegal)} onChange={() => setIsSaveDisabled(false)}>
-            <Table>
+            <TableAlt>
               <Caption> Datos cliente </Caption>
               <tbody>
                 <tr>
@@ -268,11 +280,11 @@ const ClientDetails = (props) => {
                   {!isDisabled && <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>}
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
         {(data.userType === 'LEGAL') &&
           <form onSubmit={handleSubmit(onSubmitLegal)} onChange={() => setIsSaveDisabled(false)}>
-            <Table>
+            <TableAlt>
               <Caption> Datos cliente </Caption>
               <tbody>
                 <tr>
@@ -315,12 +327,12 @@ const ClientDetails = (props) => {
                   {!isDisabled && <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR> }
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
           
           {withChecking &&
             <form onSubmit={handleSubmitChecking(onSubmitChecking)} onChange={() => setIsSaveDisabledChecking(false)}>
-              <Table>
+              <TableAlt>
               <Caption> Cuenta Corriente </Caption>
               <tbody>
                   {startWithChecking &&
@@ -352,11 +364,11 @@ const ClientDetails = (props) => {
               
                   }
               </tbody>
-            </Table>
+            </TableAlt>
             </form>
           }
 
-        <Table>
+        <TableAlt>
           <tbody>
             <tr>
               {data.checking && <TableDataL><TButton type='button' onClick={() => closeChecking()}> Cerrar cuenta corriente </TButton></TableDataL>}
@@ -365,7 +377,7 @@ const ClientDetails = (props) => {
               <TableDataL><TButton type='button'onClick={() => resetPassword()}> Resetear contraseña </TButton></TableDataL>
             </tr>
           </tbody>
-        </Table>
+        </TableAlt>
         <FixBar />
       </Content>
       <Footer id='footer' />

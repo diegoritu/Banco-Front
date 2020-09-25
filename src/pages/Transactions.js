@@ -25,7 +25,18 @@ const TableRow = styled.tr`
 const RedText = styled.p`
   color: red;
 `
-
+const TableAlt = styled(Table)`
+  width:60%;
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-collapse: collapse;
+  background-color: #e1e1e182;
+`
 const getTransactions = (accountType) => {
   return transactionService.getTransactions(accountType)
 }
@@ -130,7 +141,7 @@ const Transactions = (props) => {
         <Text> Detalle de cuenta </Text>
         <AccountDetail accountType={accountType}/>
         <Text> Últimos movimientos </Text>
-        <Table>
+        <TableAlt>
           <tbody>
             <TableHeaderRow>
               <TableHeader> Fecha </TableHeader>
@@ -141,7 +152,7 @@ const Transactions = (props) => {
             </TableHeaderRow>
             {renderTableData().length === 0 ? <tr><td colSpan='5'><EmptyTableMessage>Esta cuenta no registra movimientos</EmptyTableMessage></td></tr> : renderTableData()}
           </tbody>
-        </Table>
+        </TableAlt>
 
       </Content>
       <Footer id='footer' />

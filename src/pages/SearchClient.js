@@ -49,7 +49,18 @@ const ActionButton = styled.button`
   }
 
 `
-
+const TableAlt = styled(Table)`
+  width:60%;
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-collapse: collapse;
+  background-color: #e1e1e182;
+`
 const TableRow = styled.tr`
   background-color: #FFF;  
   border-bottom: 1px solid black;
@@ -159,7 +170,7 @@ const SearchClient = () => {
       <Header id='header' />
       <Content id='content' url="background.png" direction='column'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Table>
+          <TableAlt>
             <Caption> Búsqueda Cliente </Caption>
             <tbody>
               <tr>
@@ -182,9 +193,9 @@ const SearchClient = () => {
                 <TableDataR><Button disabled={isLoading}> Buscar </Button></TableDataR>
               </tr>
             </tbody>
-          </Table>
+          </TableAlt>
         </form>
-        <Table>
+        <TableAlt>
           <tbody>
             <TableHeaderRow>
               <TableHeader> <span>{isLegal ? 'Razón social' : 'Nombre'} </span> </TableHeader>
@@ -194,7 +205,7 @@ const SearchClient = () => {
             </TableHeaderRow>
             {renderTableData()}
           </tbody>
-        </Table>
+        </TableAlt>
       </Content>
       <Footer id='footer' />
     </GlobalContainer>

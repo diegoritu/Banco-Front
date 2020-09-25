@@ -16,6 +16,18 @@ const Input = styled.input`
   margin: 10px;
   width: 20vw;
 `
+const TableAlt = styled(Table)`
+width:60%;
+@media only screen and (max-width: 480px) {
+  width: 100%;
+}
+margin-left: auto;
+margin-right: auto;
+margin-top: 2%;
+margin-bottom: 2%;
+border-collapse: collapse;
+background-color: #e1e1e182;
+`
 
 const ToggleWrapper = styled.div`
   width: 60%;
@@ -84,7 +96,7 @@ const RegisterClient = () => {
         </ToggleWrapper>
         {!isLegal &&
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Table>
+            <TableAlt>
               <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
@@ -168,11 +180,11 @@ const RegisterClient = () => {
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
         {isLegal &&
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Table>
+            <TableAlt>
               <Caption> Registrar cliente </Caption>
               <tbody>
                 <tr>
@@ -228,7 +240,7 @@ const RegisterClient = () => {
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
         <FixBar />
       </Content>

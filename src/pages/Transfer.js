@@ -43,6 +43,18 @@ const ButtonSelected = styled.button`
 const TableDataRw = styled.td`
   padding: 10px 20%;
 `
+const TableAlt = styled(Table)`
+  width:60%;
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-collapse: collapse;
+  background-color: #e1e1e182;
+`
 
 const Transfer = props => {
   
@@ -156,7 +168,7 @@ const Transfer = props => {
 
         {ownedAcc &&
           <form onSubmit={handleSubmit(onSubmitOwned)}>
-            <Table>
+            <TableAlt>
               <Caption> Transferencia de fondos </Caption>
               <tbody>
                 <tr>
@@ -178,11 +190,11 @@ const Transfer = props => {
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
         {!ownedAcc &&
           <form onSubmit={handleSubmit(onSubmitNotOwned)}>
-            <Table>
+            <TableAlt>
               <Caption> Transferencia hacia otra cuenta </Caption>
               <tbody>
                 <tr>
@@ -214,7 +226,7 @@ const Transfer = props => {
                   <TableDataL><TButton type='submit'> Confirmar </TButton></TableDataL>
                 </tr>
               </tbody>
-            </Table>
+            </TableAlt>
           </form>}
       </Content>
       <Footer id='footer' />

@@ -7,11 +7,11 @@ export default styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  background: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
+  background-color: #e1e1e182;
 
 `
