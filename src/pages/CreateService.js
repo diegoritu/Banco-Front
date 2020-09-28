@@ -192,10 +192,10 @@ const getAccounts = () => {
                     <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} ref={register({ required: true})}/>
                   </TableDataR>
                 </tr>
-                {legalSelected ?<tr>
+                {legalSelected &&<tr>
                     <TableDataL> Cuenta de pago </TableDataL>
                     <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setAccountNumber(value)} ref={register({ required: true})} /></TableDataRw>
-                  </tr> : <tr></tr>}
+                  </tr>}
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>

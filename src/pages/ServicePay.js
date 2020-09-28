@@ -105,7 +105,7 @@ const ServicePay = () => {
     payService
     .then((response) =>{
       if(response !== 'transactionError'){
-        alert.success('Extraccion realizada con exito ')
+        alert.success('Pago de servicio realizado con éxito ')
       }
       else{
         alert.error('Operación fallida. Chequee que la cuenta tenga el saldo suficiente para realizar la operación.')
