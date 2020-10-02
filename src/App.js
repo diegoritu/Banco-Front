@@ -6,6 +6,7 @@ import CBU from './pages/CBU'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProtectedRouteAdmin from './components/ProtectedRouteAdmin'
+import ProtectedRouteLegal from './components/ProtectedRouteLegal'
 import NotProtectedRoute from './components/NotProtectedRoute'
 import NotFound from './pages/NotFound'
 import Transactions from './pages/Transactions'
@@ -48,7 +49,7 @@ function App () {
         <ProtectedRouteAdmin exact path='/registerClient' component={RegisterClient} />
         <ProtectedRouteAdmin exact path='/clientDetails' component={ClientDetails} />
         <ProtectedRoute exact path='/servicePay' component={ServicePay} />
-        <ProtectedRouteAdmin exact path='/createService' component={CreateService} />
+        <ProtectedRouteLegal exact path='/createService' component={CreateService} />
         <NotProtectedRoute exact path='/forgotPassword' component={ForgotPassword} />
         <Route path='*' component={NotFound} />
       </Switch>

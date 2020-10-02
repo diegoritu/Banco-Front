@@ -1,12 +1,17 @@
 import { urlWebService, urlOrigin } from './webService'
 import request from './requestHelper'
 
-const createService = (data, legalSelected, accountNumber, accountType) => {
-  console.log(data)
-  console.log(legalSelected)
-  console.log(accountNumber)
-  console.log(accountType)
-const requestOptions = {
+const createService = (data, accountType, userName) => {
+  var file = data.file[0]
+  const formData = new FormData()
+  
+  formData.append("file", Buffer.from(file))
+
+  formData.append('name', data.name)
+  formData.append('vendorAccountType', accountType)
+  formData.append('vendorUsername', userName)
+
+  const requestOptions = {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -14,9 +19,9 @@ const requestOptions = {
       'Content-Type': 'application/json',
       Origin: urlOrigin
     },
-    body: JSON.stringify({amount: data.amount, amountOfIds: data.amountOfIds, dueDate: data.dueDate, name : data.name, vendorAccountNumber : accountNumber, vendorAccountType : accountType, vendorUsername : legalSelected.value})
+    body: formData
   }
-  return request(urlWebService.createService, requestOptions)
+  return request(urlWebService.createService , requestOptions)
   /*
   return fetch(urlWebService.createService, requestOptions)
     .then(response => 

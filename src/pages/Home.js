@@ -27,7 +27,7 @@ const PayButton = styled.button`
 
 `
 
-const TransferButton = styled.button`
+const OtherButtons = styled.button`
   
   margin-top: 10px;
   margin-left: 20px;
@@ -54,6 +54,7 @@ const Home = () => {
   const history = useHistory()
   const navigateToServicePay = () => history.push('/servicePay')
   const navigateToTransfer = () => history.push('/transfer')
+  const createService = () => history.push('/createService')
 
   return (
     <GlobalContainer id='globalContainer'>
@@ -62,7 +63,8 @@ const Home = () => {
         <Text> Acciones </Text>
         <ButtonsContainer>
         <PayButton onClick={navigateToServicePay} type="button"> Pagar servicios </PayButton> 
-        <TransferButton onClick={navigateToTransfer} type="button"> Realizar transferencia </TransferButton>
+        <OtherButtons onClick={navigateToTransfer} type="button"> Realizar transferencia </OtherButtons>
+        {window.sessionStorage.getItem('userType') === 'LEGAL' && <OtherButtons onClick={createService} type="button"> Crear servicio </OtherButtons>}
         </ButtonsContainer>
         <Text> Mis Cuentas </Text>
         <AccountTable accountType={'SAVINGS'} />

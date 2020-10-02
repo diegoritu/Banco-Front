@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: 80%;
+  width: 50%;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: auto;
@@ -45,7 +45,6 @@ const AdminHome = () => {
   const history = useHistory()
   const registerClient = () => history.push('/registerClient')
   const searchClient = () => history.push('/searchClient')
-  const createService = () => history.push('/createService')
 
   return (
     <GlobalContainer id='globalContainer'>
@@ -59,10 +58,6 @@ const AdminHome = () => {
           <ButtonBox onClick={searchClient}>
             <img src='https://www.flaticon.es/svg/static/icons/svg/1935/1935840.svg' alt='Magnifying glass' height='128' width='128' />
             <Text> Buscar Cliente </Text>
-          </ButtonBox>
-          <ButtonBox onClick={createService}>
-            <img src='https://www.flaticon.es/svg/static/icons/svg/1935/1935353.svg' alt='Services' height='128' width='128' />
-            <Text> Crear Servicio </Text>
           </ButtonBox>
         </Wrapper>
       </Content>

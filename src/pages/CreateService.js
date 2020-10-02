@@ -13,6 +13,7 @@ import { userService } from '../services/userService'
 import { useAlert } from 'react-alert'
 import Select from 'react-select'
 import Dropdown from '../components/Dropdown'
+import ReactFileReader from 'react-file-reader'
 
 const Input = styled.input`
   padding: 10px;
@@ -65,87 +66,102 @@ const TableAlt = styled(Table)`
   background-color: #e1e1e182;
 `
 
-function loadLegalSelect(legals)
-{
-  var legalArray = []
-  
-  legals.forEach((item, index) => {
-    legalArray.push({value: item.username, label: item.businessName})
-  })
-
-  return legalArray
-
-}
 
 const CreateService = () => {
   const { register, handleSubmit, errors } = useForm()
   const alert = useAlert()
   const [isLoading, setIsLoading] = useState(false)
   const [accountNumber, setAccountNumber] = useState('')
-  const [legalSelected, setlegalSelected] = useState(null)
-  const [accounts, setAccounts] = useState([])
+  const items = []
   var selectedItem = ''
 
-  const onChangeLegalField = (legalSelected) => {
-    var accs = []
-    legals.forEach((item, index) => {
-      if(item.username === legalSelected.value){
-        selectedItem = item
-        if(item.savings != null){
-          accs.push({value: "CA " + item.savings.accountNumber , id:  item.savings.accountNumber})
-        }
-        if(item.checking != null){
-          accs.push({value: "CC " + item.checking.accountNumber, id:  item.checking.accountNumber})
-        }
-      }
-    })
-    setlegalSelected(legalSelected)
-    setAccounts(accs)
+  if(sessionStorage.getItem('userSavings') !== 'null'){
+    items.push({id: sessionStorage.getItem('userSavings'), value: 'CA ' + sessionStorage.getItem('userSavings')})
   }
+  if(sessionStorage.getItem('userChecking') !== 'null'){
+    items.push({id: sessionStorage.getItem('userChecking'), value: 'CC ' + sessionStorage.getItem('userChecking')})
+  }
+
+  /*const handleFiles = (files) => {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        // Use reader.result
+        alert.info(reader.result)
+    }
+    reader.readAsText(files[0]);
+  }*/
 
   const onSubmit = (data) => {
-    if (legalSelected == null) {
-      alert.error("Debe especificar el dueño del servicio")
-    } else {
-      setIsLoading(true)
-      var accountType = 'CHECKING'
+    setIsLoading(true)
+    var accountType = 'CHECKING'
 
-      if(selectedItem.savings && selectedItem.savings.accountNumber == accountNumber){
-        accountType = 'SAVINGS'
-      }
-
-      const createService = serviceService.createService(data, legalSelected, accountNumber, accountType)
-      createService
-        .then((data) => {
-          alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
-          const element = document.createElement("a");
-          var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
-          textToWrite = textToWrite.replace(/\n/g, "\r\n");
-          const file = new Blob([textToWrite], {type: 'text/plain'});
-          element.href = URL.createObjectURL(file);
-          element.download = "Ids de Servicio.txt";
-          document.body.appendChild(element);
-          element.click();
-        })
-        .catch((message) => {
-          alert.error(message)
-        })
-        .finally(() => setIsLoading(false))
+    if(selectedItem.savings && selectedItem.savings.accountNumber == accountNumber){
+      accountType = 'SAVINGS'
     }
+    console.log(data)
+    var fileName = data.file[0].name.split('.');
+    if(fileName.length !== 2)
+    {
+      alert.error('Archivo inválido')
+      setIsLoading(false)
+    }
+    else if(fileName[1] !== 'csv')
+    {
+      alert.error('El archivo debe ser .csv')
+      setIsLoading(false)
+    }
+    else if(accountNumber === ''){
+      alert.error('Debe seleccionar una cuenta de cobro')
+      setIsLoading(false)
+
+    }
+    else{
+      const createService = serviceService.createService(data, accountType, sessionStorage.getItem('user'))
+      createService
+      .then((data) => {
+        console.log(data)
+        /*alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
+        const element = document.createElement("a");
+        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
+        textToWrite = textToWrite.replace(/\n/g, "\r\n");
+        const file = new Blob([textToWrite], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "Ids de Servicio.txt";
+        document.body.appendChild(element);
+        element.click();*/
+      })
+      .catch((message) => {
+        alert.error(message)
+      })
+      .finally(() => setIsLoading(false))
+    }
+    //const createService = serviceService.createService(data, accountType, sessionStorage.getItem('user'))
+    /*createService
+      .then((data) => {
+        alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
+        const element = document.createElement("a");
+        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
+        textToWrite = textToWrite.replace(/\n/g, "\r\n");
+        const file = new Blob([textToWrite], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "Ids de Servicio.txt";
+        document.body.appendChild(element);
+        element.click();
+      })
+      .catch((message) => {
+        alert.error(message)
+      })
+      .finally(() => setIsLoading(false))*/
   }
 
-const getLegals = () => {
-  return userService.legals()
+const getUser = () => {
+  return userService.user('LEGAL')
 }
 
-const getAccounts = () => {
-  return accounts
-}
-  const [legals, setLegals] = React.useState([])
+  const [user, setUser] = React.useState([])
 
   React.useEffect(() => {
-    getLegals().then(legals => setLegals(legals))
-
+    getUser().then(user => setUser(user))
   }, [])
 
   return (
@@ -166,36 +182,16 @@ const getAccounts = () => {
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Cantidad de códigos </TableDataL>
+                  <TableDataL> Archivo con ids </TableDataL>
                   <TableDataR>
-                    <Input name='amountOfIds' type='number' min="1" ref={register({ required: true})} />
-                    {errors.amountOfIds && <ErrorMsg> x </ErrorMsg>}
+                    <input name='file' type="file" accept=".csv" ref={register({ required: true})} />
+                    {errors.file && <ErrorMsg> x </ErrorMsg>}
                   </TableDataR>
                 </tr>
                 <tr>
-                  <TableDataL> Monto </TableDataL>
-                  <TableDataR>
-                  <Input name='amount' type='number' min="0" step='any' ref={register({ required: true})} />
-                    {errors.amount && <ErrorMsg> x </ErrorMsg>}
-                  </TableDataR>
-                </tr>
-                <tr>
-                <TableDataL> Fecha de vencimiento </TableDataL>
-                  <TableDataR>
-                    <Input name='dueDate' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
-                    {errors.dueDate && <ErrorMsg> x </ErrorMsg>}
-                  </TableDataR>
-                </tr>
-                <tr>
-                  <TableDataL> Dueño del servicio </TableDataL>
-                  <TableDataR>
-                    <SelectLegal value ={legalSelected} options={loadLegalSelect(legals)} onChange={onChangeLegalField} ref={register({ required: true})}/>
-                  </TableDataR>
-                </tr>
-                {legalSelected &&<tr>
                     <TableDataL> Cuenta de pago </TableDataL>
-                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={getAccounts()} updateParent={value => setAccountNumber(value)} ref={register({ required: true})} /></TableDataRw>
-                  </tr>}
+                    <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={items} updateParent={value => setAccountNumber(value)} refs={register({ required: true})} /></TableDataRw>
+                </tr>
                 <tr>
                   <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
                 </tr>

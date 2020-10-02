@@ -12,6 +12,7 @@
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.13.1",
     "react-dom-factories": "^1.0.2",
+    "react-file-reader": "^1.1.4",
     "react-hook-form": "^6.8.3",
     "react-onclickoutside": "^6.9.0",
     "react-router-dom": "^5.2.0",
