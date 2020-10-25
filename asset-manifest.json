@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Banco-Front/static/css/main.a320b832.chunk.css",
+    "main.js": "/Banco-Front/static/js/main.72745e87.chunk.js",
+    "main.js.map": "/Banco-Front/static/js/main.72745e87.chunk.js.map",
+    "runtime-main.js": "/Banco-Front/static/js/runtime-main.ca026ad5.js",
+    "runtime-main.js.map": "/Banco-Front/static/js/runtime-main.ca026ad5.js.map",
+    "static/js/2.33dc048e.chunk.js": "/Banco-Front/static/js/2.33dc048e.chunk.js",
+    "static/js/2.33dc048e.chunk.js.map": "/Banco-Front/static/js/2.33dc048e.chunk.js.map",
+    "index.html": "/Banco-Front/index.html",
+    "precache-manifest.990a20eeb0968058110ca6770d5db49c.js": "/Banco-Front/precache-manifest.990a20eeb0968058110ca6770d5db49c.js",
+    "service-worker.js": "/Banco-Front/service-worker.js",
+    "static/css/main.a320b832.chunk.css.map": "/Banco-Front/static/css/main.a320b832.chunk.css.map",
+    "static/js/2.33dc048e.chunk.js.LICENSE.txt": "/Banco-Front/static/js/2.33dc048e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ca026ad5.js",
+    "static/js/2.33dc048e.chunk.js",
+    "static/css/main.a320b832.chunk.css",
+    "static/js/main.72745e87.chunk.js"
+  ]
+}
