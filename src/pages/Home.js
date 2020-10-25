@@ -5,6 +5,7 @@ import GlobalContainer from '../components/GlobalContainer'
 import Header from '../components/Header'
 import AccountTable from '../components/AccountTable'
 import Text from '../components/Text'
+import DebitCard from '../components/DebitCard'
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components'
 
@@ -64,11 +65,17 @@ const Home = () => {
         <ButtonsContainer>
         <PayButton onClick={navigateToServicePay} type="button"> Pagar servicios </PayButton> 
         <OtherButtons onClick={navigateToTransfer} type="button"> Realizar transferencia </OtherButtons>
-        {window.sessionStorage.getItem('userType') === 'LEGAL' && <OtherButtons onClick={createService} type="button"> Crear servicio </OtherButtons>}
+        {sessionStorage.getItem('userType') === 'LEGAL' && <OtherButtons onClick={createService} type="button"> Crear servicio </OtherButtons>}
         </ButtonsContainer>
         <Text> Mis Cuentas </Text>
         <AccountTable accountType={'SAVINGS'} />
         <AccountTable accountType={'CHECKING'} />
+        {(sessionStorage.getItem('userType') === 'PHYSICAL') &&
+          <React.Fragment>
+            <Text> Tarjeta de débito </Text>
+            <DebitCard/>
+          </React.Fragment>
+        }
       </Content>
       <Footer id='footer' />
     </GlobalContainer>

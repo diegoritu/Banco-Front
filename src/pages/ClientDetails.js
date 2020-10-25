@@ -276,6 +276,18 @@ const ClientDetails = (props) => {
                   </TableDataR>
                 </tr>
                 <tr>
+                  <TableDataL> Caja de ahorro </TableDataL>
+                  <TableDataR>
+                    <Input name='savings' disabled defaultValue={data.savings.accountNumber} type='text' />
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Tarjeta de débito </TableDataL>
+                  <TableDataR>
+                    <Input name='debitCard' disabled defaultValue={data.debitCard.number} type='text' />
+                  </TableDataR>
+                </tr>
+                <tr>
                   <TableDataR><TButton type='button' onClick={() => setIsDisabled(!isDisabled)}> Modificar </TButton></TableDataR>
                   {!isDisabled && <TableDataR><TButton disabled={isSaveDisabled} type='submit'> Guardar </TButton></TableDataR>}
                 </tr>
@@ -320,6 +332,12 @@ const ClientDetails = (props) => {
                   <TableDataR>
                     <Input name='phone' disabled={isDisabled} defaultValue={data.phone} type='text' ref={register({ required: true, pattern: /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/ })} />
                     <div>{errors.phoneLegalEntity && <ErrorMsg> x Verifique que su teléfono tenga el siguiente formato: XXXXXXXXXX</ErrorMsg>}</div>
+                  </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Caja de ahorro </TableDataL>
+                  <TableDataR>
+                    <Input name='savings' disabled defaultValue={data.savings.accountNumber} type='text' />
                   </TableDataR>
                 </tr>
                 <tr>

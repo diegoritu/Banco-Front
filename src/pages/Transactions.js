@@ -61,7 +61,7 @@ const Transactions = (props) => {
   function goToTransactionDetail(value){
     history.push({
       pathname: '/transactionDetails',
-      state: { transactionId: value }
+      state: { transactionId: value, account:  props.history.location.state.account}
     })}
   
   var accountType = 'SAVINGS'
@@ -107,7 +107,12 @@ const Transactions = (props) => {
           concept = 'MANTENIMIENTO'
           break
         case 4:
-          concept = 'PAGO DE SERVICIOS'
+          if(isEntryBalanceBeforeMovement){
+            concept = 'COBRO DE SERVICIOS'
+          }
+          else{
+            concept = 'PAGO DE SERVICIOS'
+          }
           break
         case 5:
           concept = 'TRANSFERENCIA'
@@ -118,6 +123,40 @@ const Transactions = (props) => {
         case 7:
           concept = 'INTERESES'
           break
+        case 8:
+          if(isEntryBalanceBeforeMovement){
+            concept = 'COBRO DE COMPRA'
+          }
+          else{
+            concept = 'COMPRA CON TARJETA DE DÉBITO'
+          }
+
+          break
+        case 9:
+          if(isEntryBalanceBeforeMovement){
+            concept = 'COBRO DE TARJETA'
+          }
+          else{
+            concept = 'PAGO DE TARJETA DE CRÉDITO'
+          }
+
+          break 
+          case 10:
+            if(isEntryBalanceBeforeMovement){
+              concept = 'ACREDITACIÓN DE SUELDO'
+            } 
+            else{
+              concept = 'PAGO DE SUELDO'
+            }
+            break
+          case 11:
+            if(isEntryBalanceBeforeMovement){
+              concept = 'COBRO DE VENTAS CON TARJETA DE CRÉDITO'
+            }
+            else{
+              concept = 'PAGO A COMERCIO'
+            }
+            break       
         default:
           concept = 'CONCEPTO'
           break
