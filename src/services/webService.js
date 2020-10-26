@@ -1,5 +1,5 @@
-const urlAPI = 'http://localhost:8080/bank-api'
-const urlOrigin = 'http://localhost:3000'
+const urlAPI = 'https://krrl-bank.herokuapp.com/bank-api'
+const urlOrigin = 'https://krrl-bank-front.herokuapp.com'
 
 const urlWebService = {
   getChecking: urlAPI + '/account/checking',
