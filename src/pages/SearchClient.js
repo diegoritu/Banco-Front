@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import Button from '../components/Button'
-import Select from 'react-select'
+
 import { useAlert } from 'react-alert'
 import { searchUserService } from '../services/searchUserService'
 import { useHistory } from 'react-router-dom'
@@ -170,6 +170,7 @@ const SearchClient = () => {
               </tr>
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
+                {/*
                 <TableDataR>
                   {isLegal &&
                     <Select
@@ -190,6 +191,7 @@ const SearchClient = () => {
                       ref={register({ required: true })}
                     />}
                 </TableDataR>
+                  */}
               </tr>
               <tr>
                 <TableDataL>
