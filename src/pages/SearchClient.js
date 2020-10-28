@@ -12,7 +12,6 @@ import Select from 'react-select'
 import { useAlert } from 'react-alert'
 import { searchUserService } from '../services/searchUserService'
 import { useHistory } from 'react-router-dom'
-import { timeout } from 'select2-react-component'
 
 const Input = styled.input`
   padding: 10px;
@@ -70,29 +69,6 @@ const TableRow = styled.tr`
   }
 `
 
-
-const usernameOption = new OptionItem('username', 'Nombre de usuario')
-const cuitCuilOption = new OptionItem('cuitCuil', 'CUIT/CUIL')
-
-const fieldOptions = {
-  legal: [
-    usernameOption,
-    cuitCuilOption,
-    new OptionItem('businessName', 'Razón social')
-  ],
-  physical: [
-    usernameOption,
-    cuitCuilOption,
-    new OptionItem('fullname', 'Nombre y/o apellido'),
-    new OptionItem('dni', 'DNI')
-  ]
-}
-
-function OptionItem (value, label) {
-  this.value = value
-  this.label = label
-}
-
 const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
   const [isLoading, setIsLoading] = useState(false)
@@ -101,13 +77,22 @@ const SearchClient = () => {
   const [items, setItems] = useState([])
   const alert = useAlert()
 
-  const getFieldOptions = () => {
-    return isLegal ? fieldOptions.legal : fieldOptions.physical
-  }
-
   const onChangeSearchField = (option) => {
     setSelectedSearchField(option)
   }
+
+  const legalOptions = [
+    { value: 'username', label: 'Nombre de usuario' },
+    { value: 'cuitCuil', label: 'CUIT/CUIL' },
+    { value: 'businessName', label: 'Razón social' }
+  ]
+
+  const physicalOptions = [
+    { value: 'username', label: 'Nombre de usuario' },
+    { value: 'cuitCuil', label: 'CUIT/CUIL' },
+    { value: 'fullname', label: 'Nombre y/o apellido' },
+    { value: 'dni', label: 'DNI' }
+  ]
 
   const updateIsLegal = (newValue) => {
     if (isLegal !== newValue) {
@@ -117,8 +102,8 @@ const SearchClient = () => {
   }
 
   const onSubmit = (data) => {
-    if ( selectedSearchField == null ) {
-      alert.error("Debe seleccionar un campo de búsqueda")
+    if (selectedSearchField === null) {
+      alert.error('Debe seleccionar un campo de búsqueda')
     } else {
       setIsLoading(true)
       const params = { field: selectedSearchField.value, term: data.term }
@@ -137,7 +122,6 @@ const SearchClient = () => {
         })
         .finally(() => setIsLoading(false))
     }
-    
   }
 
   const history = useHistory()
@@ -173,7 +157,7 @@ const SearchClient = () => {
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' url="background.png" direction='column'>
+      <Content id='content' url='background.png' direction='column'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TableAlt>
             <Caption> Búsqueda Cliente </Caption>
@@ -187,7 +171,24 @@ const SearchClient = () => {
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
                 <TableDataR>
-                  <Select name="searchField" value={selectedSearchField} onChange={onChangeSearchField} options={getFieldOptions()} placeholder='Selecione un campo de búsqueda...' ref={register({ required: true })}/>
+                  {isLegal &&
+                    <Select
+                      name='searchFieldLegal'
+                      value={selectedSearchField}
+                      options={legalOptions}
+                      onChange={onChangeSearchField}
+                      placeholder='Selecione un campo de búsqueda...'
+                      ref={register({ required: true })}
+                    />}
+                  {!isLegal &&
+                    <Select
+                      name='searchFieldPhysical'
+                      value={selectedSearchField}
+                      options={physicalOptions}
+                      onChange={onChangeSearchField}
+                      placeholder='Selecione un campo de búsqueda...'
+                      ref={register({ required: true })}
+                    />}
                 </TableDataR>
               </tr>
               <tr>
