@@ -73,7 +73,7 @@ const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const [isLegal, setIsLegal] = useState(false)
-  const [selectedSearchField, setSelectedSearchField] = useState('')
+  const [selectedSearchField, setSelectedSearchField] = useState()
   const [items, setItems] = useState([])
   const alert = useAlert()
 
