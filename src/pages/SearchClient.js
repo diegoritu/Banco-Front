@@ -178,7 +178,6 @@ const SearchClient = () => {
                       options={legalOptions}
                       onChange={onChangeSearchField}
                       placeholder='Selecione un campo de búsqueda...'
-                      ref={register({ required: true })}
                     />}
                   {!isLegal &&
                     <Select
@@ -187,7 +186,6 @@ const SearchClient = () => {
                       options={physicalOptions}
                       onChange={onChangeSearchField}
                       placeholder='Selecione un campo de búsqueda...'
-                      ref={register({ required: true })}
                     />}
                 </TableDataR>
               </tr>
