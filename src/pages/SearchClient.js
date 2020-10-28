@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import ErrorMsg from '../components/ErrorMsg'
 import Button from '../components/Button'
-
+import Select from 'react-select'
 import { useAlert } from 'react-alert'
 import { searchUserService } from '../services/searchUserService'
 import { useHistory } from 'react-router-dom'
@@ -73,7 +73,7 @@ const SearchClient = () => {
   const { register, handleSubmit, errors } = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const [isLegal, setIsLegal] = useState(false)
-  const [selectedSearchField, setSelectedSearchField] = useState()
+  const [selectedSearchField, setSelectedSearchField] = useState('')
   const [items, setItems] = useState([])
   const alert = useAlert()
 
@@ -170,7 +170,6 @@ const SearchClient = () => {
               </tr>
               <tr>
                 <TableDataL> Búsqueda por:  </TableDataL>
-                {/*
                 <TableDataR>
                   {isLegal &&
                     <Select
@@ -179,7 +178,6 @@ const SearchClient = () => {
                       options={legalOptions}
                       onChange={onChangeSearchField}
                       placeholder='Selecione un campo de búsqueda...'
-                      ref={register({ required: true })}
                     />}
                   {!isLegal &&
                     <Select
@@ -188,10 +186,8 @@ const SearchClient = () => {
                       options={physicalOptions}
                       onChange={onChangeSearchField}
                       placeholder='Selecione un campo de búsqueda...'
-                      ref={register({ required: true })}
                     />}
                 </TableDataR>
-                  */}
               </tr>
               <tr>
                 <TableDataL>
