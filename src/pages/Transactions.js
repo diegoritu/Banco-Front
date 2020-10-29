@@ -128,7 +128,7 @@ const Transactions = (props) => {
             concept = 'COBRO DE COMPRA'
           }
           else{
-            concept = 'COMPRA CON TARJETA DE DÉBITO'
+            concept = 'PAGO CON TARJETA DE DÉBITO'
           }
 
           break
