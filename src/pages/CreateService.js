@@ -11,7 +11,6 @@ import { Table, TButton, TableDataL, TableDataR, Caption } from '../components/T
 import { serviceService } from '../services/serviceService'
 import { userService } from '../services/userService'
 import { useAlert } from 'react-alert'
-import Select from 'react-select'
 import Dropdown from '../components/Dropdown'
 import ReactFileReader from 'react-file-reader'
 
@@ -19,32 +18,6 @@ const Input = styled.input`
   padding: 10px;
   margin: 10px;
   width: 20vw;
-`
-
-const SelectLegal = styled(Select)`
-  width: 20vw;
-  margin: auto;
-`
-
-const TableRow = styled.tr`
-background-color: #FFF;  
-border-bottom: 1px solid black;
-:active, :hover
-{
-  background: #e9e9e9;
-}
-`
-
-const ToggleWrapper = styled.div`
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-`
-
-const Button = styled.button`
-  width: 50%;
-  padding: 10px;
 `
 const FixBar = styled.div`
  height: 10vh;
@@ -182,7 +155,9 @@ const CreateService = () => {
               </tr>
               <tr>
                 <TableDataL> Cuenta de pago </TableDataL>
-                <TableDataRw><Dropdown title='Seleccione cuenta de pago' items={items} updateParent={value => setAccountNumber(value)} refs={register({ required: true })} /></TableDataRw>
+                <TableDataRw>
+                  <Dropdown title='Seleccione cuenta de pago' items={items} updateParent={value => setAccountNumber(value)} refs={register({ required: true })} />
+                </TableDataRw>
               </tr>
               <tr>
                 <TableDataL><TButton type='submit' disabled={isLoading}> Confirmar </TButton></TableDataL>
