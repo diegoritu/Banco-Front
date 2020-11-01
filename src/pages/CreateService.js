@@ -97,7 +97,7 @@ const CreateService = () => {
           element.click(); */
         })
         .catch((message) => {
-          alert.error(message)
+          console.log(message)
         })
         .finally(() => setIsLoading(false))
     }
