@@ -134,9 +134,13 @@ const TransactionDetails = (props) => {
           <h4> Número de transacción: #{data.idMovement} </h4>
           <h4> Fecha y hora: {formatDate(data.dayAndHour)} </h4>
           <h4> Tipo de transacción: {concept}</h4>
-          { (data.movementType === 4 || data.movementType === 8 || data.movementType === 10) &&
+          { (data.movementType === 4 || data.movementType === 8) &&
             <h4> {'Comercio: ' + data.businessName}</h4>          
           }
+          { (data.movementType === 10) &&
+            <h4> {'Sueldo pagado por: ' + data.businessName}</h4>          
+          }
+
           { (data.movementType === 9 || data.movementType === 11) &&
             <h4> {'Entidad de crédito: ' + data.businessName}</h4>          
           }
