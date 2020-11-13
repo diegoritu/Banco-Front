@@ -92,7 +92,7 @@ const ServicePay = () => {
           setAmount(res.data.amount)
           setDue(res.data.dueDate)
           setFindService(true)
-        } else if (res.status === 404) alert.error('No existe el servicio')
+        } else if (res.status === 404) alert.error('No existe el servicio o el mismo no está disponible para su pago.')
       })
       .finally(setVendorId(data.vendorId))
   }
