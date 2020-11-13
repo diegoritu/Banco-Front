@@ -85,15 +85,9 @@ const CreateService = () => {
       serviceService.createService(data, accountType, window.sessionStorage.getItem('user'))
         .then((res) => {
           console.log(res)
-          /* alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
-          const element = document.createElement("a");
-          var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
-          textToWrite = textToWrite.replace(/\n/g, "\r\n");
-          const file = new Blob([textToWrite], {type: 'text/plain'});
-          element.href = URL.createObjectURL(file);
-          element.download = "Ids de Servicio.txt";
-          document.body.appendChild(element);
-          element.click(); */
+          if (res.status === 200) alert.success('¡Servicios creados con exito!')
+          else if (res.status === 226) alert.success('¡Id repetidos!')
+          else alert.error('Error en la creacion')
         }
         )
         .catch((message) => {
