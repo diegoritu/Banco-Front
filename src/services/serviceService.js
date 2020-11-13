@@ -3,24 +3,23 @@ import request from './requestHelper'
 
 const createService = (data, accountType, userName) => {
   var file = data.file[0]
-  const formData = new FormData()
+  var formdata = new FormData()
 
-  formData.append("file", data.file)
+  formdata.append("file", data.file[0])
 
-  formData.append('name', data.name)
-  formData.append('vendorAccountType', accountType)
-  formData.append('vendorUsername', userName)
+  formdata.append('name', data.name)
+  formdata.append('vendorAccountType', accountType)
+  formdata.append('vendorUsername', userName)
 
   const requestOptions = {
     method: 'POST',
     mode: 'cors',
     headers: {
-      Accept: 'application/json',
-      "Content-Type": "multipart/form-data",
-      Origin: urlOrigin,
-      type: "formData"
+      Accept: '*/*',
+      'Content-Type': 'multipart/form-data',
+      Origin: urlOrigin
     },
-    body: formData
+    body: formdata
   }
   return request(urlWebService.createService, requestOptions)
   /*
