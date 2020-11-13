@@ -21,9 +21,7 @@ const Input = styled.input`
   width: 20vw;
   text-align: center;
 `
-const TableDataRw = styled.td`
-  padding: 10px 20%;
-`
+
 const FixBar = styled.div`
  height: 10vh;
   width: 100%;
@@ -48,13 +46,12 @@ function numberWithStyle (x) {
   return resultNumber
 }
 
-function formatDate(inputDate) {
+function formatDate (inputDate) {
   var date = new Date(inputDate)
   if (!isNaN(date.getTime())) {
-      return  (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + (date.getMonth() < 9 ? '0' + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1))  + '/' + date.getFullYear()
+    return (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + (date.getMonth() < 9 ? '0' + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1)) + '/' + date.getFullYear()
   }
 }
-
 
 const ServicePay = () => {
   const alert = useAlert()
@@ -63,7 +60,7 @@ const ServicePay = () => {
     register: registerA,
     errors: errorsA,
     handleSubmit: handleSubmitA
-  } = useForm();
+  } = useForm()
   const [vendorName, setVendorName] = useState()
   const [serviceName, setServiceName] = useState()
   const [serviceId, setServiceId] = useState()
@@ -74,47 +71,48 @@ const ServicePay = () => {
   const [findService, setFindService] = useState(false)
 
   const items = []
-  
-  if(sessionStorage.getItem('userSavings') !== 'null'){
-    items.push({id: sessionStorage.getItem('userSavings'), value: 'CA ' + sessionStorage.getItem('userSavings')})
+
+  if (window.sessionStorage.getItem('userSavings') !== 'null') {
+    items.push({ id: window.sessionStorage.getItem('userSavings'), value: 'CA ' + window.sessionStorage.getItem('userSavings') })
   }
-  if(sessionStorage.getItem('userChecking') !== 'null'){
-    items.push({id: sessionStorage.getItem('userChecking'), value: 'CC ' + sessionStorage.getItem('userChecking')})
+  if (window.sessionStorage.getItem('userChecking') !== 'null') {
+    items.push({ id: window.sessionStorage.getItem('userChecking'), value: 'CC ' + window.sessionStorage.getItem('userChecking') })
   }
 
   const onSubmit = (data) => {
     const searchService = serviceService.searchService(data)
     searchService
-    .then((data) =>{
-      console.log(data)
-      setServiceName(data.name)
-      setServiceId(data.servicePaymentId)
-      setVendorName(data.vendor.businessName)
-      setAmount(data.amount)
-      setDue(data.dueDate)
-      setFindService(true)
-    })
+      .then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          setServiceName(res.data.name)
+          setServiceId(res.data.servicePaymentId)
+          setVendorName(res.data.vendor.businessName)
+          setAmount(res.data.amount)
+          setDue(res.data.dueDate)
+          setFindService(true)
+        }
+      })
   }
 
   const onSubmitA = () => {
-    const usernameFrom = sessionStorage.getItem('user')
+    const usernameFrom = window.sessionStorage.getItem('user')
 
     console.log(acc)
-    const payService = transactionService.payService(acc,serviceId, usernameFrom, vendorId)
+    const payService = transactionService.payService(acc, serviceId, usernameFrom, vendorId)
     payService
-    .then((response) =>{
-      if(response !== 'transactionError'){
-        alert.success('Pago de servicio realizado con éxito ')
-      }
-      else{
-        alert.error('Operación fallida. Chequee que la cuenta tenga el saldo suficiente para realizar la operación.')
-      }
-    })
+      .then((response) => {
+        if (response !== 'transactionError') {
+          alert.success('Pago de servicio realizado con éxito ')
+        } else {
+          alert.error('Operación fallida. Chequee que la cuenta tenga el saldo suficiente para realizar la operación.')
+        }
+      })
   }
   return (
     <GlobalContainer id='globalContainer'>
       <Header id='header' />
-      <Content id='content' url="background.png" direction='column'>
+      <Content id='content' url='background.png' direction='column'>
         <Text> Pago de servicios </Text>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TableAlt>
@@ -124,7 +122,7 @@ const ServicePay = () => {
                 <TableDataL>
                   <Input name='vendorId' type='text' ref={register({ required: true })} />
                   {errors.vendorId && <ErrorMsg> Debe ingresar un id de proveedor </ErrorMsg>}
-                </TableDataL>      
+                </TableDataL>
               </tr>
               <tr>
                 <TableDataL><p> Identificador del servicio: </p></TableDataL>
@@ -132,44 +130,43 @@ const ServicePay = () => {
                   <Input name='servicePaymentId' type='text' ref={register({ required: true })} />
                   {errors.servicePaymentId && <ErrorMsg> Debe ingresar un id de servicio </ErrorMsg>}
                 </TableDataL>
-                 <TableDataL>
+                <TableDataL>
                   <TButton type='submit'>
                     Buscar
                   </TButton>
                 </TableDataL>
               </tr>
-              </tbody>
-          </TableAlt>
-        </form>
-        {findService &&
-        <form onSubmit={handleSubmitA(onSubmitA)}>
-          <TableAlt>
-            <tbody>
-              <tr>
-                <TableDataL> Nombre del Proveedor: </TableDataL>
-                <TableDataR> {vendorName} </TableDataR>
-              </tr>
-              <tr>
-                <TableDataL> Nombre del Servicio: </TableDataL>
-                <TableDataR> {serviceName} </TableDataR>
-              </tr>
-              <tr>
-                <TableDataL> Monto adeudado: </TableDataL>
-                <TableDataR> {'$ ' + numberWithStyle(amount)} </TableDataR>
-              </tr>
-              <tr>
-                <TableDataL> Fecha de vencimiento: </TableDataL>
-                <TableDataR> {formatDate(due)} </TableDataR>
-              </tr>
-              <tr>
-                <TableDataL><p> Cuenta a debitar: </p></TableDataL>
-                <TableDataL><Dropdown title='Seleccione cuenta' items={items} updateParent={id => setAcc(id)}/></TableDataL>
-                <TableDataL><TButton type='submit'> Pagar </TButton></TableDataL>
-              </tr>
             </tbody>
           </TableAlt>
         </form>
-        }
+        {findService &&
+          <form onSubmit={handleSubmitA(onSubmitA)}>
+            <TableAlt>
+              <tbody>
+                <tr>
+                  <TableDataL> Nombre del Proveedor: </TableDataL>
+                  <TableDataR> {vendorName} </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Nombre del Servicio: </TableDataL>
+                  <TableDataR> {serviceName} </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Monto adeudado: </TableDataL>
+                  <TableDataR> {'$ ' + numberWithStyle(amount)} </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL> Fecha de vencimiento: </TableDataL>
+                  <TableDataR> {formatDate(due)} </TableDataR>
+                </tr>
+                <tr>
+                  <TableDataL><p> Cuenta a debitar: </p></TableDataL>
+                  <TableDataL><Dropdown title='Seleccione cuenta' items={items} updateParent={id => setAcc(id)} /></TableDataL>
+                  <TableDataL><TButton type='submit'> Pagar </TButton></TableDataL>
+                </tr>
+              </tbody>
+            </TableAlt>
+          </form>}
         <FixBar />
       </Content>
       <Footer id='footer' />

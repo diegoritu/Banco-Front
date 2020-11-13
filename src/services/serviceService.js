@@ -22,7 +22,7 @@ const searchService = (data) => {
     headers: {
       Accept: 'application/json',
       Origin: urlOrigin
-    },
+    }
   }
   return fetch(urlWebService.searchService + '?servicePaymentId=' + data.servicePaymentId + "&vendorId=" + data.vendorId, requestOptions)
     .then(response =>
@@ -38,6 +38,4 @@ const searchService = (data) => {
     .catch(error => console.log('Fetch Error :-S', error))
 }
 
-
 export const serviceService = { createService, searchService }
-
