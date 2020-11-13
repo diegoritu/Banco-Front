@@ -80,6 +80,7 @@ const ServicePay = () => {
   }
 
   const onSubmit = (data) => {
+    console.log(data)
     const searchService = serviceService.searchService(data)
     searchService
       .then((res) => {
@@ -93,12 +94,13 @@ const ServicePay = () => {
           setFindService(true)
         }
       })
+      .finally(setVendorId(data.vendorId))
   }
 
   const onSubmitA = () => {
     const usernameFrom = window.sessionStorage.getItem('user')
 
-    console.log(acc)
+    console.log(acc, serviceId, usernameFrom, vendorId)
     const payService = transactionService.payService(acc, serviceId, usernameFrom, vendorId)
     payService
       .then((response) => {
