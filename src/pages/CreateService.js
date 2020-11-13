@@ -82,10 +82,9 @@ const CreateService = () => {
       alert.error('Debe seleccionar una cuenta de cobro')
       setIsLoading(false)
     } else {
-      const createService = serviceService.createService(data, accountType, window.sessionStorage.getItem('user'))
-      createService
-        .then((data) => {
-          console.log(data)
+      serviceService.createService(data, accountType, window.sessionStorage.getItem('user'))
+        .then((res) => {
+          console.log(res)
           /* alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
           const element = document.createElement("a");
           var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
@@ -95,29 +94,13 @@ const CreateService = () => {
           element.download = "Ids de Servicio.txt";
           document.body.appendChild(element);
           element.click(); */
-        })
+        }
+        )
         .catch((message) => {
           console.log(message)
         })
         .finally(() => setIsLoading(false))
     }
-    // const createService = serviceService.createService(data, accountType, sessionStorage.getItem('user'))
-    /* createService
-      .then((data) => {
-        alert.success('¡Servicios creados con exito! El archivo con los identificadores se descargó correctamente.' )
-        const element = document.createElement("a");
-        var textToWrite = "Vendor Id: " + data.vendorId + "\n \nIds:\n# " + data.ids.toString().replace(/,/g, '\n# ');
-        textToWrite = textToWrite.replace(/\n/g, "\r\n");
-        const file = new Blob([textToWrite], {type: 'text/plain'});
-        element.href = URL.createObjectURL(file);
-        element.download = "Ids de Servicio.txt";
-        document.body.appendChild(element);
-        element.click();
-      })
-      .catch((message) => {
-        alert.error(message)
-      })
-      .finally(() => setIsLoading(false)) */
   }
 
   const getUser = () => {
