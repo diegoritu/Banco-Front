@@ -18,10 +18,9 @@ const searchService = (data) => {
   console.log(data)
   const requestOptions = {
     method: 'GET',
-    mode: 'no-cors',
+    mode: 'cors',
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
       Origin: urlOrigin
     },
   }
@@ -31,7 +30,10 @@ const searchService = (data) => {
         if (response.status === 404) {
           return 'serviceBillNotFound'
         }
-      })
+      }).then(data => ({
+        data: data,
+        status: response.status
+      }))
     )
     .catch(error => console.log('Fetch Error :-S', error))
 }

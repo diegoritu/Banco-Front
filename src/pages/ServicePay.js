@@ -84,7 +84,6 @@ const ServicePay = () => {
 
   const onSubmit = (data) => {
     const searchService = serviceService.searchService(data)
-    setVendorId(data.vendorId)
     searchService
     .then((data) =>{
       console.log(data)
