@@ -64,9 +64,10 @@ const ServicePay = () => {
   const [vendorName, setVendorName] = useState()
   const [serviceName, setServiceName] = useState()
   const [serviceId, setServiceId] = useState()
+  const [due, setDue] = useState()
   const [vendorId, setVendorId] = useState()
   const [amount, setAmount] = useState()
-  const [due, setDue] = useState()
+  const [dueDateParameter, setDueDateParameter] = useState()
   const [acc, setAcc] = useState('')
   const [findService, setFindService] = useState(false)
 
@@ -88,6 +89,7 @@ const ServicePay = () => {
         if (res.status === 200) {
           setServiceName(res.data.name)
           setServiceId(res.data.servicePaymentId)
+          setDue(res.data.dueDateParameter)
           setVendorName(res.data.vendor.businessName)
           setAmount(res.data.amount)
           setDue(res.data.dueDate)
@@ -132,12 +134,18 @@ const ServicePay = () => {
                   <Input name='servicePaymentId' type='text' ref={register({ required: true })} />
                   {errors.servicePaymentId && <ErrorMsg> Debe ingresar un id de servicio </ErrorMsg>}
                 </TableDataL>
-                <TableDataL>
+                </tr>
+                <tr>
+                  <TableDataL><p> Fecha de vencimiento: </p></TableDataL>
+                  <TableDataL>
+                  <Input name='dueDateParameter' type='date' ref={register({ required: true, min: '1900-01-01', max: '2100-01-01' })} />
+                  </TableDataL>
+                  <TableDataL>
                   <TButton type='submit'>
                     Buscar
                   </TButton>
                 </TableDataL>
-              </tr>
+                </tr>
             </tbody>
           </TableAlt>
         </form>

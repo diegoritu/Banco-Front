@@ -24,7 +24,7 @@ const searchService = (data) => {
       Origin: urlOrigin
     }
   }
-  return fetch(urlWebService.searchService + '?servicePaymentId=' + data.servicePaymentId + "&vendorId=" + data.vendorId, requestOptions)
+  return fetch(urlWebService.searchService + '?servicePaymentId=' + data.servicePaymentId + "&vendorId=" + data.vendorId + "&dueDate=" + data.dueDateParameter, requestOptions)
     .then(response =>
       response.json().catch(err => {
         if (response.status === 404) {

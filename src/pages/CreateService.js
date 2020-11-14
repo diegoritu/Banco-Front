@@ -54,15 +54,6 @@ const CreateService = () => {
     items.push({ id: window.sessionStorage.getItem('userChecking'), value: 'CC ' + window.sessionStorage.getItem('userChecking') })
   }
 
-  /* const handleFiles = (files) => {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        // Use reader.result
-        alert.info(reader.result)
-    }
-    reader.readAsText(files[0]);
-  } */
-
   const onSubmit = (data) => {
     setIsLoading(true)
     var accountType = 'CHECKING'
@@ -85,7 +76,7 @@ const CreateService = () => {
       serviceService.createService(data, accountType, window.sessionStorage.getItem('user'))
         .then((res) => {
           console.log(res)
-          if (res.status === 200) alert.success('¡Servicios creados con exito!')
+          if (res.status === 201) alert.success('¡Servicios creados con exito!')
           else if (res.status === 226) alert.success('¡Id repetidos!')
           else alert.error('Error en la creacion')
         }
