@@ -46,11 +46,12 @@ function numberWithStyle (x) {
   return resultNumber
 }
 
-function formatDate (inputDate) {
-  var date = new Date(inputDate)
-  if (!isNaN(date.getTime())) {
-    return (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + (date.getMonth() < 9 ? '0' + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1)) + '/' + date.getFullYear()
-  }
+function formatDate(inputDate) {
+  var date = inputDate.split("-")
+  var year = date[0]
+  var month = date[1]
+  var day = date[2]
+  return day + "/" + month + "/" + year
 }
 
 const ServicePay = () => {
