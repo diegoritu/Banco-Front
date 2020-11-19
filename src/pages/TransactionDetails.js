@@ -145,8 +145,8 @@ const TransactionDetails = (props) => {
             <h4> {'Entidad de crédito: ' + data.businessName}</h4>          
           }
 
-          { entryAccount && (data.movementType !== 4 && data.movementType !== 8 && data.movementType !== 9) ? <h4> {entryAccount && !exitAccount ? 'Cuenta: ' : 'Cuenta origen: '}{entryAccount.accountNumber} </h4> : ''}
-          { exitAccount && (data.movementType !== 10 && data.movementType !== 11) ? <h4> {!entryAccount && exitAccount ? 'Cuenta: ' : 'Cuenta destino: '}{exitAccount.accountNumber} </h4> : ''}
+          { entryAccount && (data.movementType !== 4 && data.movementType !== 8 && data.movementType !== 9 && data.movementType !== 11) ? <h4> {entryAccount && !exitAccount ? 'Cuenta: ' : 'Cuenta origen: '}{entryAccount.accountNumber} </h4> : ''}
+          { exitAccount && (data.movementType !== 10) ? <h4> {!entryAccount && exitAccount ? 'Cuenta: ' : 'Cuenta destino: '}{exitAccount.accountNumber} </h4> : ''}
           <h4> Importe: $ {numberWithStyle(parseFloat(data.amount))}</h4>
           { data.reference ? <h4> Referencia: {data.reference} </h4> : ''}
 
